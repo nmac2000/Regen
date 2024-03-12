@@ -1,0 +1,20 @@
+---
+title: "Overstory"
+author: "Nat"
+date: "2024-03-12"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+
+site <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/site.csv")
+overstory <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/Overstory.csv")
+
+```
+
+Now I need to delete all the blank rows. For now, I'm going to leave a blank row if the plot has no overstory
+```{r}
+
+```
+

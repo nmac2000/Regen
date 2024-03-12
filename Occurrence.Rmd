@@ -151,7 +151,7 @@ regen_combo$Card <- as.character(regen_combo$Card)
 ##adding it now for total counts
 
 
-
+```
 
 
 
@@ -167,7 +167,7 @@ regen_combo$Card <- as.character(regen_combo$Card)
 
 
 
-
+```{r}
 # add GIS data
 regen_copy <- regen_combo #don't
 regen_copy <- regen_copy %>% 
@@ -514,8 +514,6 @@ ggplot(data = Disturbance_comparison_long, aes(x = Disturbance_Type_1, y = Value
        y = "Count") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
-#nothing####################
-
 
 ```{r}
 #deliverables#################################################
