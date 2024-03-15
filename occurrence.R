@@ -912,3 +912,5 @@ ggplot(regen_table, aes(x = factor(AgeClass, levels = class_order), y = Count)) 
         legend.text = element_text(size=15),
         legend.title = element_text(size=20))
   
+
+  

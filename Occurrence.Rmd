@@ -5,6 +5,8 @@ date: "2024-03-11"
 output: html_document
 ---
 
+# Load dataframes and packages
+
 ```{r}
 library(tidyverse)
 
@@ -16,7 +18,11 @@ GIS <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/from_GIS.csv")
 GIS1 <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/from_GIS.csv")
 clipGis <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/PossiblePlot.csv")
 internal <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/Internal.csv")
-#formatting data###############################################################################################
+```
+
+#formatting data
+
+```{r}
 # Fill in blank species, NR = no regen
 regen$Species <- sub("^$", "NR", regen$Species)
 regen$Species <- sub("ACT", "NonCon", regen$Species)
@@ -150,22 +156,11 @@ regen_combo$Card <- as.character(regen_combo$Card)
 # I could add TPH, but I don't think I will. It's just multiplying everything by 200
 ##adding it now for total counts
 
-
-```
-
-
-
-
 # export dataframe
 #write.csv(regen_combo, "C:/Users/nmac2000/Documents/regen project/Data/cleaned_counts_021224.csv")
+```
 
-
-
-
-
-
-
-
+#Add the GIS data
 
 ```{r}
 # add GIS data
@@ -205,6 +200,8 @@ write.csv(regen_GIS, "C:/Users/nmac2000/Documents/regen project/Data/regen_GIS.c
 #sf_data <- st_as_sf(GIS_filter, coords = c("Longitude", "Latitude"), crs = 3005)
 #st_write(sf_data, "C:/Users/nmac2000/Documents/regen project/Data/cleaned_counts_021224.shp", driver = "ESRI Shapefile")
 ```
+
+# some plots (not that useful)
 
 ```{r}
 #plots###############################################################################################
@@ -276,7 +273,9 @@ ggplot(regen_GIS, aes(x=Distance_to_Perimeter)) +
   geom_point(aes(y=PLI_count), color="red", alpha= .5) +
   geom_point(aes(y=FDI_count), color="green", alpha=.5)
 ```
-#deliverables###############################################################################################
+
+# deliverables for Anya
+making tables for different categorical variables and seeing how they have been sampled
 
 ```{r}
 table(GIS$SOILNAME_1)
@@ -388,133 +387,8 @@ Subzone_comparison  <- compare_tables(GIS, regen_GIS, "Subzone")%>%
 ```
 
 
-
-```{r}
-
-#graphs of deliverables####################
-BEC_comparison_long <- gather(BEC_comparison, key = "Variable", value = "Value", total_plots, measured_plots)
-ParentSoil_comparison_long <- gather(ParentSoil_comparison, key = "Variable", value = "Value", total_plots, measured_plots)
-SoilName_comparison_long <- gather(SoilName_comparison, key = "Variable", value = "Value", total_plots, measured_plots)
-Texture_comparison_long <- gather(Texture_comparison, key = "Variable", value = "Value", total_plots, measured_plots)
-Drainage_comparison_long <- gather(Drainage_comparison, key = "Variable", value = "Value", total_plots, measured_plots)
-Cofrag_comparison_long <- gather(Cofrag_comparison, key = "Variable", value = "Value", total_plots, measured_plots)
-FireYear_comparison_long <- gather(FireYear_comparison, key = "Variable", value = "Value", total_plots, measured_plots)
-FireNum_comparison_long <- gather(FireNum_comparison, key = "Variable", value = "Value", total_plots, measured_plots)
-FireSeverity_comparison_long <- gather(FireSeverity_comparison, key = "Variable", value = "Value", total_plots, measured_plots)
-Overstory_comparison_long <- gather(Overstory_comparison, key = "Variable", value = "Value", total_plots, measured_plots)
-CrownClosure_comparison_long <- gather(CrownClosure_comparison, key = "Variable", value = "Value", total_plots, measured_plots)
-Disturbance_comparison_long <- gather(Disturbance_comparison, key = "Variable", value = "Value", total_plots, measured_plots)
-
-#BEC zone
-ggplot(data = BEC_comparison_long, aes(x = Zone, y = Value, fill = Variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Variable") +
-  scale_fill_manual(values = c("total_plots" = "blue", "measured_plots" = "red")) +
-  labs(title = "Comparison of Total and Measured Plots by BEC Zone",
-       x = "BEC Zone",
-       y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#Parent Material
-ggplot(data = ParentSoil_comparison_long, aes(x = PARENT_SOILS, y = Value, fill = Variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Variable") +
-  scale_fill_manual(values = c("total_plots" = "blue", "measured_plots" = "red")) +
-  labs(title = "Comparison of Total and Measured Plots by Parent SOil",
-       x = "Parent Soil",
-       y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#Soil Name
-ggplot(data = SoilName_comparison_long, aes(x = SOILNAME_1, y = Value, fill = Variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Variable") +
-  scale_fill_manual(values = c("total_plots" = "blue", "measured_plots" = "red")) +
-  labs(title = "Comparison of Total and Measured Plots by Soil Name",
-       x = "Soil Name",
-       y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#Soil Texture
-ggplot(data = Texture_comparison_long, aes(x = TEXTURE_1, y = Value, fill = Variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Variable") +
-  scale_fill_manual(values = c("total_plots" = "blue", "measured_plots" = "red")) +
-  labs(title = "Comparison of Total and Measured Plots by Soil Texture",
-       x = "Soil Texture",
-       y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#Soil Drainage
-ggplot(data = Drainage_comparison_long, aes(x = DRAIN_1, y = Value, fill = Variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Variable") +
-  scale_fill_manual(values = c("total_plots" = "blue", "measured_plots" = "red")) +
-  labs(title = "Comparison of Total and Measured Plots by Soil Drainage",
-       x = "Soil Drainage",
-       y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#Coarse Fragment
-ggplot(data = Cofrag_comparison_long, aes(x = COFRAG_1, y = Value, fill = Variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Variable") +
-  scale_fill_manual(values = c("total_plots" = "blue", "measured_plots" = "red")) +
-  labs(title = "Comparison of Total and Measured Plots by Soil Coarsefragment %",
-       x = "Coarse fragment %",
-       y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#Fire Year
-ggplot(data = FireYear_comparison_long, aes(x = Fire_Year_1, y = Value, fill = Variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Variable") +
-  scale_fill_manual(values = c("total_plots" = "blue", "measured_plots" = "red")) +
-  labs(title = "Comparison of Total and Measured Plots by Fire Year",
-       x = "Year",
-       y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#Fire Number 1
-ggplot(data = FireNum_comparison_long, aes(x = Fire_Number_1, y = Value, fill = Variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Variable") +
-  scale_fill_manual(values = c("total_plots" = "blue", "measured_plots" = "red")) +
-  labs(title = "Comparison of Total and Measured Plots by Fire Number",
-       x = "Fire Number",
-       y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#Fire Severity
-ggplot(data = FireSeverity_comparison_long, aes(x = Fire_Severity_1, y = Value, fill = Variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Variable") +
-  scale_fill_manual(values = c("total_plots" = "blue", "measured_plots" = "red")) +
-  labs(title = "Comparison of Total and Measured Plots by Fire Severity",
-       x = "Fire Severity",
-       y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#Overstory Species
-ggplot(data = Overstory_comparison_long, aes(x = Species_1, y = Value, fill = Variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Variable") +
-  scale_fill_manual(values = c("total_plots" = "blue", "measured_plots" = "red")) +
-  labs(title = "Comparison of Total and Measured Plots by Pre-Fire OVerstory",
-       x = "Species",
-       y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#Crown Closure
-ggplot(data = CrownClosure_comparison_long, aes(x = Crown_Closure_1, y = Value, fill = Variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Variable") +
-  scale_fill_manual(values = c("total_plots" = "blue", "measured_plots" = "red")) +
-  labs(title = "Comparison of Total and Measured Plots by % Crown Closure",
-       x = "% Crown Closure",
-       y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-#Pre-Fire Disturbance
-ggplot(data = Disturbance_comparison_long, aes(x = Disturbance_Type_1, y = Value, fill = Variable)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(fill = "Variable") +
-  scale_fill_manual(values = c("total_plots" = "blue", "measured_plots" = "red")) +
-  labs(title = "Comparison of Total and Measured Plots by Pre-Fire Disturbance",
-       x = "Disturbance Type",
-       y = "Count") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
-
+# Continuation of deliverables for Anya
+this looks at occurrence and basic stocking for some of the categorical data
 ```{r}
 #deliverables#################################################
 #Anya wants conifer count
@@ -642,7 +516,8 @@ ggplot(regen_Overstory) +
   theme_minimal() +
   facet_wrap(vars(Species_1))
 ```
-##############################Which plots have unknown burn severity##########################
+
+#Which plots have unknown burn severity
 ```{r}
 for_table <- regen_GIS %>% 
   filter(Fire_Severity_1 == "Unknown") %>% 
@@ -652,6 +527,7 @@ for_table <- regen_GIS %>%
 
 ```
 
+# Looking at wedge data (Bianca said this isnt useful)
 ```{r}
 #Wedges###############################
 # now i want to have columns for each species
@@ -760,6 +636,7 @@ options(scipen=0)
 
 ```
 
+# Dealing with Aspect
 ```{r}
 #northeast-to-southwest facing scale (Beers et al., 1996)
 #Taspect = sin(aspect + 45) + 1
@@ -775,5 +652,140 @@ asp$aspect <- sin(regen_GIS$Aspect + 45) + 1
 ggplot(asp, aes(aspect, Con_count)) +
   geom_point(aes(color=SpeciesAll))
 
+#Convert Aspect
+assign_direction <- function(angle) {
+  ifelse(is.na(angle), NA,  # Handle NA values
+         ifelse(angle >= 315 || angle < 45, "N",
+                ifelse(angle >= 45 && angle < 135, "E",
+                       ifelse(angle >= 135 && angle < 225, "S", "W"))))
+  }
+
+
+# Apply the function to the data column
+regen_GIS$Aspect_cat <- sapply(regen_GIS$Aspect, assign_direction)
 
 ```
+
+# Binary Counts
+did it two ways
+```{r}
+regen_binary <- regen_GIS %>% 
+  mutate(total_count_bin = ifelse(total_count>0,1,0),
+         total_x0_bin = ifelse(total_x0>0,1,0),
+         total_x10_bin = ifelse(total_x10>0,1,0),
+         total_x30_bin = ifelse(total_x30>0,1,0),
+         total_x130_bin = ifelse(total_x130>0,1,0),
+         FDI_count_bin = ifelse(FDI_count>0,1,0),
+         FDI_x0_bin = ifelse(FDI_x0>0,1,0),
+         FDI_x10_bin = ifelse(FDI_x10>0,1,0),
+         FDI_x30_bin = ifelse(FDI_x30>0,1,0),
+         FDI_x130_bin = ifelse(FDI_x130>0,1,0),
+         PLI_count_bin = ifelse(PLI_count>0,1,0),
+         PLI_x0_bin = ifelse(PLI_x0>0,1,0),
+         PLI_x10_bin = ifelse(PLI_x10>0,1,0),
+         PLI_x30_bin = ifelse(PLI_x30>0,1,0),
+         PLI_x130_bin = ifelse(PLI_x130>0,1,0),
+         NonCon_count_bin = ifelse(NonCon_count>0,1,0),
+         NonCon_x0_bin = ifelse(NonCon_x0>0,1,0),
+         NonCon_x10_bin = ifelse(NonCon_x10>0,1,0),
+         NonCon_x30_bin = ifelse(NonCon_x30>0,1,0),
+         NonCon_x130_bin = ifelse(NonCon_x130>0,1,0),
+         Spruce_count_bin = ifelse(Spruce_count>0,1,0),
+         Spruce_x0_bin = ifelse(Spruce_x0>0,1,0),
+         Spruce_x10_bin = ifelse(Spruce_x10>0,1,0),
+         Spruce_x30_bin = ifelse(Spruce_x30>0,1,0),
+         Spruce_x130_bin = ifelse(Spruce_x130>0,1,0))
+
+create_binary_columns <- function(data) {
+  binary_cols <- c("total_count", "total_x0", "total_x10", "total_x30", "total_x130",
+                   "FDI_count", "FDI_x0", "FDI_x10", "FDI_x30", "FDI_x130",
+                   "PLI_count", "PLI_x0", "PLI_x10", "PLI_x30", "PLI_x130",
+                   "NonCon_count", "NonCon_x0", "NonCon_x10", "NonCon_x30", "NonCon_x130",
+                   "Spruce_count", "Spruce_x0", "Spruce_x10", "Spruce_x30", "Spruce_x130")
+  
+  for (col in binary_cols) {
+    binary_col <- paste0(col, "_bin")
+    data[[binary_col]] <- ifelse(data[[col]] > 0, 1, 0)
+  }
+  
+  return(data)
+}
+
+regen_binary1 <- create_binary_columns(regen_GIS) %>% 
+  select(Card, total_count_bin:Spruce_x130_bin)
+
+
+regen_binary <- regen_binary %>% 
+  select(Card, total_count_bin:Spruce_x130_bin)
+
+library(testthat)
+test_that("Test if data frames are same", {
+  expect_equal(regen_binary,regen_binary1)
+})
+```
+
+# Occurrence as binary plot
+
+```{r}
+
+names(regen_binary)
+regen_for_table <- regen_binary %>% 
+  summarise(total_no_occurrence = n()-sum(total_count_bin),
+            x0_no_occurrence = n()-sum(total_x0_bin),
+            x10_no_occurrence = n()-sum(total_x10_bin),
+            x30_no_occurrence = n()-sum(total_x30_bin),
+            x130_no_occurrence = n()-sum(total_x130_bin),
+            FDI_count_occurrence = sum(FDI_count_bin),
+            FDI_x0_occurrence = sum(FDI_x0_bin),
+            FDI_x10_occurrence = sum(FDI_x10_bin),
+            FDI_x30_occurrence = sum(FDI_x30_bin),
+            FDI_x130_occurrence = sum(FDI_x130_bin),
+            PLI_count_occurrence = sum(PLI_count_bin),
+            PLI_x0_occurrence = sum(PLI_x0_bin),
+            PLI_x10_occurrence = sum(PLI_x10_bin),
+            PLI_x30_occurrence = sum(PLI_x30_bin),
+            PLI_x130_occurrence = sum(PLI_x130_bin),
+            NonCon_count_occurrence = sum(NonCon_count_bin),
+            NonCon_x0_occurrence = sum(NonCon_x0_bin),
+            NonCon_x10_occurrence = sum(NonCon_x10_bin),
+            NonCon_x30_occurrence = sum(NonCon_x30_bin),
+            NonCon_x130_occurrence = sum(NonCon_x130_bin),
+            Spruce_count_occurrence = sum(Spruce_count_bin),
+            Spruce_x0_occurrence = sum(Spruce_x0_bin),
+            Spruce_x10_occurrence = sum(Spruce_x10_bin),
+            Spruce_x30_occurrence = sum(Spruce_x30_bin),
+            Spruce_x130_occurrence = sum(Spruce_x130_bin)
+            )
+
+regen_table <- gather(regen_for_table, "AgeClass", "Count",1:25)
+regen_table$Species <- c("No Regen","No Regen","No Regen","No Regen","No Regen","FDI","FDI",
+                         "FDI","FDI","FDI","PLI","PLI","PLI","PLI","PLI","Non Conifer",
+                         "Non Conifer","Non Conifer","Non Conifer","Non Conifer", 
+                         "Spruce","Spruce","Spruce","Spruce", "Spruce")
+regen_table$AgeClass <- c("All heights", "x0", "x10", "x30", "x130",
+                          "All heights", "x0", "x10", "x30", "x130",
+                          "All heights", "x0", "x10", "x30", "x130",
+                          "All heights", "x0", "x10", "x30", "x130",
+                          "All heights", "x0", "x10", "x30", "x130")
+
+class_order <- c("All heights", "x0", "x10", "x30", "x130")
+species_order <- c("PLI","FDI","Spruce","Non Conifer","No Regen")
+ggplot(regen_table, aes(x = factor(AgeClass, levels = class_order), y = Count)) +
+  geom_col(aes(fill = factor(Species, levels = species_order)), position = "dodge") +
+  xlab("Height Class (cm)") +
+  ylab("# of Plots with Occurrence") +
+  ggtitle("Occurrence of Regen by Height Class and Species") +
+  labs(fill = "Species") +
+  scale_fill_brewer(palette = "Spectral") +
+  scale_x_discrete(labels = c("total" = "All heights", "x0" = "0-9", "x10" = "10-29", "x30" = "30-129", "x130" = "130+")) +
+  theme_bw() +
+  theme(axis.text.x=element_text(size=15),
+        axis.text.y=element_text(size=15),
+        axis.title.x=element_text(size=20),
+        axis.title.y=element_text(size=20),
+        plot.title = element_text(size = 20),
+        legend.text = element_text(size=15),
+        legend.title = element_text(size=20))
+```
+
+
