@@ -9,12 +9,25 @@ output: html_document
 library(tidyverse)
 
 site <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/site.csv")
-overstory <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/Overstory.csv")
+overstory_1 <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/Overstory.csv")
 
 ```
 
 Now I need to delete all the blank rows. For now, I'm going to leave a blank row if the plot has no overstory
 ```{r}
+overstory <- overstory_1 %>% 
+  group_by(Card) %>% 
+  mutate(has_nr = any(is.na(TreeNumber)), num_rows = n()) %>% 
+  filter(num_rows == 1 | !(has_nr & is.na(TreeNumber))) %>% 
+  select(-has_nr, -num_rows)
+```
 
+Okay now I need to start doing something with this data. 
+Going to make some summaries by plot. 
+```{r}
+overstory %>% 
+  group_by(Species) %>% 
+  summarise(count(Species))
+  
 ```
 
