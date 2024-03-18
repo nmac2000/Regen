@@ -664,6 +664,10 @@ assign_direction <- function(angle) {
 # Apply the function to the data column
 regen_GIS$Aspect_cat <- sapply(regen_GIS$Aspect, assign_direction)
 
+
+ggplot(regen_GIS, aes(x=Aspect_cat,y=total_count)) +
+  geom_boxplot()
+
 ```
 
 # Binary Counts
@@ -722,6 +726,116 @@ library(testthat)
 test_that("Test if data frames are same", {
   expect_equal(regen_binary,regen_binary1)
 })
+
+#combing binary with GIS data
+bin_GIS <- left_join(regen_binary,GIS, by = "Card") %>% 
+  ungroup()
+
+assign_direction <- function(angle) {
+  ifelse(is.na(angle), NA,  # Handle NA values
+         ifelse(angle >= 315 || angle < 45, "N",
+                ifelse(angle >= 45 && angle < 135, "E",
+                       ifelse(angle >= 135 && angle < 225, "S", "W"))))
+  }
+
+
+# Apply the function to the data column
+bin_GIS$Aspect_cat <- sapply(bin_GIS$Aspect, assign_direction)
+
+#Making graphs
+##aspect and total count (no real change IMO)
+aspect_graph <- bin_GIS %>%
+  group_by(Aspect_cat, total_count_bin) %>%
+  summarise(count = n()) 
+
+aspect_graph <- aspect_graph %>%
+  group_by(Aspect_cat) %>%
+  mutate(percentage = count / sum(count) * 100)
+
+aspect_graph$total_count_bin <- as.factor(aspect_graph$total_count_bin)  
+
+ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = percentage, fill = total_count_bin)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
+                    name = "Total Count Bin",
+                    labels = c("No regen", "Regen")) +
+  labs(x = "Aspect Category", y = "Percentage", 
+       title = "Percentage of Observations by Aspect Category and Total Count Bin") +
+  theme_minimal() 
+ 
+ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = count, fill = total_count_bin)) +
+  geom_col(position="dodge") +  # Adjust dodge width as needed # Adjust colors as needed
+  scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
+                    name = "Total Count Bin",
+                    labels = c("No regen", "Regen")) +
+  labs(x = "Aspect Category", y = "Count", 
+       title = "Count of Observations by Aspect Category and Total Count Bin") +
+  theme_minimal() 
+
+#PLI abd aspect
+aspect_graph <- bin_GIS %>%
+  group_by(Aspect_cat, PLI_count_bin) %>%
+  summarise(count = n()) 
+
+
+aspect_graph <- aspect_graph %>%
+  group_by(Aspect_cat) %>%
+  mutate(percentage = count / sum(count) * 100)
+
+aspect_graph$PLI_count_bin <- as.factor(aspect_graph$PLI_count_bin)  
+
+ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = percentage, fill = PLI_count_bin)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
+                    name = "PLI Count Bin",
+                    labels = c("No regen", "Regen")) +
+  labs(x = "Aspect Category", y = "Percentage", 
+       title = "Percentage of Observations by Aspect Category and PLI Count Bin") +
+  theme_minimal() 
+
+#FDI and aspect
+aspect_graph <- bin_GIS %>%
+  group_by(Aspect_cat, FDI_count_bin) %>%
+  summarise(count = n()) 
+
+
+aspect_graph <- aspect_graph %>%
+  group_by(Aspect_cat) %>%
+  mutate(percentage = count / sum(count) * 100)
+
+aspect_graph$FDI_count_bin <- as.factor(aspect_graph$FDI_count_bin)  
+
+ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = percentage, fill = FDI_count_bin)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
+                    name = "FDI Count Bin",
+                    labels = c("No regen", "Regen")) +
+  labs(x = "Aspect Category", y = "Percentage", 
+       title = "Percentage of Observations by Aspect Category and FDI Count Bin") +
+  theme_minimal() 
+
+#NonCon and aspect
+aspect_graph <- bin_GIS %>%
+  group_by(Aspect_cat, NonCon_count_bin) %>%
+  summarise(count = n()) 
+
+
+aspect_graph <- aspect_graph %>%
+  group_by(Aspect_cat) %>%
+  mutate(percentage = count / sum(count) * 100)
+
+aspect_graph$NonCon_count_bin <- as.factor(aspect_graph$NonCon_count_bin)  
+
+ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = percentage, fill = NonCon_count_bin)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
+                    name = "NonCon Count Bin",
+                    labels = c("No regen", "Regen")) +
+  labs(x = "Aspect Category", y = "Percentage", 
+       title = "Percentage of Observations by Aspect Category and NonCon Count Bin") +
+  theme_minimal() 
+
+#next lets try getting them all on the same plot
 ```
 
 # Occurrence as binary plot
