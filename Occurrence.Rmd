@@ -906,3 +906,9 @@ ggplot(regen_table, aes(x = factor(AgeClass, levels = class_order), y = Count)) 
 ```
 
 
+```{r}
+table(regen_GIS$Fire_Date_1)
+
+
+```
+
