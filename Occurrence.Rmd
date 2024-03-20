@@ -18,6 +18,7 @@ GIS <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/from_GIS.csv")
 GIS1 <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/from_GIS.csv")
 clipGis <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/PossiblePlot.csv")
 internal <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/Internal.csv")
+basal <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/BasalArea.csv")
 ```
 
 #formatting data
@@ -31,7 +32,6 @@ regen$Species <- sub("SW", "Spruce", regen$Species)
 regen$Species <- sub("SE", "Spruce", regen$Species)
 regen$Species <- sub("SX", "Spruce", regen$Species)
 
-regen$Card <- as.character(regen$Card)
 
 # get rid of unnecessary columns
 regen<- regen %>% 
@@ -152,7 +152,7 @@ regen_combo <- regen_all %>%
   ungroup()
 
 
-regen_combo$Card <- as.character(regen_combo$Card)
+
 # I could add TPH, but I don't think I will. It's just multiplying everything by 200
 ##adding it now for total counts
 
@@ -164,7 +164,8 @@ regen_combo$Card <- as.character(regen_combo$Card)
 
 ```{r}
 # add GIS data
-regen_copy <- regen_combo #don't
+regen$Card <- as.integer(regen$Card)
+regen_copy <- regen #don't
 regen_copy <- regen_copy %>% 
   rename(SampleSite_ID = Card)
 clipped_plots <- semi_join(clipGis, regen_copy, "SampleSite_ID")
@@ -187,12 +188,12 @@ GIS$Species_1 <- sub("\\bPL\\b", "PLI", GIS$Species_1)
 GIS$Species_1 <- sub("\\bFD\\b", "FDI", GIS$Species_1)
 GIS$Species_1 <- sub("\\bPA\\b", "PLI", GIS$Species_1)
 
-write.csv(GIS, "C:/Users/nmac2000/Documents/regen project/Data/possibleplots_GIS.csv")
+#write.csv(GIS, "C:/Users/nmac2000/Documents/regen project/Data/possibleplots_GIS.csv")
 
 regen_GIS <- left_join(regen_combo,GIS, by = "Card") %>% 
   ungroup()
 
-write.csv(regen_GIS, "C:/Users/nmac2000/Documents/regen project/Data/regen_GIS.csv")
+#write.csv(regen_GIS, "C:/Users/nmac2000/Documents/regen project/Data/regen_GIS.csv")
 
 #trying to get some stuff to work on arc
 #GIS_filter <- regen_GIS %>% 
@@ -649,8 +650,6 @@ regen_GIS$Con_tph <- regen_GIS$Con_count*200
 asp <- regen_GIS 
 asp$aspect <- sin(regen_GIS$Aspect + 45) + 1
 
-ggplot(asp, aes(aspect, Con_count)) +
-  geom_point(aes(color=SpeciesAll))
 
 #Convert Aspect
 assign_direction <- function(angle) {
@@ -741,7 +740,9 @@ assign_direction <- function(angle) {
 
 # Apply the function to the data column
 bin_GIS$Aspect_cat <- sapply(bin_GIS$Aspect, assign_direction)
-
+```
+#Some graphs with binary
+```{r}
 #Making graphs
 ##aspect and total count (no real change IMO)
 aspect_graph <- bin_GIS %>%
@@ -834,6 +835,8 @@ ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = percent
   labs(x = "Aspect Category", y = "Percentage", 
        title = "Percentage of Observations by Aspect Category and NonCon Count Bin") +
   theme_minimal() 
+
+
 
 #next lets try getting them all on the same plot
 ```

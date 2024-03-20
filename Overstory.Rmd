@@ -11,23 +11,75 @@ library(tidyverse)
 site <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/site.csv")
 overstory_1 <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/Overstory.csv")
 
+overstory_1$Species <- sub("AT", "NonCon", overstory_1$Species)
+overstory_1$Species <- sub("SW", "Spruce", overstory_1$Species)
+overstory_1$Species <- sub("SE", "Spruce", overstory_1$Species)
+overstory_1$Species <- sub("SX", "Spruce", overstory_1$Species)
 ```
 
 Now I need to delete all the blank rows. For now, I'm going to leave a blank row if the plot has no overstory
 ```{r}
+site <- site %>% 
+  select(Card, Notes)
+site$Card <- as.integer(site$Card)
+overstory_1$Card <- as.integer(overstory_1$Card)
+
 overstory <- overstory_1 %>% 
   group_by(Card) %>% 
-  mutate(has_nr = any(is.na(TreeNumber)), num_rows = n()) %>% 
-  filter(num_rows == 1 | !(has_nr & is.na(TreeNumber))) %>% 
-  select(-has_nr, -num_rows)
+  filter(!is.na(TreeNumber)) %>% 
+  select(Card, TreeNumber:Notes)
+
+overstory <- full_join(overstory, site, by = "Card")
+overstory$DBH[is.na(overstory$DBH)] <- 0
+
+
 ```
 
 Okay now I need to start doing something with this data. 
 Going to make some summaries by plot. 
 ```{r}
 overstory %>% 
-  group_by(Species) %>% 
-  summarise(count(Species))
+  group_by(Card) %>% 
+  summarise(n())
   
+```
+Trees
+-seed trees
+-shade!
+-size of trees (basal area)
+-density (size classes, live and dead, basal area)
+-is there salvage logging?
+-tables/graphs by fire severity class
+```{r}
+#add basal area column
+
+
+overstory$Basal <- pi*(overstory$DBH/200)^2
+BasalArea <- overstory %>% 
+  group_by(Card) %>% 
+  summarise(LiveBasal = sum(Basal[Status == "L"])/.01,
+            DeadBasal = sum(Basal[Status == "D"])/.01,
+            TotalBasal = sum(Basal)/.01,
+            LiveBasal_PLI = sum(Basal[Status == "L" & Species == "PLI"])/.01,
+            DeadBasal_PLI = sum(Basal[Status == "D" & Species == "PLI"])/.01,
+            TotalBasal_PLI = sum(Basal[Species == "PLI"])/.01,
+            LiveBasal_FDI = sum(Basal[Status == "L" & Species == "FDI"])/.01,
+            DeadBasal_FDI = sum(Basal[Status == "D" & Species == "FDI"])/.01,
+            TotalBasal_FDI = sum(Basal[Species == "FDI"])/.01,
+            LiveBasal_Spruce = sum(Basal[Status == "L" & Species == "Spruce"])/.01,
+            DeadBasal_Spruce = sum(Basal[Status == "D" & Species == "Spruce"])/.01,
+            TotalBasal_Spruce = sum(Basal[Species == "Spruce"])/.01,
+            LiveBasal_NonCon = sum(Basal[Status == "L" & Species == "NonCon"])/.01,
+            DeadBasal_NonCon = sum(Basal[Status == "D" & Species == "NonCon"])/.01,
+            TotalBasal_NonCon = sum(Basal[Species == "NonCon"])/.01)
+
+BasalArea <- BasalArea %>%
+  filter(!is.na(Card)) %>% 
+  replace(is.na(.),0)
+
+write.csv(BasalArea, "C:/Users/nmac2000/Documents/regen project/Data/BasalArea.csv", row.names = FALSE)
+
+
+
 ```
 
