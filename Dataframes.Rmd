@@ -220,6 +220,8 @@ assign_direction <- function(angle) {
 # Apply the function to the data column
 GIS$Azimuth <- sapply(GIS$Aspect, assign_direction)
 
+write.csv(regen_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/GIS.csv")
+
 ```
 
 
@@ -234,6 +236,72 @@ regen_GIS <- left_join(regen_combo,GIS, by = "Card") %>%
 write.csv(regen_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_GIS.csv")
 ```
 
+
+Occurrence
+```{r}
+regen_binary <- regen_GIS %>% 
+  mutate(total_count_bin = ifelse(total_count>0,1,0),
+         total_x0_bin = ifelse(total_x0>0,1,0),
+         total_x10_bin = ifelse(total_x10>0,1,0),
+         total_x30_bin = ifelse(total_x30>0,1,0),
+         total_x130_bin = ifelse(total_x130>0,1,0),
+         FDI_count_bin = ifelse(FDI_count>0,1,0),
+         FDI_x0_bin = ifelse(FDI_x0>0,1,0),
+         FDI_x10_bin = ifelse(FDI_x10>0,1,0),
+         FDI_x30_bin = ifelse(FDI_x30>0,1,0),
+         FDI_x130_bin = ifelse(FDI_x130>0,1,0),
+         PLI_count_bin = ifelse(PLI_count>0,1,0),
+         PLI_x0_bin = ifelse(PLI_x0>0,1,0),
+         PLI_x10_bin = ifelse(PLI_x10>0,1,0),
+         PLI_x30_bin = ifelse(PLI_x30>0,1,0),
+         PLI_x130_bin = ifelse(PLI_x130>0,1,0),
+         NonCon_count_bin = ifelse(NonCon_count>0,1,0),
+         NonCon_x0_bin = ifelse(NonCon_x0>0,1,0),
+         NonCon_x10_bin = ifelse(NonCon_x10>0,1,0),
+         NonCon_x30_bin = ifelse(NonCon_x30>0,1,0),
+         NonCon_x130_bin = ifelse(NonCon_x130>0,1,0),
+         Spruce_count_bin = ifelse(Spruce_count>0,1,0),
+         Spruce_x0_bin = ifelse(Spruce_x0>0,1,0),
+         Spruce_x10_bin = ifelse(Spruce_x10>0,1,0),
+         Spruce_x30_bin = ifelse(Spruce_x30>0,1,0),
+         Spruce_x130_bin = ifelse(Spruce_x130>0,1,0))
+
+create_binary_columns <- function(data) {
+  binary_cols <- c("total_count", "total_x0", "total_x10", "total_x30", "total_x130",
+                   "FDI_count", "FDI_x0", "FDI_x10", "FDI_x30", "FDI_x130",
+                   "PLI_count", "PLI_x0", "PLI_x10", "PLI_x30", "PLI_x130",
+                   "NonCon_count", "NonCon_x0", "NonCon_x10", "NonCon_x30", "NonCon_x130",
+                   "Spruce_count", "Spruce_x0", "Spruce_x10", "Spruce_x30", "Spruce_x130")
+  
+  for (col in binary_cols) {
+    binary_col <- paste0(col, "_bin")
+    data[[binary_col]] <- ifelse(data[[col]] > 0, 1, 0)
+  }
+  
+  return(data)
+}
+
+regen_binary1 <- create_binary_columns(regen_GIS) %>% 
+  select(Card, total_count_bin:Spruce_x130_bin)
+
+
+regen_binary <- regen_binary %>% 
+  select(Card, total_count_bin:Spruce_x130_bin)
+
+library(testthat)
+test_that("Test if data frames are same", {
+  expect_equal(regen_binary,regen_binary1)
+})
+
+#combing binary with GIS data
+bin_GIS <- left_join(regen_binary,GIS, by = "Card") %>% 
+  ungroup()
+
+write.csv(regen_binary, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_binary.csv")
+write.csv(bin_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/binary_GIS.csv")
+
+
+```
 
 
 
