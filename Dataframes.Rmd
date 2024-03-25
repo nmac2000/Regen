@@ -12,7 +12,8 @@ library(tidyverse)
 
 
 # plots with Card#B removed, ask Anya what they are
-regen <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/Regen_2023_ALL.csv")
+regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv?token=GHSAT0AAAAAACPN4GFQQ6UQNWHS2CTG4C6GZQB5F6A"
+regen <- read.csv(regen)
 site <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/site.csv")
 GIS <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/from_GIS.csv")
 GIS1 <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/from_GIS.csv")
