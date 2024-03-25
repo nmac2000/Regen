@@ -1,0 +1,444 @@
+Card,ID,Display Name,Plot ID,Zone,Easting,Northing,Accuracy (m),Elevation (m),Crew leader name,Date ,Slope,Aspect,Photo?,Notes
+1628,450959181769,Site,1628,,470255,5795922,10.0,,Shane,"Oct 11, 2023",0,,Yes,No sample tree
+1982,442732159188,Site,1982,,52.43691,124.34296,5.0,1257,David Landon,"Sep 14, 2023",15,N,Yes,
+1657,713630678610,Site,1657,,468544,5798078,10.0,,Shane,,,W,Yes,
+1438,623837056568,Site,1438,,466449,5777107,10.0,,Shane Hink,"Sep 20, 2023",2,NW,Yes,
+2042,124432977080,Site,2042,,124.210060,52.443392,5.0,1140,Skip Gregg,"Sep 21, 2023",2,S,Yes,"Plot lands in green Aspen patch , unburned area"
+1658,298515456414,Site,1658,,469285,5797954,,,Darclyn,"Oct 10, 2023",7,SW,Yes,
+2041,764061037214,Site,2041,,124.224789,52.444164,5.0,1100,Otis Guichon,"Sep 21, 2023",10,SW,Yes,
+1791,603509312575,Site,1791,,478551,5802553,,,Darclyn Charleyboy,,12,SW,Yes,
+1540,505081847894,Site,1540,,475877,5786695,10.0,,Darclyn Charleyboy,"Sep 22, 2023",,,Yes,"All trees less than 4 cm DBH.     
+Sample tree is N/A due to mistletoe"
+1596,379196374847,Site,1596,,479620,5792444,10.0,,Shane Hink,"Oct 18, 2023",25,SW,Yes,No sample trees
+1644,845840687616,Site,1644,,476102,5796565,10.0,,Darclyn Charleyboy,"Nov 8, 2023",0,,Yes,"No sample tree 
+Nothing over 4 cm DBH"
+1739,815452346915,Site,1739,,52.38142,124.22742,0.5,1219,David Landon,"Sep 13, 2023",21,S,Yes,Not a typical plot. Located on rock knob.
+1678,585555549780,Site,1678,,475596,5798611,10.0,,Darclyn Charleyboy,"Nov 8, 2023",4,W,Yes,
+1615,883958963325,Site,1615,,467126,5794626,10.0,,Shane Hink,"Oct 12, 2023",6,NE,Yes,"Nothing over 4 cm 
+No sample trees"
+1807,219929960850,Site,1807,,,,,,David Landon,"Sep 15, 2023",,,Yes,Plot lands in swamp. Can’t get to it.
+2626,946762097697,Site,2626,,124.029172,52.530715,5.0,1240,Skip Gregg,"Sep 26, 2023",10,S,Yes,1/4 of NE quadrant due to high volume #’s in regen
+1481,282287940913,Site,1481,,52.21746,124.07275,0.5,1061,David Landon,"Sep 7, 2023",6,SE,Yes,No overstory
+1825,723182611917,Site,1825,,473972,5803814,10.0,,Darclyn Charleyboy,"Nov 3, 2023",8,S,Yes,
+2212,513160560287,Site,2212,,52.47011,124.16466,5.0,1272,David Landon,"Sep 20, 2023",33,SW,Yes,
+1606,435670320856,Site,1606,,478166,5793581,10.0,,Darclyn Charleyboy,"Oct 17, 2023",6,NW,Yes,
+1589,888205612844,Site,1589,,465934,5793145,10.0,,Shane,,10,NE,Yes,No sample trees
+1625,694503711170,Site,1625,,463108,5796288,10.0,,Darclyn Charleyboy,"Nov 7, 2023",16,,No,
+1840,103643119556,Site,1840,,52.40945,124.29984,5.0,1204,David Landon,"Sep 18, 2023",,,Yes,Unburnt. SAt stand.
+1805,892814347446,Site,1805,,52.40013,124.28541,5.0,1158,David Landon,"Sep 13, 2023",10,SE,Yes,
+1916,193392947007,Site,1916,,473669,5805761,10.0,,Darclyn Charleyboy,"Nov 3, 2023",16,S,Yes,
+1579,438937540695,Site,1579,,475049,5790722,,,Darclyn Charleyboy,"Sep 25, 2023",8,NW,No,
+1450,710943184604,Site,1450,,472493,5777849,10.0,,Shane Hink,"Aug 28, 2023",5,South,Yes,
+1485,756216321664,Site,1485,,52.40734,124.16746,5.0,1117,Dave Landon,"Sep 12, 2023",4,NW,Yes,
+1844,751831902257,Site,1844,,52.40809,124.21154,0.5,1087,David Landon,"Sep 12, 2023",5,NW,Yes,
+1759,777849002227,Site,1759,,482198,5801523,10.0,,Darclyn Charleyboy,"Nov 6, 2023",15,W,Yes,"Nothing over 4 cm 
+No sample tree"
+1630,774474199945,Site,1630,,478257,5795579,10.0,,Darclyn,"Oct 23, 2023",0,,Yes,
+2107,781307991018,Site,2107,,124.194942,52.452658,5.0,1210,Skip Gregg,"Sep 20, 2023",14,N,Yes,
+1663,553608581639,Site,1663,,476543,5797632,10.0,,Darclyn Charleyboy,"Nov 8, 2023",0,,Yes,
+1511,153808339669,Site,1511,,53.23539,124.07193,5.0,1116,Skip Gregg,"Sep 8, 2023",0,South,Yes,
+1772,512555736452,Site,1772,,52.39015,124.21230,0.5,1107,David Landon,"Sep 12, 2023",2,E,Yes,
+1584,537859018320,Site,1584,,475086,5791726,,,Darclyn Charleyboy,"Sep 25, 2023",5,NW,Yes,No trees less than 4 cm DBH
+1738,129168002888,Site,1738,,52.38169,124.24203,0.5,1172,David Landon,"Sep 13, 2023",12,SW,Yes,
+1581,947986096651,Site,1581,,471087,5791891,10.0,,Darclyn Charleyboy,"Oct 5, 2023",2,N,Yes,All trees under 4 cm DBH
+1627,576657901862,Site,1627,,468243,5795822,10.0,,Darclyn Charleyboy,,6,S,Yes,"Nothing over 4 cm 
+no sample trees
+Heavy rock"
+1461,337496457123,Site,1461,,472530,5778859,,,darclyn,"Aug 28, 2023",0,s,Yes,
+1591,307300310904,Site,1591,,469418,5793385,10.0,,Darclyn Charleyboy,"Oct 10, 2023",7,N,Yes,
+1554,577898803516,Site,1554,,468964,5788981,10.0,,Darclyn Charleyboy,"Oct 4, 2023",0,,Yes,All trees less than 4 cm DBH
+1522,416770060964,Site,1522,,123.881369,52.232064,5.0,1030,Otis Guichon,"Sep 12, 2023",3,N,Yes,
+1612,397788023261,Site,1612,,463210,5795212,10.0,,Darclyn Charleyboy,"Sep 20, 2023",0,,Yes,
+1503,589452146660,Site,1503,,52.22,123.96,5.0,1000,Skip Gregg,"Sep 7, 2023",15,S,Yes,
+1479,247408817742,Site,1479,,124.102064,52.217951,5.0,1060,Skip Gregg,"Sep 13, 2023",20,S,Yes,"No trees growing in plot , regen and brush growing around plot . Plot on south side slope"
+1701,510364460395,Site,1701,,479381,5799528,,,Darclyn Charleyboy,"Nov 1, 2023",0,,No,Unburnt area
+2205,522366084401,Site,2205,,124.312134,52.472391,5.0,1120,Otis Guichon,"Sep 14, 2023",22,S,Yes,
+1649,322769371884,Site,1649,,485146,5796000,10.0,,Darclyn Charleyboy,"Oct 19, 2023",0,,Yes,"Nothing over 4 cm DBH 
+No sample tree 
+Rocky area 
+Heavy burn"
+1594,358311768535,Site,1594,,477130,5792635,10.0,,Darclyn Charleyboy,"Oct 17, 2023",9,NE,No,No sample trees
+2159,954099928365,Site,2159,,124.165107,52.461181,5.0,1320,Skip Gregg,"Sep 20, 2023",25,NW,No,"1/4 plot done due to large # regen , large # of dead over story"
+1647,264870591487,Site,1647,,480846,5795967,10.0,,,"Oct 23, 2023",12,W,Yes,
+1531,300515901103,Site,1531,,52.24,124.01,5.0,1080,David Landon,"Sep 6, 2023",13,NE,Yes,
+1624,802484166909,Site,1624,,486260,5794295,10.0,,Darclyn Charleyboy,"Oct 19, 2023",0,,Yes,"Nothing over 4 cm DBH 
+No sample tree"
+1514,171694537608,Site,1514,,52.23,123.99,5.0,1050,Dave Landon,"Sep 6, 2023",1,NE,Yes,
+2208,996074120102,Site,2208,,124.238437,52.471282,5.0,1130,Otis Guichon,"Sep 25, 2023",1,S,Yes,"Plot is in green stand , no burnt areas"
+1502,787187450628,Site,1502,,52.22,123.98,0.5,990,David Landon,"Sep 7, 2023",12,South,Yes,
+1609,319535501071,Site,1609,,480791,5793613,10.0,,Shane Hink,"Oct 18, 2023",0,,Yes,Old plantation
+1558,211935883824,Site,1558,,474041,5788991,10.0,,Darclyn Charleyboy,"Sep 25, 2023",10,NW,Yes,All trees less than 4 cm DBH
+1504,101027980201,Site,1504,,52.22,123.95,5.0,1008,Skip Gregg,"Sep 7, 2023",32,N,Yes,
+1527,750582046660,Site,1527,,124.086232,52.244596,5.0,1120,Skip Gregg,"Sep 13, 2023",1,N,Yes,"Counted NW quadrant only , dog hair regen"
+1535,830450990032,Site,1535,,467868,5787040,10.0,,Darclyn Charleyboy,,19,E,Yes,
+2336,511498629117,Site,2336,9,124.163941,52.488062,5.0,1250,Otis Guichon,"Oct 11, 2023",17,NE,Yes,Only NE quadrant counted due to high volume 0-10cm PLI
+1619,880297033127,Site,1619,,479035,5794807,10.0,,Darclyn Charleyboy,"Oct 23, 2023",0,,No,
+1559,525628361973,Site,1559,,474962,5788727,10.0,,Darclyn Charleyboy,"Oct 3, 2023",0,N,Yes,All trees less than 4 cm DBH
+1675,226088216245,Site,1675,,467191,5798932,10.0,,Shane,"Oct 30, 2023",0,,Yes,"Nothing over 4 cm
+No sample tree"
+1562,267914570528,Site,1562,,52.27127,124.07034,5.0,1160,Skip Gregg,"Sep 8, 2023",7,E,Yes,
+1757,995165227107,Site,1757,,480512,5801476,,,Darclyn Charleyboy,"Nov 6, 2023",0,,Yes,
+2155,117855979923,Site,2155,,124.283059,52.462954,5.0,1090,Otis Guichon,"Sep 14, 2023",2,NE,Yes,
+1601,850926453096,Site,1601,,484136,5792334,10.0,,Shane Hink,"Oct 18, 2023",22,N,Yes,"Nothing over 4 cm DBH 
+No sample tree"
+1539,502723080500,Site,1539,,473870,5786778,10.0,,Darclyn Charleyboy,"Sep 22, 2023",0,,Yes,"Nothing over 4cm DBH 
+Plot near open rocky area"
+1845,355652373043,Site,1845,,52.40783,124.19676,5.0,1090,David Landon,"Sep 12, 2023",5,NW,Yes,
+1653,997216661823,Site,1653,,124.346456,52.347284,5.0,1140,Otis Guichon,"Oct 5, 2023",1,SE,Yes,
+2662,561827948583,Site,2662,,124.057878,52.549134,5.0,1340,Otis Guichon,"Sep 27, 2023",9,S,Yes,
+1645,605188557184,Site,1645,,476494,5795613,10.0,,Darclyn Charleyboy,"Nov 7, 2023",8,S,No,
+1665,996877265718,Site,1665,,481255,5797917,10.0,,Darclyn Charleyboy,"Nov 6, 2023",16,NW,Yes,
+1617,407518353483,Site,1617,,470331,5794531,10.0,,Darclyn,"Oct 10, 2023",36,S,Yes,"Nothing  over 4 cm 
+1 tree near plot not within plot"
+1529,379538439907,Site,1529,,52.24411,124.05691,0.5,1115,David Landon,"Sep 11, 2023",2,All,Yes,
+1538,972559720405,Site,1538,,470873,5786906,10.0,,Darclyn Charleyboy,"Sep 22, 2023",14,SE,No,All sample trees less than 4 cm
+1501,165352078140,Site,1501,,52.22,122.99,5.0,1060,Dave Landon,"Sep 6, 2023",8,SE,Yes,
+1672,574687775326,Site,1672,,463682,5798682,10.0,,Darclyn Charleyboy,"Nov 7, 2023",0,,Yes,"Nothing over 4 cm DBH 
+No sample tree"
+1643,370979973632,Site,1643,,475840,5796894,10.0,,Darclyn Charleyboy,"Nov 8, 2023",0,,Yes,
+2646,836119706106,Site,2646,,124.058288,52.540187,5.0,1300,Otis Guichon,"Sep 27, 2023",8,S,Yes,"Plot lands in green stand , no burns"
+1505,567733157981,Site,1505,,123.925767,52.223870,5.0,990,Otis Guichon,"Sep 11, 2023",8,E,Yes,No over story green healthy trees
+2034,207446058829,Site,2034,,52.44586,124.34254,5.0,1231,David Landon,"Sep 14, 2023",5,N,Yes,
+1648,883716509311,Site,1648,,482305,5796407,10.0,,Darclyn,"Oct 23, 2023",27,S,Yes,"Nothing over 4 cm DBH 
+No sample trees"
+2664,871750143634,Site,2664,,124.028338,52.548636,5.0,1300,Skip Gregg,"Sep 26, 2023",4,SW,Yes,"1/4 plot done due to high volume regen , and over story"
+1816,329976720989,Site,1816,,124.094173,52.397232,5.0,1220,Skip Gregg,"Oct 10, 2023",5,S,Yes,"Plot lands in top of bed rock hill , no trees in plot"
+2108,904604082687,Site,2108,,124.180223,52.452450,5.0,1310,Otis Guichon,"Sep 20, 2023",23,SW,Yes,
+1578,461001654769,Site,1578,,474139,5790807,10.0,,Darclyn Charleyboy,"Sep 25, 2023",6,S,Yes,
+1602,713252977087,Site,1602,,467165,5794054,10.0,,Shane,,5,W,Yes,"Nothing over 4 cm 
+No sample tree"
+1679,349157078240,Site,1679,,481387,5798433,10.0,,Darclyn Charleyboy,,15,NW,Yes,
+1587,303239088206,Site,1587,,480092,5791506,10.0,,Shane Hink,"Oct 18, 2023",0,,Yes,"Road side plot, not complete 360"
+2035,594023446310,Site,2035,,52.44571,124.32803,5.0,1214,David Landon,"Sep 14, 2023",16,NW,Yes,
+2644,424703913623,Site,2644,,124.087820,52.540664,5.0,1200,Otis Guichon,"Sep 27, 2023",12,SE,Yes,
+1507,800378965678,Site,1507,,469788,5784958,10.0,,,,,,No,
+1598,526784938505,Site,1598,,481135,5792469,10.0,,Darclyn Charleyboy,"Oct 19, 2023",0,,Yes,"Plantation with natural region 
+No sample tree"
+1560,833643141877,Site,1560,,475898,5788728,10.0,,Darclyn Charleyboy,"Oct 29, 2023",0,N,Yes,
+1573,202276040564,Site,1573,,481131,5789573,10.0,,Shane Hink,"Oct 18, 2023",6,S,Yes,Natural region
+1702,380033097524,Site,1702,,482429,5799396,10.0,,Darclyn Charleyboy,"Nov 9, 2023",-18,SE,Yes,No sample tree
+1592,904876828818,Site,1592,,471161,5792907,10.0,,Darclyn Charleyboy,"Oct 5, 2023",0,,Yes,
+1674,376190156284,Site,1674,,466675,5798955,10.0,,Darclyn Charleyboy,"Nov 7, 2023",6,W,Yes,
+1942,690548197402,Site,1942,,52.42622,124.22552,5.0,1066,David Landon,"Sep 15, 2023",,,Yes,Unburnt. Plot lands in meadow.
+1564,420852741216,Site,1564,,123.967655,52.269488,5.0,1060,Otis Guichon,"Sep 12, 2023",0,N,Yes,
+1518,922557240238,Site,1518,,123.939933,52.233122,5.0,1010,Otis Guichon,"Sep 11, 2023",6,W,Yes,
+1590,394190683742,Site,1590,,466978,5793314,10.0,,Darclyn Charleyboy,"Oct 12, 2023",0,,Yes,"Nothing over 4 cm DBH
+No sample tree"
+2158,403085819963,Site,2158,,124.194587,52.461638,5.0,1140,Otis Guichon,"Sep 20, 2023",10,SE,Yes,
+2043,493561283701,Site,2043,,124.195328,52.443698,5.0,1160,Otis Guichon,"Sep 21, 2023",8,S,Yes,"Plot is in full green immature pine stand , no burn marks"
+2113,531417461382,Site,2113,,52.45131,124.10646,5.0,1079,David Landon,"Sep 20, 2023",3,NW,Yes,
+1623,580258420045,Site,1623,,483141,5794397,,,Darclyn Charleyboy,"Oct 19, 2023",,,No,Unburnt plot / area
+1607,718744038847,Site,1607,,479174,5793545,10.0,,Darclyn Charleyboy,"Oct 17, 2023",6,S,Yes,No sample tree
+1608,185755977442,Site,1608,,480866,5794033,10.0,,Darclyn Charleyboy,"Oct 17, 2023",3,W,Yes,"No sample trees
+No old plantation"
+1192 - Dave Landon,883701995352,Site,1192,,124.17.982,52.2.492,5.0,1010,Dave Landon,"Nov 1, 2023",1,SE,Yes,No trees in the other quadrants
+2647,540202604994,Site,2647,,124.028759,52.539679,5.0,1270,Skip Gregg,"Sep 26, 2023",11,S,Yes,"Counted 1/4 of NE quadrant due to high volume regen , overstory"
+2200,249863795056,Site,2200,,52.47357,124.40063,5.0,1299,David Landon,"Sep 19, 2023",4,NW,Yes,
+1510,917375325411,Site,1510,,124.086635,52.235629,5.0,1120,Otis Guichon,"Sep 13, 2023",2,SW,Yes,"Dog hair regen in each quadrant, only counted NW quadrant .
+
+No over story trees"
+2269,273323562963,Site,2269,,124.238071,52.480237,5.0,1170,Otis Guichon,"Sep 25, 2023",4,SE,Yes,"Plot lands in green area , no burns , burn area 20m west of plot"
+2412,359304166533,Site,2412,9,124.148834,52.496784,5.0,1150,Otis Guichon,"Oct 11, 2023",6,E,Yes,
+1153 - Dave Landon,177623075386,Site,1153,,124.17.137,52.1.942,5.0,1020,Dave Landon,"Nov 1, 2023",1,SE,Yes,
+2414,993604735839,Site,2414,9,124.119302,52.496325,5.0,1070,Otis Guichon,"Oct 11, 2023",3,E,Yes,
+2271,484858106650,Site,2271,,52.47979,124.20860,5.0,1227,David Landon,"Sep 21, 2023",,,Yes,Unburnt
+2210,762884038264,Site,2210,,52.47060,124.19417,5.0,1173,David Landon,"Sep 21, 2023",10,S,Yes,
+1723,111593351590,Site,1723,,479473,5800523,10.0,,Darclyn Charleyboy,"Nov 1, 2023",12,S,No,
+1508,236624527109,Site,1508,,474797,5784749,10.0,,Darclyn Charleyboy,,0,,Yes,All trees over 1.3 meters are less than4 cm DBH
+1754,823088986978,Site,1754,,476629,5801247,10.0,,Darclyn Charleyboy,"Nov 9, 2023",7,E,Yes,
+1526,572917077151,Site,1526,,474828,5785744,10.0,,Darclyn Charleyboy,"Sep 22, 2023",0,,Yes,Sample tree age was taking by counting whorls do to small DBH size
+2115,414260796776,Site,2115,,124.062332,52.450535,5.0,280,Otis Guichon,"Sep 25, 2023",1,S,Yes,"Green patch , all around the plot is burned up"
+1620,367597059878,Site,1620,,480227,5794510,10.0,,Darclyn Charleyboy,"Oct 17, 2023",13,NW,No,"Nothing over 4 cm DBH 
+No sample tree"
+1552,737555289643,Site,1552,,124.012080,52.261280,5.0,1090,Otis Guichon,"Sep 12, 2023",53,NE,Yes,
+1981,588318755041,Site,1981,,52.43720,124.35767,5.0,1374,David Landon,"Sep 14, 2023",8,W,Yes,
+1889,353098297119,Site,1889,,52.41771,124.25533,5.0,1112,David Landon,"Sep 15, 2023",5,NE,Yes,
+2202,415220979786,Site,2202,,52.47318,124.37114,5.0,1290,David Landon,"Sep 19, 2023",17,NW,Yes,
+1605,471810198937,Site,1605,,477178,5793638,10.0,,Darclyn Charleyboy,"Nov 3, 2023",5,NW,Yes,
+2211,770322655166,Site,2211,,52.47034,124.17946,5.0,1244,David Landon,"Sep 21, 2023",15,NW,Yes,
+1482,602132474123,Site,1482,,,,,,David Landon,"Sep 5, 2023",,,Yes,Plot falls into unburnt
+1577,427600752432,Site,1577,,473355,5790705,10.0,,Darclyn Charleyboy,"Oct 3, 2023",3,NW,Yes,All trees DBH over 4 cm
+1557,666091381660,Site,1557,,473035,5788973,10.0,,Darclyn Charleyboy,"Oct 4, 2023",10,S,Yes,
+1635,796645592772,Site,1635,,486268,5795236,10.0,,Darclyn Charleyboy,"Oct 19, 2023",0,,Yes,
+-1291634974,716255753981,Site,-1291634974,,469573,5779970,10.0,,Darclyn Charleyboy,"Sep 28, 2023",0,,No,
+1567,510661240132,Site,1567,,471001,5789895,10.0,,Darclyn Charleyboy,"Sep 25, 2023",7,SE,Yes,Only greater than 4cm is the sample tree
+1770,278483487283,Site,1770,,52.39080,124.25639,0.5,1173,David Landon,"Sep 13, 2023",3,W,Yes,
+1498,102681644289,Site,1498,,124.043043,52.225928,5.0,1050,Skip Gregg,"Oct 10, 2023",35,NE,Yes,
+1580,591930386617,Site,1580,,479792,5790908,10.0,,Shane Hink,"Oct 18, 2023",0,,Yes,
+2213,510828612488,Site,2213,,52.46988,124.14983,5.0,1144,David Landon,"Sep 20, 2023",,,Yes,Unburnt. I’m Pl.
+1569,605303143594,Site,1569,,473184,5789913,10.0,,Darclyn Charleyboy,"Oct 3, 2023",4,NE,No,
+1476,851223980197,Site,1476,,124.087803,52.208743,5.0,1040,Skip Gregg,"Sep 13, 2023",13,N,Yes,
+1544,350186660948,Site,1544,,52.25282,124.04180,0.5,1175,David Landon,"Sep 11, 2023",15,South,Yes,
+2111,135564509002,Site,2111,,52.45174,124.13595,5.0,1148,David Landon,"Sep 20, 2023",7,E,Yes,
+1478,637166049730,Site,1478,,473707,5782792,10.0,,Darclyn Charleyboy,,3,SW,Yes,
+2334,517994033660,Site,2334,,52.48849,124.19343,5.0,1241,David Landon,"Sep 21, 2023",,,Yes,Unburnt
+1789,932526424538,Site,1789,,476793,5802667,10.0,,Darclyn Charleyboy,"Nov 3, 2023",5,E,Yes,"Nothing over 4 cm DBH 
+No sample tree"
+1460,780598650125,Site,1460,,468542,5779019,10.0,,darclyn,,,,Yes,
+2163,525375697207,Site,2163,,52.46000,124.09143,5.0,1080,David Landon,"Sep 20, 2023",2,S,Yes,
+1484,559223518817,Site,1484,,52.21,124.01,5.0,950,Skip Gregg,"Sep 5, 2023",19,NW,Yes,No living trees to sample.
+1640,387783743861,Site,1640,,468292,5797000,10.0,,Shane,"Oct 11, 2023",3,S,Yes,Heavy burnt
+1666,190578999752,Site,1666,,482355,5797411,10.0,,Darclyn Charleyboy,"Nov 1, 2023",0,,Yes,
+1637,116022790087,Site,1637,,465712,5797744,10.0,,Darclyn Charleyboy,"Oct 12, 2023",6,NE,Yes,"Nothing over 4 cm DBH 
+No sample tree
+Plot lands near road right of way"
+1571,629135367444,Site,1571,,475001,5789731,10.0,,Darclyn Charleyboy,"Oct 3, 2023",5,S,Yes,
+1634,772762807581,Site,1634,,485262,5795281,10.0,,,,21,W,Yes,"No sample tree 
+Nothing over 4 cm DBH"
+1485,556516158437,Site,1485,,52.21619,123.99945,5.0,1046,David Landon,"Sep 7, 2023",33,SE,Yes,
+1662,871683383010,Site,1662,,475289,5797529,10.0,,Darclyn Charleyboy,"Nov 8, 2023",0,,Yes,"No sample tree
+Nothing over 4 cm DBH"
+1771,384303933640,Site,1771,,52.39058,124.24170,5.0,1225,David Landon,"Sep 13, 2023",7,SW,Yes,
+1604,241902164652,Site,1604,,469167,5793971,10.0,,Darclyn Charleyboy,"Oct 5, 2023",0,,Yes,Heavy rock
+1979,893789305912,Site,1979,,124.387234,52.437561,5.0,1240,Otis Guichon,"Sep 14, 2023",3,S,Yes,
+1583,186391489221,Site,1583,,473115,5792004,10.0,,Darclyn Charleyboy,"Oct 4, 2023",13,NE,Yes,Nothing over 4 cm
+1487,451034647166,Site,1487,,471743,5783877,10.0,,Darclyn Charleyboy,"Sep 21, 2023",0,,Yes,All trees < 4 cm DBH
+1440,712883644294,Site,1440,,473449,5776814,1.0,,Darclyn Charleyboy,"Sep 20, 2023",7,S,Yes,50 meters south of grassland ridge
+1500,640252778476,Site,1500,,52.22,124.01,5.0,1090,Dave Landon,"Sep 6, 2023",1,N,Yes,
+1936,644121168641,Site,1936,,52.42777,124.32861,5.0,1296,David Landon,"Sep 18, 2023",,,Yes,Unburnt. Landed in an NCD.
+1631,198387859509,Site,1631,,480184,5795481,10.0,,Darclyn Charleyboy,"Oct 23, 2023",21,W,Yes,
+1724,467222724552,Site,1724,,480155,5800850,10.0,,Darclyn Charleyboy,"Nov 6, 2023",0,,Yes,"Unburnt area
+Spruce drainage"
+1542,264187670761,Site,1542,,52.25336,124.07111,0.5,1111,David Landon,"Sep 11, 2023",6,West,Yes,
+2272,275496948005,Site,2272,,52.47954,124.19381,5.0,1266,David Landon,"Sep 21, 2023",6,SE,Yes,
+708,538729282116,Site,708,10,483356,5750428,0.2,1130,Dan Marcotte,"Sep 18, 2023",8,W,Yes,No live sample tree in plot
+707,213381864904,Site,707,10,482358,5750475,0.3,1140,Dan Marcotte,"Sep 18, 2023",2,NE,Yes,No sample tree
+1110,341513327551,Site,1110,10,486782,5760270,0.4,797,Dan Marcotte,"Nov 9, 2023",10,E,Yes,
+1069,214603719340,Site,1069,10,456723,5760539,0.1,1080,Dan Marcotte,"Sep 22, 2023",3,NW,Yes,
+1045,520206148477,Site,1045,10,482710,5758459,0.4,1024,Sonya Lulua,"Sep 26, 2023",12,NE,Yes,
+193,271616579504,Site,193,10,471848,5738925,,,Sonya Lulua,"Oct 6, 2023",,,Yes,planted
+851,493798152253,Site,851,10,456476,5754561,0.2,1107,Dan Marcotte,"Oct 16, 2023",1,N,Yes,
+13,208408421474,Site,13,10,485007,5718403,0.2,1463,Dan Marcotte,"Nov 7, 2023",5,N,Yes,
+1333,255537820494,Site,1333,10,482034,5766460,0.3,733,Dan Marcotte,"Nov 9, 2023",60,N,Yes,Steep slope with erosion and high cattle traffic. Minimal live Fdi as seed source nearby
+1214,845729360676,Site,1214,10,478908,5763603,0.3,1030,Dan Marcotte,"Nov 8, 2023",4,NW,Yes,Plot landed in area with multi layer Fdi stand with some Pli regen. High Fdi Regen from past two years.
+1099,880040703513,Site,1099,10,455766,5761578,0.2,1070,Dan Marcotte,"Sep 22, 2023",1,NW,Yes,Surrounding area is Fdi leading with all age classes represented. Mature Fdi seed source all around
+1068,307849971789,Site,1068,10,455723,5760582,0.3,1080,Dan Marcotte,"Sep 22, 2023",2,N,Yes,Fdi seed source 100m to north and west
+158,218881496014,Site,158,10,455793,5738613,0.2,1205,Dan Marcotte,"Oct 10, 2023",6,W,Yes,
+413,317037209786,Site,413,10,474057,5743825,0.4,1162,Sonya Lulua,"Oct 4, 2023",2,NE,Yes,no trees in plot
+1075,622179765741,Site,1075,10,483738,5759396,0.5,832,Dan Marcotte,"Sep 5, 2023",5,N,Yes,Live mature Fdi adjacent
+1111,386546762404,Site,1111,10,473236,5742071,4.0,1178,Bruce Johnson,"Sep 5, 2023",5,SW,No,Live mature fir/ borders grassland
+801,478286238893,Site,801,10,455430,5753601,0.1,1106,Dan Marcotte,"Oct 16, 2023",5,W,Yes,Live mature Fdi surrounding plot. Most tree <10cm are germinants from 2021-2022.
+903,245608700157,Site,903,10,482527,5754459,0.3,1080,,"Sep 8, 2023",10,N,Yes,
+900,554058960179,Site,900,10,475527,5754757,0.5,1017,Sonya Lulua,"Oct 5, 2023",3,N,Yes,
+1108,240250634874,Site,1108,10,483787,5860401,0.3,840,Dan Marcotte,"Sep 7, 2023",33,NE,Yes,Plot landed under live standing Fdi
+319,991452918174,Site,319,10,478973,5741620,0.4,1173,Sonya Lulua,"Oct 4, 2023",0,,Yes,
+933,943511901629,Site,933,10,455552,5756596,0.1,1074,Dan Marcotte,"Oct 18, 2023",15,SW,Yes,
+899,284966366501,Site,899,10,456515,5755554,0.2,1096,Dan Marcotte,"Oct 18, 2023",3,N,Yes,An ocean of Pli regen. Scattered dead mature Fdi within 100m
+229,820018277009,Site,229,10,479894,5739589,0.2,1150,Dan Marcotte,"Sep 19, 2023",10,NW,Yes,
+852,333016998011,Site,852,10,457467,5754516,0.1,1107,Dan Marcotte,"Oct 16, 2023",2,W,Yes,DMP infested mature Pli near plot. Scattered Fdi nearby
+981,577737517739,Site,981,10,480608,5756546,,,Sonya Lulua,"Sep 26, 2023",,NE,Yes,
+159,895242939838,Site,159,10,456801,5738565,0.2,1297,Dan Marcotte,"Oct 12, 2023",24,S,Yes,Live mature surrounding plot. Fdi beetle present
+939,477609410221,Site,939,10,478567,5755623,,,Sonya Lulua,"Sep 26, 2023",,,Yes,
+1109,530018637567,Site,1109,10,484781,5760359,0.2,850,Dan Marcotte,"Sep 7, 2023",25,S,Yes,Plot located in dead standing mature Fdi. Fdi seed source about 200m away.
+1207,438233556733,Site,1207,10,461897,5764318,0.1,1040,Dan Marcotte,"Sep 22, 2023",2,N,Yes,Mature Fdi for seed source 70m north
+227,578909835407,Site,227,10,468891,5740053,0.3,1190,Dan Marcotte,"Sep 19, 2023",1,SW,Yes,
+318,979022688361,Site,318,10,474975,5741799,,,Sonya Lulua,"Oct 6, 2023",,,Yes,planted
+653,906031392278,Site,653,10,473312,5749837,0.5,1146,Sonya Lulua,"Oct 5, 2023",5,N,Yes,
+865,523163925404,Site,865,10,486487,5753291,0.2,860,Dan Marcotte,"Sep 6, 2023",-35,E,Yes,"This area was salvage logged after wildfire disturbance but doesn’t appear to be planted.
+
+Shrubs spp added during field audit 20/09/2023 (SS)."
+758,646640973174,Site,758,10,475398,5751767,0.2,1098,Dan Marcotte,"Oct 11, 2023",1,S,Yes,
+1364,914035985715,Site,1364,10,479080,5767591,0.3,770,,"Sep 7, 2023",8,N,Yes,
+859,935122085040,Site,859,10,477481,5753671,0.3,1050,Dan Marcotte,"Sep 20, 2023",7,N,Yes,
+761,231499457818,Site,761,10,482400,5751466,0.2,1130,Dan Marcotte,"Sep 18, 2023",3,NW,Yes,Plot landed adjacent two vet Fdi that survived the wildfire but succumbed to fir beetle/stress
+1362,446632360453,Site,1362,10,468044,5768025,,,Bruce Johnson,"Sep 25, 2023",,,No,
+1219,769132895271,Site,1219,10,483907,5763389,0.2,805,Dan Marcotte,"Nov 9, 2023",14,NE,Yes,Plot landed in standing Fdi stand where a lower intensity burn occurred and most trees survived
+814,634465262604,Site,814,10,1193434,771538,0.2,820,Dan Marcotte,"Sep 6, 2023",7,SE,Yes,Minimal corrections during field check 20/09/2023 (SS).
+1209,545752199180,Site,1209,10,463898,5764232,0.2,1040,Dan Marcotte,"Oct 12, 2023",1,NW,Yes,Plot landed in an old Pli plantation that appears unburned but free of obligation.
+1139,258126471540,Site,1139,10,476822,5761694,0.2,1052,Dan Marcotte,"Nov 8, 2023",4,NE,Yes,Plot is surrounded by patchy multi-layer Fdi
+974,336977281292,Site,974,10,455597,5757592,0.1,1076,Dan Marcotte,"Oct 18, 2023",5,S,Yes,No overstorey. Some scattered poor quality Pli near plot
+659,903885274613,Site,659,10,482316,5749477,0.2,1140,Dan Marcotte,"Sep 18, 2023",5,E,Yes,
+657,953408185328,Site,657,10,480319,5749571,0.5,1135,Sonya Lulua,"Oct 4, 2023",4,N,Yes,
+812,682482360586,Site,812,10,485446,5752347,0.3,1000,Dan Marcotte,"Sep 6, 2023",16,S,Yes,Grassland adjacent. Live mature Fdi and Sx near plot. Aspen patch adjacent. High grass cover
+1012,991977214660,Site,1012,10,454638,5758632,0.2,1073,Dan Marcotte,"Oct 18, 2023",9,SW,Yes,Plot landed in a clearing surrounded by a Pli plantation with dead mature Fdi overstorey. Only one tree in plot.
+857,339657443045,Site,857,10,475478,5753759,0.3,1073,Dan Marcotte,"Oct 11, 2023",5,N,Yes,Mature Fdi seed source <100m from plot centre
+1142,255023597994,Site,1142,10,485823,5761308,0.4,788,Dan Marcotte,"Nov 9, 2023",11,NE,Yes,
+810,817909596184,Site,810,10,483441,5752427,0.3,1090,,"Sep 8, 2023",5,NE,Yes,
+808,641007089179,Site,808,10,478441,5752637,0.1,1090,Dan Marcotte,"Sep 20, 2023",10,SW,Yes,Large Fdi vets around plot for seed source. One vet was the sample tree
+1253,508086023222,Site,1253,10,479951,5764554,0.3,998,Dan Marcotte,"Nov 8, 2023",3,NW,Yes,Plot landed in area with multi layered Fdi. High regen in exposed soil.
+806,894306787768,Site,806,10,474442,5752807,0.3,1096,Dan Marcotte,"Oct 11, 2023",1,E,Yes,Plot is surrounded by multi layered Fdi as a seed source. High germination from past two years
+860,961106738968,Site,860,10,478481,5753632,0.3,1050,Dan Marcotte,"Sep 20, 2023",15,NW,Yes,
+1247,374684805951,Site,1247,10,465936,5765152,0.5,,Bruce Johnson,"Sep 25, 2023",0,,Yes,
+847,807014651699,Site,847,10,452470,5754730,3.0,1114,Anya,"Sep 27, 2023",0,,Yes,Live FDI ~10 m off plot. Quite a big of slash. Relatively unburnt or low severity burn area.
+1276,622656221559,Site,1276,10,449977,5766820,4.0,1069,Anya,"Sep 26, 2023",0,,Yes,Live pine over story . Low severity burn. Lots of blow down.
+846,643576572604,Site,846,10,451469,5754762,0.0,1120,Anya,"Sep 27, 2023",0,,Yes,Poor growing pine in open flat area. No live overstory for a long distance. Only counted regen in NE quadrant because of time restrictions. All quadrants had very high density of poor growing pine.
+1356,131832387330,Site,1356,10,451071,5768783,1.0,1069,Anya,"Sep 26, 2023",0,,Yes,Standing burnt snags near by. None in plot. Average age approx.
+407,351198005530,Site,407,10,457057,5744547,2.0,1158,Axelson,"Sep 28, 2023",2,NW,Yes,"Gravel depression, surrounded area dominated by class 3 pli and larger."
+844,362115396677,Site,844,10,449472,5754854,4.0,1114,Axelson,"Sep 27, 2023",4,E,Yes,Evidence of Zellaria needle sheath miner. Some trees have distinct growth pattern of alternating low to normal /high height growth for 4-5 yrs.
+1200,376946125435,Site,1200,10,444882,5765033,2.0,1079,Axelson,"Sep 25, 2023",5,N,Yes,Clumpy distribution of mainly class 1 and 2. No overstory. No sample tree.
+1273,352723948417,Site,1273,10,445971,5766989,1.0,1072,Anya,"Sep 25, 2023",0,,Yes,Slight depression. Trees poorer vigour than surrounding areas. Possibly frost. Zone 11.
+845,956972587778,Site,845,10,450467,5754804,2.0,1122,Axelson,"Sep 27, 2023",4,NE,Yes,"Zellaria, small class 2s stunted"
+1272,154577673707,Site,1272,10,444966,5767025,2.0,1072,Anya,"Sep 25, 2023",0,,Yes,
+894,946012255520,Site,894,10,451512,5755766,1.0,1102,Anya,"Sep 27, 2023",15,N,No,Douglas-fir seed source 200m. Pine are doing quite well here. Seems like the N aspect has increase moisture.
+1160,648650674827,Site,1160,10,444849,5764035,3.0,1093,Axelson,"Sep 25, 2023",0,,Yes,"Very rocky, sandy soils."
+895,650398519817,Site,895,10,452510,5755723,1.0,1073,Anya,"Sep 27, 2023",20,E,Yes,On the E facing slope of a small drainage. Live FDI close to plot. Lots of slash. FDI seedlings under slash and under Soopolallie.
+454,696501496030,Site,454,10,456090,5745588,4.0,1163,Axelson,"Sep 28, 2023",2,NW,No,Zellaria evidence throughout quads.
+892,695323194390,Site,892,10,449514,5755843,3.0,1119,Axelson,"Sep 27, 2023",0,,Yes,"Low density, trees healthier, more foliage, dead burnt fdi vet just outside plot, 10m, no fir in area. Some fdi cones (not burnt) seen on ground."
+408,100577285561,Site,408,10,458052,5744506,2.0,1175,Anya,"Sep 28, 2023",0,,No,Mature over story. Old surface fire in plot possibly 80 years ago.
+1319,937066994346,Site,1319,10,448013,5767892,5.0,1060,Axelson,"Sep 26, 2023",0,,Yes,"Uneven aged canopy pli forest, very little regen, downed old MPB, typical chilcoltin stand of this type, no Fdi vets seen. Potentially not burned site, cwd on ground doesn’t appear burnt."
+1322,746221918112,Site,1322,10,451016,5767761,1.0,,Anya,"Sep 26, 2023",0,,Yes,Live fir overstory. Big patch of low severity fire here. Bigger fir survived fire. Soopolallie is sheltering fir seedlings.
+1321,194411838484,Site,1321,10,450017,5767814,3.0,1066,Axelson,"Sep 26, 2023",10,SW,Yes,
+358,620414170094,Site,358,10,,,,,,,,,No,Site prep and Planted.
+893,730830934409,Site,893,10,450518,5755804,2.0,1121,Axelson,"Sep 27, 2023",1,SE,Yes,No overstory. Pine regen looks ok. Zellaria defoliation present in area.not straight stem form - snow/wind?
+1235,124275975947,Site,1235,10,444935,5766031,2.0,1068,Anya,"Sep 25, 2023",2,N,Yes,Soopolallie 0.5m average height
+456,235597689549,Site,456,10,459084,5745507,1.0,1143,Anya,"Sep 28, 2023",0,,No,No good sample tree. Photo on AR phone.
+469,744144596348,Site,469,10,458139,5746500,1.0,1148,Anya,"Sep 28, 2023",0,,No,Photo on AR phone
+1320,876899319668,Site,1320,10,449015,5767852,3.0,1057,Axelson,"Sep 26, 2023",3,NW,Yes,"Regeneration- Chlorotic; needless maybe elytroderma?, poor form vigour overall. Overstory - none"
+163,8.91161E+11,Site,163,10,486812,5737301,1.3,1146,Darren Wayling,08-Aug-23,15,S,Yes,
+1794,7.76303E+11,Site,1794,10,487564,5802176,3.8,1273,Cody Holtom,12-Oct-23,8,SE,Yes,
+324,5.82701E+11,Site,324,10,487981,5741247,1.3,1101,darren,16-Aug-23,-15,North east,Yes,
+1460,4.24207E+11,Site,1460,10,468557,5778977,3.5,1025,darren,05-Oct-23,-9,S,Yes,
+1798,2.47919E+11,Site,1798,10,491563,5802013,1.2,1217,Philip Hartmann,19-Oct-23,-2,NW,Yes,no sample tree
+331,8.84744E+11,Site,331,10,499998,5740737,0.3,1160,Cody Holtom,26-Jul-23,-7,N,Yes,
+235,8.40557E+11,Site,235,10,494904,5738948,3.7,1185,cody,25-Jul-23,-4,N,Yes,
+193,2.06527E+11,Site,193,10,471846,5738929,1.3,1184,cody,25-Aug-23,2,north,Yes,
+2380,4.64556E+11,Site,2380,10,487025,5813179,2.5,1168,darren,11-Oct-23,-1,N,Yes,
+1335,4.57593E+11,Site,1335,10,493042,5765997,3.8,1166,Cody Holtom,24-Aug-23,-10,NE,Yes,
+375,3.86769E+11,Site,375,10,497027,5741869,3.5,1310,Cody Holtom,31-Jul-23,-13,E,Yes,
+1795,3.47395E+11,Site,1795,10,488566,5802130,3.8,1257,Cody Holtom,12-Oct-23,-3,N,Yes,
+1760,9.32864E+11,Site,1760,10,485516,5801258,2,1168,darren,12-Oct-23,4,N,Yes,
+2379,2.57772E+11,Site,2379,10,486026,5813215,3.8,1164,Cody Holtom,11-Oct-23,3,S,Yes,
+499,2.03348E+11,Site,499,10,474141,5745817,3.8,1152,Cody Holtom,21-Aug-23,-10,NW,Yes,No evidence of burn
+460,6.74788E+11,Site,460,10,477099,5744709,3.5,1172,Philip Hartmann,15-Aug-23,16,NE,Yes,
+662,5.6853E+11,Site,662,10,489321,5749178,2,1080,Cody Holtom,19-Jul-23,12,S,Yes,
+420,1.36657E+11,Site,420,10,493063,5743027,0.2,1260,darren,09-Aug-23,2,North West,Yes,
+502,7.43713E+11,Site,502,10,478144,5745650,1.5,1144,darren,14-Aug-23,6,North east,Yes,
+466,5.94604E+11,Site,466,10,495110,5743939,1.4,1245,darren,31-Jul-23,-19,North,No,
+369,1.57024E+11,Site,369,10,490027,5742157,1.4,1094,darren,11-Aug-23,45,west,Yes,
+2460,9.93086E+11,Site,2460,10,493070,5813919,1.4,1207,Darren Wayling,06-Oct-23,3,S,No,
+1294,1.15875E+11,Site,1294,10,491999,5765048,1.5,1196,darren,24-Aug-23,35,north,Yes,
+1115,9.79152E+11,Site,1115,10,499790,5759721,1.3,1144,Philip Hartmann,17-Oct-23,7,W,Yes,no overstory or sample
+1833,4.99318E+11,Site,1833,10,488607,5803120,2,1278,Darren,12-Oct-23,18,N,Yes,
+1225,3.14943E+11,Site,1225,10,499922,5762710,3.8,1211,Cody Holtom,29-Aug-23,7,S,Yes,
+1144,6.37552E+11,Site,1144,10,492855,5761016,3.8,1028,Cody Holtom,18-Oct-23,2,NW,Yes,
+320,8.63949E+11,Site,320,10,481976,5741504,1.5,1208,darren,14-Aug-23,6,north,Yes,
+2317,2.38925E+11,Site,2317,10,494991,5811844,2.5,1268,darren,10-Oct-23,2,N,Yes,
+425,3.72923E+11,Site,425,10,500070,5742735,3.5,1030,Cody Holtom,03-Aug-23,-3,N,Yes,South quadrants are in rd pullout. half of north quadrants are burm of rd pullout
+1220,9.55042E+11,Site,1220,10,492909,5763008,1.5,1156,darren,29-Aug-23,17,south,Yes,
+1049,5.17546E+11,Site,1049,10,494703,5757939,3.8,1077,Cody Holtom,17-Oct-23,6,W,Yes,
+327,7.99931E+11,Site,327,10,492984,5741041,1.5,1251,Darren,31-Jul-23,-20,South,No,
+467,1.99065E+11,Site,467,10,496119,5743899,1.5,1137,dw,03-Aug-23,30,North east,Yes,
+1052,2.28741E+11,Site,1052,10,498708,5757769,3.8,1113,Cody Holtom,17-Oct-23,1,SW,Yes,
+276,5.16657E+11,Site,276,10,486940,5740286,1.3,1147,darren,16-Aug-23,5,north,Yes,
+1836,6.74974E+11,Site,1836,10,493608,5802923,1.4,1232,Philip Hartmann,19-Oct-23,13,N,Yes,No evidence of burn
+315,3.14683E+11,Site,315,10,467969,5742095,5.5,1190,cody,10-Aug-23,8,N,Yes,in salvage block
+282,7.72842E+11,Site,282,10,495940,5739901,3,1187,Cody Holtom,31-Jul-23,10,S,Yes,
+1708,3.46492E+11,Site,1708,10,489438,5799096,3,1263,Cody Holtom,23-Oct-23,7,NW,Yes,
+1261,5.84353E+11,Site,1261,10,495958,5763876,3.8,1358,Cody Holtom,03-Oct-23,9,SE,Yes,
+2318,5.94628E+11,Site,2318,10,495989,5811795,3.8,1246,Cody Holtom,10-Oct-23,-4,S,Yes,
+717,1.34354E+11,Site,717,10,493365,5750006,1.6,818,darren,17-Aug-23,30,north,Yes,
+1145,7.08371E+11,Site,1145,10,493826,5760968,1.3,1149,Philip Hartmann,18-Oct-23,3,NW,Yes,no sample
+666,3.26293E+11,Site,666,10,493317,5749005,1.6,941,darren,17-Aug-23,50,south,Yes,
+1706,9.03778E+11,Site,1706,10,487438,5799189,1.4,1287,Philip Hartmann,20-Oct-23,15,N,Yes,no overstory or sample
+1180,9.53353E+11,Site,1180,10,492871,5762011,1.5,1048,darren,29-Aug-23,2,west,Yes,
+329,7.87941E+11,Site,329,10,494981,5740948,1.4,1234,darren,31-Jul-23,14,East,Yes,protected by road
+1185,6.27684E+11,Site,1185,10,498880,5761759,3.8,1148,Cody Holtom,29-Aug-23,2,S,Yes,
+1430,9.22702E+11,Site,1430,10,473316,5773826,1.7,878,phil,04-Oct-23,-18,W,Yes,
+1222,6.61812E+11,Site,1222,10,494914,5762922,1.7,1150,darren,29-Aug-23,10,south,Yes,
+988,9.41866E+11,Site,988,10,495616,5755899,3.8,1053,Cody Holtom,17-Oct-23,2,SW,Yes,
+366,4.54859E+11,Site,366,10,482023,5742502,2.5,1134,Philip Hartmann,14-Aug-23,-11,NE,Yes,
+20,5.40368E+11,Site,20,10,486052,5719359,1.7,1469,Cody Holtom,24-Jul-23,15,NW,Yes,
+361,1.05428E+11,Site,361,10,469023,5743039,4.5,1156,Cody Holtom,10-Aug-23,2,N,Yes,no evidence of burn
+234,4.96897E+11,Site,234,10,488898,5739205,4,1117,Philip Hartmann,16-Aug-23,-6,E,Yes,
+1705,8.51638E+11,Site,1705,10,486429,5799225,3,1256,Cody Holtom,20-Oct-23,3,N,Yes,
+1398,2.04806E+11,Site,1398,10,495171,5768898,3.8,1229,Cody Holtom,19-Sep-23,-10,W,Yes,
+1080,1.21587E+11,Site,1080,10,494747,5758936,1.3,1060,Philip Hartmann,17-Oct-23,5,NE,Yes,no sample
+1221,1.40771E+11,Site,1221,10,493910,5762962,3.8,1120,Cody Holtom,24-Aug-23,4,SE,Yes,in draw
+545,6.68269E+11,Site,545,10,495192,5745927,0.1,1021,darren,09-Aug-23,-5,north,Yes,area has been logged
+423,4.6117E+11,Site,423,10,498070,5742814,2.5,1073,Cody Holtom,03-Aug-23,15,N,Yes,
+1148,9.19177E+11,Site,1148,10,496850,5760848,1.4,1092,Philip Hartmann,17-Oct-23,11,NW,Yes,no overstory or sample
+1422,2.20381E+11,Site,1422,10,483284,5772396,1.7,1011,phil,04-Oct-23,,,No,
+1793,1.33076E+11,Site,1793,10,486559,5802216,3.8,1235,Cody Holtom,12-Oct-23,13,W,Yes,in draw
+1340,9.07012E+11,Site,1340,10,499046,5765741,3,1232,Darren Wayling,22-Aug-23,1,NW,Yes,
+1024,9.89627E+11,Site,1024,10,499668,5756731,3.8,1107,Cody Holtom,17-Oct-23,15,W,Yes,in draw
+1264,9.936E+11,Site,1264,10,499969,5763708,2.5,1214,Darren Wayling,22-Aug-23,9,SE,Yes,
+620,4.98992E+11,Site,620,10,490279,5748135,1.7,1105,darren,11-Aug-23,2,North,Yes,
+1835,5.53325E+11,Site,1835,10,492612,5802957,1.4,1232,Philip Hartmann,12-Oct-23,7,NW,Yes,
+535,1.27605E+11,Site,535,10,473179,5746860,3.8,1119,Cody Holtom,21-Aug-23,-4,S,Yes,
+2253,3.91919E+11,Site,2253,10,492946,5810930,1.5,1255,Philip Hartmann,10-Oct-23,5,W,Yes,no overstory or sample tree.  barely any evidence of burn
+1186,3.03175E+11,Site,1186,10,499876,5761710,3.8,1143,Cody Holtom,29-Aug-23,20,SE,Yes,
+162,3.99437E+11,Site,162,10,481817,5737505,1.6,1199,Darren Wayling,08-Aug-23,10,S,Yes,Barely burnt. Aspen stand. Only evidence is charging on the base of some aspen
+949,9.35492E+11,Site,949,10,498585,5754777,1.3,1085,Philip Hartmann,18-Oct-23,3,S,Yes,
+1685,4.74151E+11,Site,1685,10,487391,5798188,1.2,1334,Philip Hartmann,20-Oct-23,6,W,Yes,only counted NE quadrant for regen
+1113,9.94733E+11,Site,1113,10,495795,5759894,1.4,1070,Philip Hartmann,17-Oct-23,4,W,Yes,no overstory or sample
+279,6.03285E+11,Site,279,10,489941,5740162,3,1068,Philip Hartmann,11-Aug-23,7,W,Yes,
+2312,8.37817E+11,Site,2312,10,487983,5812139,1.3,1173,Philip Hartmann,11-Oct-23,2,S,No,
+1401,6.46531E+11,Site,1401,10,499187,5768734,3.8,1288,Cody Holtom,20-Sep-23,15,SW,Yes,
+1931,8.57102E+11,Site,1931,10,490693,5805036,3.5,1183,Cody Holtom,19-Oct-23,10,SW,Yes,
+1022,3.30699E+11,Site,1022,10,494662,5756938,3.8,1062,Cody Holtom,17-Oct-23,2,SW,Yes,
+2523,2.62258E+11,Site,2523,10,494117,5814875,1.3,1258,Darren Wayling,06-Oct-23,-30,S,Yes,Didn't have plot number on pdf map. Called it 2523
+1461,6.83044E+11,Site,1461,10,472556,5778822,2.5,956,Darren,05-Oct-23,-1,NW,Yes,no overstory no sample
+505,1.1733E+11,Site,505,10,484143,5745395,1.6,1083,darren,15-Aug-23,20,North east,Yes,
+464,5.57761E+11,Site,464,10,485109,5744359,1.3,1090,darren,15-Aug-23,2,North west,Yes,
+1298,8.17039E+11,Site,1298,10,496001,5764873,3.8,1341,Cody Holtom,03-Oct-23,60,NE,Yes,
+370,5.26275E+11,Site,370,10,492043,5742089,2.5,1197,Cody Holtom,01-Aug-23,-7,SW,Yes,plot in post fire ibd sanitation area
+1299,1.94862E+11,Site,1299,10,496989,5764837,4.8,1385,Cody Holtom,22-Sep-23,-39,S,Yes,
+1761,2.97326E+11,Site,1761,10,489519,5801100,2,1265,darren,12-Oct-23,5,NE,Yes,
+284,4.95818E+11,Site,284,10,499906,5739667,0.4,1267,Cody Holtom,26-Jul-23,-13,S,Yes,
+161,2.97461E+11,Site,161,10,480804,5737551,3.5,1195,cody,08-Aug-23,6,NW,Yes,only evidence of burn is in 5.64
+1258,4.87211E+11,Site,1258,10,492953,5764009,1.6,1306,darren,28-Aug-23,45,east,Yes,
+1257,6.53742E+11,Site,1257,10,491954,5764043,1.6,1170,darren,24-Aug-23,30,South west,Yes,
+1114,1.05669E+11,Site,1114,10,497790,5759808,1.6,1109,Philip Hartmann,17-Oct-23,9,N,No,average slope is 9. Slope down the gully is -33
+1367,1.09148E+11,Site,1367,10,497089,5766822,3.8,1267,Cody Holtom,21-Sep-23,-14,SW,Yes,
+907,8.95765E+11,Site,907,10,497534,5753821,3.8,912,Cody Holtom,18-Oct-23,-5,NE,Yes,in salvage block. trenched and planted. no natural regen
+270,7.59153E+11,Site,270,10,469929,5741010,1.9,1176,darren,10-Aug-23,-6,North east,Yes,
+574,1.64029E+11,Site,574,10,476224,5747743,4,1080,Philip Hartmann,14-Aug-23,-7,W,Yes,
+13,1.33782E+11,Site,13,10,485004,5718397,1.5,1460,Cody Holtom,24-Jul-23,4,N,Yes,
+2251,3.3572E+11,Site,2251,10,488941,5811098,3.8,1168,Cody Holtom,11-Oct-23,1,SW,Yes,
+360,5.95617E+11,Site,360,10,468009,5743090,1.6,1165,darren,10-Aug-23,15,South east,No,
+417,7.69386E+11,Site,417,10,483063,5743453,1.5,109,darren,15-Aug-23,9,South west,Yes,
+1686,4.46532E+11,Site,1686,10,488403,5798143,1.4,1331,Philip Hartmann,23-Oct-23,5,S,Yes,Site isn't representative of area. Most of the area has 2 or 3x the amount of regen
+1050,9.08644E+11,Site,1050,10,496703,5757855,3.8,1090,Cody Holtom,17-Oct-23,2,SW,Yes,
+371,1.07206E+11,Site,371,10,493026,5742020,3.5,1277,Cody Holtom,01-Aug-23,-16,N,Yes,
+661,3.81274E+11,Site,661,10,488325,5749225,1.6,1055,cody,19-Jul-23,6,NE,Yes,
+1111,5.50608E+11,Site,1111,10,491788,5760060,3,999,Darren,18-Oct-23,1,W,Yes,
+1425,1.97281E+11,Site,1425,10,496300,5771847,1.5,1234,darren,28-Aug-23,20,north,Yes,
+197,7.2554E+11,Site,197,10,499859,5737747,1.5,1158,Darren,26-Jul-23,2,southern,No,
+2195,4.17905E+11,Site,2195,10,493898,5809896,1.5,1315,Philip Hartmann,10-Oct-23,6,S,Yes,
+541,8.16087E+11,Site,541,10,484182,5746398,4,1029,Cody Holtom,11-Aug-23,-17,N,Yes,
+540,8.00755E+11,Site,540,10,480187,5746573,5,1097,Philip Hartmann,15-Aug-23,-3,NE,Yes,
+419,7.9809E+11,Site,419,10,491066,5743112,1.4,1175,dw,02-Aug-23,8,west,Yes,
+281,6.11982E+11,Site,281,10,494939,5739956,1.3,1192,darren,31-Jul-23,6,South,Yes,
+1467,1.48445E+11,Site,1467,10,469597,5779935,2.5,978,darren,05-Oct-23,-3,S,No,no evidence of burn
+618,2.75754E+11,Site,618,10,486282,5748289,2,1058,Cody Holtom,20-Jul-23,-9,NW,Yes,
+232,1.23852E+11,Site,232,10,485891,5739332,1.4,1152,darren,21-Aug-23,7,south,Yes,
+165,5.43283E+11,Site,165,10,499810,5736745,3.7,1156,Cody holtom,25-Jul-23,4,N,Yes,
+503,6.05559E+11,Site,503,10,479142,5745608,1.5,1118,darren,14-Aug-23,10,west,Yes,
+718,3.30931E+11,Site,718,10,494372,5749963,1.6,774,darren,09-Aug-23,20,north,Yes,
+421,7.68731E+11,Site,421,10,496067,5742903,4,1273,Cody Holtom,31-Jul-23,18,N,Yes,
+1182,7.69332E+11,Site,1182,10,494880,5761926,3.8,1069,Cody Holtom,28-Aug-23,4,W,Yes,
+1053,7.62533E+11,Site,1053,10,499706,5757731,3.8,1129,Cody Holtom,17-Oct-23,3,SW,Yes,
+1259,2.79572E+11,Site,1259,10,493954,5763964,3.8,1157,Cody Holtom,24-Aug-23,6,N,Yes,
+1400,5.47758E+11,Site,1400,10,498166,5768773,3.8,1271,Cody Holtom,20-Sep-23,4,SW,Yes,
+367,6.75493E+11,Site,367,10,488027,5742250,1.3,1069,darren,16-Aug-23,40,South west,Yes,
+815,4.72431E+11,Site,815,10,492447,5752042,1.7,803,darren,17-Aug-23,-10,North east,Yes,
+1707,7.86151E+11,Site,1707,10,488436,5799141,1.2,1287,Philip Hartmann,23-Oct-23,4,W,Yes,no overstory or sample
+1341,9.01254E+11,Site,1341,10,500050,5765697,3,1236,Darren Wayling,22-Aug-23,1025555,E,Yes,
+766,9.23412E+11,Site,766,10,492406,5751053,3.8,836,Cody Holtom,17-Aug-23,51,N,Yes,in draw
+711,8.5868E+11,Site,711,10,486361,5750273,2,857,Cody Holtom,20-Jul-23,7,W,Yes,
+1297,9.38495E+11,Site,1297,10,495005,5764916,3.8,1359,Cody Holtom,25-Sep-23,68,NE,No,unsafe plot. steep rock outcrop windy day. Quick occular survey. no regen. 40% rock 40% moss 20% grass. 2 overstory 22.3 DBH 27.4 DBH. No sample tree.
+577,2.50542E+11,Site,577,10,484230,5747389,3,1055,Cody Holtom,11-Aug-23,-16,NE,Yes,
+536,1.72971E+11,Site,536,10,475179,5746774,3.8,1146,cody holtom,21-Aug-23,-8,W,Yes,
+2378,6.49473E+11,Site,2378,10,485026,5813256,1.1,1155,Philip Hartmann,11-Oct-23,-2,SW,Yes,"no sample, no overstory"
+669,8.72284E+11,Site,669,10,496322,5748876,3.8,850,Cody Holtom,17-Aug-23,-6,N,Yes,
+1423,9.94153E+11,Site,1423,10,494297,5771933,3.8,1223,Cody Holtom,28-Aug-23,-4,N,Yes,no evidence of burn. half of plot on road/fireguard
+1831,8.9685E+11,Site,1831,10,486600,5803212,2.5,1209,darren,12-Oct-23,2,NE,Yes,no evidence of burn
+3,8.46905E+11,Site,3,,497255,5870542,0.5,,,15-Jun-23,,,No,
+231,5.30978E+11,Site,231,10,484902,5739375,1.5,1139,darren,21-Aug-23,20,west,Yes,
+1413,6.1434E+11,Site,1413,10,494256,5770943,3.8,1211,Cody Holtom,28-Aug-23,3,SW,Yes,Northern half very little evidence of burn.
+585,5.89591E+11,Site,585,10,494239,5746972,1.7,1007,darren,09-Aug-23,1,east,Yes,area has been logged
+1651,6.26625E+11,Site,1651,10,487310,5796192,2.5,1287,Cody Holtom,20-Oct-23,43,W,Yes,
+1876,6.19493E+11,Site,1876,10,491646,5803994,1.4,1148,Philip Hartmann,12-Oct-23,4,NW,Yes,
+538,5.39811E+11,Site,538,10,477189,5746708,3.5,1094,Philip Hartmann,15-Aug-23,-8,N,Yes,
+1792,4.66182E+11,Site,1792,10,485559,5802261,3.8,1186,Cody Holtom,12-Oct-23,17,NW,Yes,
+581,2.10448E+11,Site,581,10,489241,5747184,1.7,1114,darren,11-Aug-23,2,north,Yes,
+194,2.52892E+11,Site,194,10,481851,5738507,3.8,1131,Cody Holtom,25-Aug-23,-10,S,Yes,
+1796,5.14918E+11,Site,1796,10,489564,5802088,2.5,1242,Darren,12-Oct-23,3,S,Yes,no evidence of burn
+1421,7.3042E+11,Site,1421,10,482292,5772446,1.7,1005,phil,04-Oct-23,5,W,Yes,
+719,1.45541E+11,Site,719,10,498368,5749790,3.8,755,Cody Holtom,17-Aug-23,5,NW,Yes,
+506,6.41119E+11,Site,506,10,494153,5744969,1.3,1176,dw,02-Aug-23,15,North east,Yes,
+141,7.18364E+11,Site,141,10,499771,5735835,1.6,1181,Darren,25-Jul-23,2,east,Yes,
+2311,2.99579E+11,Site,2311,10,486977,5812171,3.8,1138,Cody Holtom,11-Oct-23,9,W,Yes,
+1295,1.12994E+11,Site,1295,10,492990,5765004,1,1267,darren,24-Aug-23,25,North east,Yes,
+424,3.29512E+11,Site,424,10,499073,5742771,3,1047,Cody Holtom,03-Aug-23,3,N,Yes,
+330,9.59714E+11,Site,330,10,498989,5740783,1.3,1265,darren,26-Jul-23,-9,NE,Yes,
