@@ -165,7 +165,7 @@ regen_combo <- regen_all %>%
   ungroup()
 
 # export dataframe
-#write.csv(regen_combo, "C:/Users/nmac2000/Documents/regen project/Data/cleaned_counts_021224.csv")
+write.csv(regen_combo, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/MeasuredPlots.csv")
 ```
 
 Clip GIS data to only potential plots and edit Aspect
@@ -231,7 +231,7 @@ Now it's plot data with GIS data
 
 regen_GIS <- left_join(regen_combo,GIS, by = "Card") %>% 
   ungroup()
-#write.csv(regen_GIS, "C:/Users/nmac2000/Documents/regen project/Data/regen_GIS.csv")
+write.csv(regen_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_GIS.csv")
 ```
 
 
