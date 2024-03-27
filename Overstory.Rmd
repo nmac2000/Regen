@@ -8,9 +8,29 @@ output: html_document
 ```{r}
 library(tidyverse)
 
-site <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/site.csv")
-overstory_1 <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/Overstory.csv")
+overstory_1 <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Overstory.csv"
+overstory_1 <- read.csv(overstory_1)
+regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv" ##check this
+regen <- read.csv(regen)
+site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
+site <- read.csv(site)
+GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS.csv"
+GIS <- read.csv(GIS)
+internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv" ##check this
+internal <- read.csv(internal)
+basal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/BasalArea.csv"
+basal <- read.csv(basal)
+regen_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_GIS.csv"
+regen_GIS <- read.csv(regen_GIS)
+bin_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/binary_GIS.csv"
+bin_GIS <- read.csv(bin_GIS)
+regen_binary <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_binary.csv"
+regen_binary <- read.csv(regen_binary)
+measured_plots <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/MeasuredPlots.csv"
+measured_plots <- read.csv(measured_plots)
+```
 
+```{r}
 overstory_1$Species <- sub("AT", "NonCon", overstory_1$Species)
 overstory_1$Species <- sub("SW", "Spruce", overstory_1$Species)
 overstory_1$Species <- sub("SE", "Spruce", overstory_1$Species)
@@ -40,6 +60,7 @@ Going to make some summaries by plot.
 ```{r}
 overstory %>% 
   group_by(Card) %>% 
+  filter(is.na(Status)) %>% 
   summarise(n())
   
 ```
@@ -77,9 +98,50 @@ BasalArea <- BasalArea %>%
   filter(!is.na(Card)) %>% 
   replace(is.na(.),0)
 
-write.csv(BasalArea, "C:/Users/nmac2000/Documents/regen project/Data/BasalArea.csv", row.names = FALSE)
+#write.csv(BasalArea, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/BasalArea.csv", row.names = FALSE)
 
+```
+
+basal area and GIS data
+```{r}
+basal_GIS <- full_join(BasalArea, GIS, by="Card")
+#write.csv(basal_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/BasalGIS.csv", row.names = FALSE)
+```
+basal area compared to different variables
+```{r}
+ggplot(basal_GIS, aes(x=Fire_Severity_1, y=DeadBasal)) +
+  geom_boxplot()
+
+ggplot(basal_GIS, aes(x=Fire_Severity_1, y=LiveBasal)) +
+  geom_boxplot()
+
+ggplot(basal_GIS, aes(x= Fire_Severity_1)) +
+  geom_boxplot(aes(y=DeadBasal), color="blue", width = .4) +
+  geom_boxplot(aes(y=LiveBasal), color="red", position = position_nudge(x= 0.3), width = .4) 
 
 
 ```
+
+
+I want to look at the notes for each plot and see if there plots that should be removed because they weren't actually sampled
+```{r}
+
+site_notes <- site %>% 
+  select(Card, Notes) %>% 
+  filter(str_length(Notes) >1)
+
+#write.csv(site_notes, "C:/Users/nmac2000/Documents/regen project/Data/SiteNotes.csv", row.names = FALSE)
+
+not_sampled_check <- left_join(site_notes, measured_plots, by = "Card")
+not_sampled <- not_sampled_check %>% 
+  filter(total_count == 0)
+#okay this is a good start. It seems like most of these on this list were not actually sampled. There are a few I should double check
+```
+
+
+
+
+
+
+
 

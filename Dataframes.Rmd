@@ -12,17 +12,17 @@ library(tidyverse)
 
 
 # plots with Card#B removed, ask Anya what they are
-regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv?token=GHSAT0AAAAAACPN4GFQQ6UQNWHS2CTG4C6GZQB5F6A"
+regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"
 regen <- read.csv(regen)
-site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv?token=GHSAT0AAAAAACPN4GFQ3O2WLKGUOTTPFUNKZQB5OTA"
+site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
 site <- read.csv(site)
-GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/from_GIS.csv?token=GHSAT0AAAAAACPN4GFQLZKTW5GW5ZJGBQNKZQB5PQQ"
+GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/from_GIS.csv"
 GIS <- read.csv(GIS)
-clipGis <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/PossiblePlot.csv?token=GHSAT0AAAAAACPN4GFQKYCKFKJXYZWP2JVAZQB5QLA"
+clipGis <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/PossiblePlot.csv"
 clipGis <- read.csv(clipGis)
-internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv?token=GHSAT0AAAAAACPN4GFQXF34Q52WUWD63GIMZQB5QYQ"
+internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv"
 internal <- read.csv(internal)
-basal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/BasalArea.csv?token=GHSAT0AAAAAACPN4GFRHJFEOILURPMCUUWQZQB5R4Q"
+basal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/BasalArea.csv"
 basal <- read.csv(basal)
 
 ```

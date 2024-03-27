@@ -10,23 +10,23 @@ output: html_document
 ```{r}
 #okay so there is an issue here after all because these tokens are changing
 library(tidyverse)
-regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv?token=GHSAT0AAAAAACPN4GFRYQK6QL6QK4OA2ULGZQB7JOA"
+regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"
 regen <- read.csv(regen)
-site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv?token=GHSAT0AAAAAACPN4GFQ3O2WLKGUOTTPFUNKZQB5OTA"
+site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
 site <- read.csv(site)
-GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS.csv?token=GHSAT0AAAAAACPN4GFRZ74YXYPDJRD3FDI6ZQB7IOQ"
+GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS.csv"
 GIS <- read.csv(GIS)
-internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv?token=GHSAT0AAAAAACPN4GFQXF34Q52WUWD63GIMZQB5QYQ"
+internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv"
 internal <- read.csv(internal)
-basal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/BasalArea.csv?token=GHSAT0AAAAAACPN4GFRHJFEOILURPMCUUWQZQB5R4Q"
+basal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/BasalArea.csv"
 basal <- read.csv(basal)
-regen_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_GIS.csv?token=GHSAT0AAAAAACPN4GFRBJZLD6UUVFYU5VF4ZQB7DCQ"
+regen_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_GIS.csv"
 regen_GIS <- read.csv(regen_GIS)
-bin_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/binary_GIS.csv?token=GHSAT0AAAAAACPN4GFQT35N2HBXXFBCXUDUZQB7FOQ"
+bin_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/binary_GIS.csv"
 bin_GIS <- read.csv(bin_GIS)
-regen_binary <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_binary.csv?token=GHSAT0AAAAAACPN4GFRGQ2OORZ4P6Y2YLGSZQB7F7Q"
-regen_binary <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_binary.csv?token=GHSAT0AAAAAACPN4GFRGQ2OORZ4P6Y2YLGSZQB7F7Q")
-regen_counts
+regen_binary <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_binary.csv"
+regen_binary <- read.csv(regen_binary)
+
 ```
 
 # some plots (not that useful)
@@ -471,16 +471,16 @@ options(scipen=0)
 #Making graphs
 ##aspect and total count (no real change IMO)
 aspect_graph <- bin_GIS %>%
-  group_by(Aspect_cat, total_count_bin) %>%
+  group_by(Azimuth, total_count_bin) %>%
   summarise(count = n()) 
 
 aspect_graph <- aspect_graph %>%
-  group_by(Aspect_cat) %>%
+  group_by(Azimuth) %>%
   mutate(percentage = count / sum(count) * 100)
 
 aspect_graph$total_count_bin <- as.factor(aspect_graph$total_count_bin)  
 
-ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = percentage, fill = total_count_bin)) +
+ggplot(filter(aspect_graph, !is.na(Azimuth)), aes(x = Azimuth, y = percentage, fill = total_count_bin)) +
   geom_col(position = "dodge") +
   scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
                     name = "Total Count Bin",
@@ -489,7 +489,7 @@ ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = percent
        title = "Percentage of Observations by Aspect Category and Total Count Bin") +
   theme_minimal() 
  
-ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = count, fill = total_count_bin)) +
+ggplot(filter(aspect_graph, !is.na(Azimuth)), aes(x = Azimuth, y = count, fill = total_count_bin)) +
   geom_col(position="dodge") +  # Adjust dodge width as needed # Adjust colors as needed
   scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
                     name = "Total Count Bin",
@@ -500,17 +500,17 @@ ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = count, 
 
 #PLI abd aspect
 aspect_graph <- bin_GIS %>%
-  group_by(Aspect_cat, PLI_count_bin) %>%
+  group_by(Azimuth, PLI_count_bin) %>%
   summarise(count = n()) 
 
 
 aspect_graph <- aspect_graph %>%
-  group_by(Aspect_cat) %>%
+  group_by(Azimuth) %>%
   mutate(percentage = count / sum(count) * 100)
 
 aspect_graph$PLI_count_bin <- as.factor(aspect_graph$PLI_count_bin)  
 
-ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = percentage, fill = PLI_count_bin)) +
+ggplot(filter(aspect_graph, !is.na(Azimuth)), aes(x = Azimuth, y = percentage, fill = PLI_count_bin)) +
   geom_col(position = "dodge") +
   scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
                     name = "PLI Count Bin",
@@ -521,17 +521,17 @@ ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = percent
 
 #FDI and aspect
 aspect_graph <- bin_GIS %>%
-  group_by(Aspect_cat, FDI_count_bin) %>%
+  group_by(Azimuth, FDI_count_bin) %>%
   summarise(count = n()) 
 
 
 aspect_graph <- aspect_graph %>%
-  group_by(Aspect_cat) %>%
+  group_by(Azimuth) %>%
   mutate(percentage = count / sum(count) * 100)
 
 aspect_graph$FDI_count_bin <- as.factor(aspect_graph$FDI_count_bin)  
 
-ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = percentage, fill = FDI_count_bin)) +
+ggplot(filter(aspect_graph, !is.na(Azimuth)), aes(x = Azimuth, y = percentage, fill = FDI_count_bin)) +
   geom_col(position = "dodge") +
   scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
                     name = "FDI Count Bin",
@@ -542,17 +542,17 @@ ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = percent
 
 #NonCon and aspect
 aspect_graph <- bin_GIS %>%
-  group_by(Aspect_cat, NonCon_count_bin) %>%
+  group_by(Azimuth, NonCon_count_bin) %>%
   summarise(count = n()) 
 
 
 aspect_graph <- aspect_graph %>%
-  group_by(Aspect_cat) %>%
+  group_by(Azimuth) %>%
   mutate(percentage = count / sum(count) * 100)
 
 aspect_graph$NonCon_count_bin <- as.factor(aspect_graph$NonCon_count_bin)  
 
-ggplot(filter(aspect_graph, !is.na(Aspect_cat)), aes(x = Aspect_cat, y = percentage, fill = NonCon_count_bin)) +
+ggplot(filter(aspect_graph, !is.na(Azimuth)), aes(x = Azimuth, y = percentage, fill = NonCon_count_bin)) +
   geom_col(position = "dodge") +
   scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
                     name = "NonCon Count Bin",
