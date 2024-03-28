@@ -165,7 +165,7 @@ regen_combo <- regen_all %>%
   ungroup()
 
 # export dataframe
-write.csv(regen_combo, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/MeasuredPlots.csv")
+#write.csv(regen_combo, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/MeasuredPlots.csv")
 ```
 
 Clip GIS data to only potential plots and edit Aspect
@@ -220,7 +220,7 @@ assign_direction <- function(angle) {
 # Apply the function to the data column
 GIS$Azimuth <- sapply(GIS$Aspect, assign_direction)
 
-write.csv(regen_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/GIS.csv")
+write.csv(GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/GIS_fixed.csv")
 
 ```
 

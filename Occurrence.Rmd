@@ -14,7 +14,7 @@ regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_
 regen <- read.csv(regen)
 site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
 site <- read.csv(site)
-GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS.csv"
+GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS_fixed.csv"
 GIS <- read.csv(GIS)
 internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv"
 internal <- read.csv(internal)
