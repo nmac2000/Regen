@@ -212,8 +212,15 @@ Subzone_comparison  <- compare_tables(GIS, regen_GIS, "Subzone")%>%
   mutate(PercentSampled = measured_plots/sum(measured_plots)*100) %>%
   filter(row_number() <= n()-1)
 
-```
+overstory_BEC <- GIS %>% 
+  group_by(Zone, Species_1) %>% 
+  summarize(n())
 
+
+
+
+```
+####overstory and BEC
 
 # Continuation of deliverables for Anya
 this looks at occurrence and basic stocking for some of the categorical data

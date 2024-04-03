@@ -16,8 +16,8 @@ regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_
 regen <- read.csv(regen)
 site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
 site <- read.csv(site)
-GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/from_GIS.csv"
-GIS <- read.csv(GIS)
+GIS_i <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/from_GIS.csv"
+GIS_i <- read.csv(GIS_i)
 clipGis <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/PossiblePlot.csv"
 clipGis <- read.csv(clipGis)
 internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv"
@@ -184,17 +184,17 @@ forgotten_plots <- forgotten_plots %>%
   select(SampleSite_ID)
 clipGis <- full_join(clipGIS1,forgotten_plots, "SampleSite_ID")
 
-GIS <- semi_join(GIS, clipGis, "SampleSite_ID")
-GIS$Card <- as.integer(GIS$SampleSite_ID)
+GIS_i <- semi_join(GIS_i, clipGIS, "SampleSite_ID")
+GIS_i$Card <- as.integer(GIS_i$SampleSite_ID)
 regen_combo$Card <- as.integer(regen_combo$Card, na.rm=TRUE)
 
 #Edit overstory species to our catergories
-GIS$Species_1 <- sub("\\bSX\\b", "Spruce", GIS$Species_1)
-GIS$Species_1 <- sub("\\bS\\b", "Spruce", GIS$Species_1)
-GIS$Species_1 <- sub("\\bSE\\b", "Spruce", GIS$Species_1)
-GIS$Species_1 <- sub("\\bPL\\b", "PLI", GIS$Species_1)
-GIS$Species_1 <- sub("\\bFD\\b", "FDI", GIS$Species_1)
-GIS$Species_1 <- sub("\\bPA\\b", "PLI", GIS$Species_1)
+GIS_i$Species_1 <- sub("\\bSX\\b", "Spruce", GIS_i$Species_1)
+GIS_i$Species_1 <- sub("\\bS\\b", "Spruce", GIS_i$Species_1)
+GIS_i$Species_1 <- sub("\\bSE\\b", "Spruce", GIS_i$Species_1)
+GIS_i$Species_1 <- sub("\\bPL\\b", "PLI", GIS_i$Species_1)
+GIS_i$Species_1 <- sub("\\bFD\\b", "FDI", GIS_i$Species_1)
+GIS_i$Species_1 <- sub("\\bPA\\b", "PLI", GIS_i$Species_1)
 
 
 
@@ -205,7 +205,7 @@ GIS$Species_1 <- sub("\\bPA\\b", "PLI", GIS$Species_1)
 
 
 
-GIS$Beers_aspect <- sin(GIS$Aspect + 45) + 1
+GIS_i$Beers_aspect <- sin(GIS_i$Aspect + 45) + 1
 
 
 #Convert Aspect
@@ -218,9 +218,9 @@ assign_direction <- function(angle) {
 
 
 # Apply the function to the data column
-GIS$Azimuth <- sapply(GIS$Aspect, assign_direction)
+GIS_i$Azimuth <- sapply(GIS_i$Aspect, assign_direction)
 
-write.csv(GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/GIS_fixed.csv")
+write.csv(GIS_i, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/GIS_fixed.csv")
 
 ```
 
@@ -231,7 +231,7 @@ Now it's plot data with GIS data
 ```{r}
 
 
-regen_GIS <- left_join(regen_combo,GIS, by = "Card") %>% 
+regen_GIS <- left_join(regen_combo,GIS_i, by = "Card") %>% 
   ungroup()
 write.csv(regen_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_GIS.csv")
 ```
@@ -294,7 +294,7 @@ test_that("Test if data frames are same", {
 })
 
 #combing binary with GIS data
-bin_GIS <- left_join(regen_binary,GIS, by = "Card") %>% 
+bin_GIS <- left_join(regen_binary,GIS_i, by = "Card") %>% 
   ungroup()
 
 write.csv(regen_binary, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_binary.csv")

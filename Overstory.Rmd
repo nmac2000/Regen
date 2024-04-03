@@ -137,6 +137,80 @@ not_sampled <- not_sampled_check %>%
   filter(total_count == 0)
 #okay this is a good start. It seems like most of these on this list were not actually sampled. There are a few I should double check
 ```
+#Look at how many trees of each species are at each plot
+and then compare it to VRI layer and regen composition
+```{r}
+plot_comp <- overstory %>% 
+  group_by(Card, Species) %>%
+  replace_na(list(DBH = 0, Height = 0)) %>% 
+  summarise(Count = n(),
+            AvgHt = mean(Height, na.rm = T),
+            AvgDBH = mean(DBH, na.rm = T),
+            MaxHt = max(Height, na.rm = T),
+            MaxDBH = max(DBH, na.rm = T)) 
+
+summary_df <- plot_comp %>%
+  group_by(Card, Species) %>%
+  summarise(
+    Count = sum(Count),
+    AvgHt = mean(AvgHt),
+    AvgDBH = mean(AvgDBH),
+    MaxHt = max(MaxHt),
+    MaxDBH = max(MaxDBH)
+  )
+
+#this one has combined the D and L
+long_comp <- pivot_wider(data = summary_df, 
+                      names_from = Species, 
+                      values_from = c("Count", "AvgHt", "AvgDBH", "MaxHt", "MaxDBH"),
+                      names_glue = "{Species}_{.value}")
+long_comp <- long_comp %>% 
+  select(-NA_Count, -`_Count`, -NA_AvgHt, -`_AvgHt`,-NA_AvgDBH, -`_AvgDBH`, -NA_MaxHt, -`_MaxHt`,-NA_MaxDBH, -`_MaxDBH`)
+#this one has D and L separated
+long_comp_both <- pivot_wider(data = plot_comp, 
+                      names_from = Species, 
+                      values_from = c("Count", "AvgHt", "AvgDBH", "MaxHt", "MaxDBH"),
+                      names_glue = "{Species}_{.value}")
+long_comp_both <- long_comp_both %>% 
+  select(-NA_Count, -`_Count`, -NA_AvgHt, -`_AvgHt`,-NA_AvgDBH, -`_AvgDBH`, -NA_MaxHt, -`_MaxHt`,-NA_MaxDBH, -`_MaxDBH`)
+
+live_plot_comp <- plot_comp %>% 
+  filter(Status == "L")
+
+long_live_comp <- pivot_wider(data = live_plot_comp, 
+                      names_from = Species, 
+                      values_from = c("Count", "AvgHt", "AvgDBH", "MaxHt", "MaxDBH"),
+                      names_glue = "{Species}_{.value}")
+long_live_comp <- long_live_comp %>% 
+  select( -`_Count`, -`_AvgHt`, -`_AvgDBH`, -`_MaxHt`, -`_MaxDBH`)
+
+dead_plot_comp <- plot_comp %>% 
+  filter(Status == "D")
+
+plot_comp %>% 
+  group_by(Card) %>% 
+  filter(n() > 1)
+
+plot_comp_counts <- full_join(long_comp, regen_GIS, by = "Card") %>% 
+  select(Card:NonCon_MaxDBH, total_count:Spruce_x130,Species_1)
+
+#ggplot(plot_comp_counts, aes(x=Species, y=Count)) +
+#  geom_col(aes(fill=Species)) +
+ # facet_wrap(facets = "Species_1")
+
+overstory_metrics <- plot_comp %>% 
+  group_by(Card) %>% 
+  summarize(Highest_avg_dbh = Species[which.max(AvgDBH)],
+            Highest_avg_ht = Species[which.max(AvgHt)],
+            Max_count = Species[which.max(Count)],
+            Max_dbh = Species[which.max(MaxDBH)],
+            Max_ht = Species[which.max(MaxHt)])
+
+overstory_metrics <- full_join(overstory_metrics, regen_GIS)
+overstory_metrics <- overstory_metrics %>% 
+  dplyr::select(Card:Max_ht, Species_1, SpeciesAll, total_count:Spruce_x130)
+
+```
 
 
 
