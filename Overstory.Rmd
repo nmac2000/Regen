@@ -210,6 +210,10 @@ overstory_metrics <- full_join(overstory_metrics, regen_GIS)
 overstory_metrics <- overstory_metrics %>% 
   dplyr::select(Card:Max_ht, Species_1, SpeciesAll, total_count:Spruce_x130)
 
+ggplot(overstory_metrics, aes(x=Max_count)) +
+  geom_bar() +
+  facet_wrap(~Species_1)
+
 ```
 
 
