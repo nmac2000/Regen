@@ -14,7 +14,7 @@ regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_
 regen <- read.csv(regen)
 site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
 site <- read.csv(site)
-GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS.csv"
+GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS_fixed.csv"
 GIS <- read.csv(GIS)
 internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv" ##check this
 internal <- read.csv(internal)
@@ -135,6 +135,8 @@ site_notes <- site %>%
 not_sampled_check <- left_join(site_notes, measured_plots, by = "Card")
 not_sampled <- not_sampled_check %>% 
   filter(total_count == 0)
+#what is the X variable?
+
 #okay this is a good start. It seems like most of these on this list were not actually sampled. There are a few I should double check
 ```
 
