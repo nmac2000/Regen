@@ -40,14 +40,14 @@ overstory_1$Species <- sub("SX", "Spruce", overstory_1$Species)
 Now I need to delete all the blank rows. For now, I'm going to leave a blank row if the plot has no overstory
 ```{r}
 site <- site %>% 
-  select(Card, Notes)
+  dplyr::select(Card, Notes)
 site$Card <- as.integer(site$Card)
 overstory_1$Card <- as.integer(overstory_1$Card)
 
 overstory <- overstory_1 %>% 
   group_by(Card) %>% 
   filter(!is.na(TreeNumber)) %>% 
-  select(Card, TreeNumber:Notes)
+  dplyr::select(Card, TreeNumber:Notes)
 
 overstory <- full_join(overstory, site, by = "Card")
 overstory$DBH[is.na(overstory$DBH)] <- 0
@@ -127,7 +127,7 @@ I want to look at the notes for each plot and see if there plots that should be 
 ```{r}
 
 site_notes <- site %>% 
-  select(Card, Notes) %>% 
+  dplyr::select(Card, Notes) %>% 
   filter(str_length(Notes) >1)
 
 #write.csv(site_notes, "C:/Users/nmac2000/Documents/regen project/Data/SiteNotes.csv", row.names = FALSE)
