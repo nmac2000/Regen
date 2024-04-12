@@ -14,7 +14,7 @@ regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_
 regen <- read.csv(regen)
 site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
 site <- read.csv(site)
-GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS.csv"
+GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS_fixed.csv"
 GIS <- read.csv(GIS)
 internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv" ##check this
 internal <- read.csv(internal)
@@ -40,14 +40,14 @@ overstory_1$Species <- sub("SX", "Spruce", overstory_1$Species)
 Now I need to delete all the blank rows. For now, I'm going to leave a blank row if the plot has no overstory
 ```{r}
 site <- site %>% 
-  select(Card, Notes)
+  dplyr::select(Card, Notes)
 site$Card <- as.integer(site$Card)
 overstory_1$Card <- as.integer(overstory_1$Card)
 
 overstory <- overstory_1 %>% 
   group_by(Card) %>% 
   filter(!is.na(TreeNumber)) %>% 
-  select(Card, TreeNumber:Notes)
+  dplyr::select(Card, TreeNumber:Notes)
 
 overstory <- full_join(overstory, site, by = "Card")
 overstory$DBH[is.na(overstory$DBH)] <- 0
@@ -127,7 +127,7 @@ I want to look at the notes for each plot and see if there plots that should be 
 ```{r}
 
 site_notes <- site %>% 
-  select(Card, Notes) %>% 
+  dplyr::select(Card, Notes) %>% 
   filter(str_length(Notes) >1)
 
 #write.csv(site_notes, "C:/Users/nmac2000/Documents/regen project/Data/SiteNotes.csv", row.names = FALSE)
@@ -135,6 +135,8 @@ site_notes <- site %>%
 not_sampled_check <- left_join(site_notes, measured_plots, by = "Card")
 not_sampled <- not_sampled_check %>% 
   filter(total_count == 0)
+#what is the X variable?
+
 #okay this is a good start. It seems like most of these on this list were not actually sampled. There are a few I should double check
 ```
 #Look at how many trees of each species are at each plot
