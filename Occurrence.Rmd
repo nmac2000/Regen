@@ -639,10 +639,163 @@ ggplot(regen_table, aes(x = factor(AgeClass, levels = class_order), y = Count)) 
 ```
 
 
+
+I want to make a graph that has an explanatory categorical variable on the x axis and counts of plots on the y axis. Each category will have 2 bars, one for 0s one for 1s
 ```{r}
-regen_GIS %>% 
-  filter(SOILNAME_1 == "NO SOILS DATA")
+##Parent Soils
+bin_GIS_plot <- bin_GIS %>%
+  group_by(PARENT_SOILS, total_count_bin) %>%
+  summarise(count = n()) %>%
+  mutate(proportion = count / sum(count))
+
+# Plot the proportions
+ggplot(bin_GIS_plot, aes(x = PARENT_SOILS, y = proportion, fill = factor(total_count_bin))) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
+       fill = "Regeneration Presence") +
+  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
+                    labels = c("0" = "No regeneration",
+                               "1" = "Regeneration")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+##Azimuth
+bin_GIS_plot <- bin_GIS %>%
+  group_by(Azimuth, total_count_bin) %>%
+  summarise(count = n()) %>%
+  mutate(proportion = count / sum(count))
+
+# Plot the proportions
+ggplot(bin_GIS_plot, aes(x = Azimuth, y = proportion, fill = factor(total_count_bin))) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
+       fill = "Regeneration Presence") +
+  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
+                    labels = c("0" = "No regeneration",
+                               "1" = "Regeneration")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+##Texture
+bin_GIS_plot <- bin_GIS %>%
+  group_by(TEXTURE_1, total_count_bin) %>%
+  summarise(count = n()) %>%
+  mutate(proportion = count / sum(count))
+
+# Plot the proportions
+ggplot(bin_GIS_plot, aes(x = TEXTURE_1, y = proportion, fill = factor(total_count_bin))) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
+       fill = "Regeneration Presence") +
+  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
+                    labels = c("0" = "No regeneration",
+                               "1" = "Regeneration")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+##DRAIN_1
+bin_GIS_plot <- bin_GIS %>%
+  group_by(DRAIN_1, total_count_bin) %>%
+  summarise(count = n()) %>%
+  mutate(proportion = count / sum(count))
+
+# Plot the proportions
+ggplot(bin_GIS_plot, aes(x = DRAIN_1, y = proportion, fill = factor(total_count_bin))) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
+       fill = "Regeneration Presence") +
+  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
+                    labels = c("0" = "No regeneration",
+                               "1" = "Regeneration")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+##BEC
+bin_GIS_plot <- bin_GIS %>%
+  group_by(Zone, total_count_bin) %>%
+  summarise(count = n()) %>%
+  mutate(proportion = count / sum(count))
+
+# Plot the proportions
+ggplot(bin_GIS_plot, aes(x = Zone, y = proportion, fill = factor(total_count_bin))) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
+       fill = "Regeneration Presence") +
+  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
+                    labels = c("0" = "No regeneration",
+                               "1" = "Regeneration")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+##Coarse Fragment
+bin_GIS_plot <- bin_GIS %>%
+  group_by(PERCENT_1, total_count_bin) %>%
+  summarise(count = n()) %>%
+  mutate(proportion = count / sum(count))
+
+# Plot the proportions
+ggplot(bin_GIS_plot, aes(x = PERCENT_1, y = proportion, fill = factor(total_count_bin))) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
+       fill = "Regeneration Presence") +
+  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
+                    labels = c("0" = "No regeneration",
+                               "1" = "Regeneration")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
+##Coarse Fragment
+bin_GIS_plot <- bin_GIS %>%
+  group_by(PERCENT_1, total_count_bin) %>%
+  summarise(count = n()) %>%
+  mutate(proportion = count / sum(count))
+
+# Plot the proportions
+ggplot(bin_GIS_plot, aes(x = PERCENT_1, y = proportion, fill = factor(total_count_bin))) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
+       fill = "Regeneration Presence") +
+  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
+                    labels = c("0" = "No regeneration",
+                               "1" = "Regeneration")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+##Fire Severity
+bin_GIS_plot <- bin_GIS %>%
+  group_by(Fire_Severity_1, total_count_bin) %>%
+  summarise(count = n()) %>%
+  mutate(proportion = count / sum(count))
+
+# Plot the proportions
+ggplot(bin_GIS_plot, aes(x = Fire_Severity_1, y = proportion, fill = factor(total_count_bin))) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
+       fill = "Regeneration Presence") +
+  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
+                    labels = c("0" = "No regeneration",
+                               "1" = "Regeneration")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+##Disturbance
+bin_GIS_plot <- bin_GIS %>%
+  group_by(Disturbance_Type_1, total_count_bin) %>%
+  summarise(count = n()) %>%
+  mutate(proportion = count / sum(count))
+
+# Plot the proportions
+ggplot(bin_GIS_plot, aes(x = Disturbance_Type_1, y = proportion, fill = factor(total_count_bin))) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
+       fill = "Regeneration Presence") +
+  scale_fill_manual(values = c("0" = "darkseagreen", "1" = "darkslategray4"),
+                    labels = c("0" = "No regeneration",
+                               "1" = "Regeneration")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
