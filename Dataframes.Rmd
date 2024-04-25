@@ -303,5 +303,16 @@ write.csv(bin_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/b
 
 ```
 
+```{r}
+clipGis <- rename(clipGis, Card = SampleSite_ID)
+measured_clipped <- full_join(clipGis, regen_GIS, by = "Card") %>% 
+  select(Card,X)
+measured_clipped$measured <- ifelse(measured_clipped$X>=0,1,0)
+measured_clipped[is.na(measured_clipped)] <- 0
+sum(measured_clipped$measured == 1)
+clipGis$measured <- measured_clipped$measured
+rename(clipGis, SampleSite_ID = Card)
+write.csv(clipGis, "C:/Users/nmac2000/Documents/regen project/Data/all_plots.csv")
+```
 
 

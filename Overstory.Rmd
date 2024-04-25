@@ -267,3 +267,7 @@ regen_GIS %>%
 
 
 
+```{r}
+regen_GIS %>% 
+  filter
+```
