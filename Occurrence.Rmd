@@ -26,6 +26,8 @@ bin_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/bin
 bin_GIS <- read.csv(bin_GIS)
 regen_binary <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_binary.csv"
 regen_binary <- read.csv(regen_binary)
+actual_coords <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Plot_coordinates_actual.csv"
+actual_coords <- read.csv(actual_coords)
 
 ```
 
@@ -797,5 +799,12 @@ ggplot(bin_GIS_plot, aes(x = Disturbance_Type_1, y = proportion, fill = factor(t
                                "1" = "Regeneration")) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r}
+forcoords <- regen_GIS %>% 
+  select(Card, Fire_Year_1, Fire_Number_1)
+actual_coords <- rename(actual_coords, Card = Plot.ID)
+forSasha <- full_join(forcoords, actual_coords, by="Card")
+#write.csv(forSasha,  "C:/Users/nmac2000/Documents/regen project/Data/ForSasha.csv")
 ```
 

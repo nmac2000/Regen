@@ -1,0 +1,166 @@
+---
+title: "Climate"
+author: "Nat"
+date: "2024-04-25"
+output: html_document
+---
+# Load dataframes and packages
+
+```{r}
+library(tidyverse)
+library(ClimateNAr)
+library(sf)
+
+regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"
+regen <- read.csv(regen)
+site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
+site <- read.csv(site)
+GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS_fixed.csv"
+GIS <- read.csv(GIS)
+internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv"
+internal <- read.csv(internal)
+basal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/BasalArea.csv"
+basal <- read.csv(basal)
+regen_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_GIS.csv"
+regen_GIS <- read.csv(regen_GIS)
+bin_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/binary_GIS.csv"
+bin_GIS <- read.csv(bin_GIS)
+regen_binary <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_binary.csv"
+regen_binary <- read.csv(regen_binary)
+actual_coords <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Plot_coordinates_actual.csv"
+actual_coords <- read.csv(actual_coords)
+
+```
+#Get coords for actual plots
+```{r}
+#need to convert utm to lat/long
+
+utm_crs <- "+proj=utm +zone=10 +datum=WGS84 +units=m +no_defs"
+# Create an sf object
+utm_sf <- st_as_sf(actual_coords, coords = c("Easting", "Northing"), crs = utm_crs)
+
+st_crs(utm_sf)
+
+# Convert to latitude/longitude
+lat_lon_sf <- st_transform(utm_sf, crs = st_crs("+proj=longlat +datum=WGS84"))
+lat_lon_sf <- st_set_precision(lat_lon_sf, 10)
+
+# Extract coordinates and bind to original data
+lat_lon_coords <- round(st_coordinates(lat_lon_sf), digits = 10)
+lat_lon_data <- cbind(actual_coords, lat_lon_coords)
+
+lat_lon_data <- lat_lon_data %>% 
+  rename(lat = "Y",
+         long = "X")
+#write.csv(lat_lon_data, "C:/Users/nmac2000/Documents/regen project/Data/UTM_Lat_Lon.csv")
+```
+
+
+#Now need to break up by fire year
+```{r}
+forClim1 <- regen_GIS %>% 
+  dplyr::select(Card, Elevation, Fire_Year_1)
+
+forClim1<- full_join(forClim1, lat_lon_data, by="Card")
+
+forClim1 <- forClim1 %>% 
+  rename(PlotID = `Card`) %>% 
+  dplyr::select(PlotID, Fire_Year_1, lat, long, Elevation) %>% 
+  rename(ID1 = "PlotID",
+         ID2 = "Fire_Year_1",
+         el = "Elevation")
+
+table(forClim1$ID2)
+
+forClim2003 <- forClim1 %>% 
+  dplyr::filter(ID2== 2003)
+write.csv(forClim2003, "C:/Users/nmac2000/Documents/regen project/Data/ClimateBC/plots2003.csv")
+
+forClim2009 <- forClim1 %>% 
+  filter(ID2== 2009)
+write.csv(forClim2009, "C:/Users/nmac2000/Documents/regen project/Data/ClimateBC/plots2009.csv")
+
+forClim2010 <- forClim1 %>% 
+  filter(ID2== 2010)
+
+forClim2015 <- forClim1 %>% 
+  filter(ID2== 2015)
+
+forClim2016 <- forClim1 %>% 
+  filter(ID2== 2016)
+
+forClim2017 <- forClim1 %>% 
+  filter(ID2== 2017)
+
+forClim2023 <- forClim1 %>% 
+  filter(ID2== 2023)
+
+## need to break 2017 into multiple data frame for Climate NA
+```
+
+
+```{r}
+#clim2003.2004 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2003, period='Year_2004.ann', MSY='SY')
+#clim2003.2005 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2003, period='Year_2005.ann', MSY='SY')
+#clim2003.2006 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2003, period='Year_2006.ann', MSY='SY')
+#write.csv(clim2003.2004, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2003/2004.csv")
+#write.csv(clim2003.2005, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2003/2005.csv")
+#write.csv(clim2003.2006, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2003/2006.csv")
+
+#clim2009.2010 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2009, period='Year_2010.ann', MSY='SY')
+#clim2009.2011 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2009, period='Year_2011.ann', MSY='SY')
+#clim2009.2012 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2009, period='Year_2012.ann', MSY='SY')
+#write.csv(clim2009.2010, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2009/2010.csv")
+#write.csv(clim2009.2011, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2009/2011.csv")
+#write.csv(clim2009.2012, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2009/2012.csv")
+
+#clim2010.2011 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2010, period='Year_2011.ann', MSY='SY')
+#clim2010.2012 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2010, period='Year_2012.ann', MSY='SY')
+#clim2010.2013 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2010, period='Year_2013.ann', MSY='SY')
+#write.csv(clim2010.2011, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2010/2011.csv")
+#write.csv(clim2010.2012, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2010/2012.csv")
+#write.csv(clim2010.2013, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2010/2013.csv")
+
+#clim2015.2016 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2015, period='Year_2016.ann', MSY='SY')
+#clim2015.2017 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2015, period='Year_2017.ann', MSY='SY')
+#clim2015.2018 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2015, period='Year_2018.ann', MSY='SY')
+#write.csv(clim2015.2016, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2015/2016.csv")
+#write.csv(clim2015.2017, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2015/2017.csv")
+#write.csv(clim2015.2018, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2015/2018.csv")
+
+#clim2016.2017 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2016, period='Year_2017.ann', MSY='SY')
+#clim2016.2018 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2016, period='Year_2018.ann', MSY='SY')
+#clim2016.2019 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2016, period='Year_2019.ann', MSY='SY')
+#write.csv(clim2016.2017, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2016/2017.csv")
+#write.csv(clim2016.2018, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2016/2018.csv")
+#write.csv(clim2016.2019, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2016/2019.csv")
+
+###2017 data needs to be split up
+forClim2017a <- forClim2017[1:100,]
+forClim2017b <- forClim2017[101:200,]
+forClim2017c <- forClim2017[201:277,]
+
+#clim2017a.2018 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017, period='Year_2018.ann', MSY='SY')
+#clim2017a.2019 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017, period='Year_2019.ann', MSY='SY')
+#clim2017a.2020 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017, period='Year_2020.ann', MSY='SY')
+#write.csv(clim2017a.2018, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2018a.csv")
+#write.csv(clim2017a.2019, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2019a.csv")
+#write.csv(clim2017a.2020, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2020a.csv")
+
+#clim2017b.2018 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017, period='Year_2018.ann', MSY='SY')
+#clim2017b.2019 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017, period='Year_2019.ann', MSY='SY')
+#clim2017b.2020 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017, period='Year_2020.ann', MSY='SY')
+#write.csv(clim2017b.2018, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2018b.csv")
+#write.csv(clim2017b.2019, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2019b.csv")
+#write.csv(clim2017b.2020, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2020b.csv")
+
+
+#NOT DONE YET NEED TO PUSH THIS CODE
+#clim2017c.2018 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017, period='Year_2018.ann', MSY='SY')
+#clim2017c.2019 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017, period='Year_2019.ann', MSY='SY')
+#clim2017c.2020 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017, period='Year_2020.ann', MSY='SY')
+#write.csv(clim2017c.2018, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2018c.csv")
+#write.csv(clim2017c.2019, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2019c.csv")
+#write.csv(clim2017c.2020, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2020c.csv")
+```
+
