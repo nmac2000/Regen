@@ -163,4 +163,47 @@ forClim2017c <- forClim2017[201:277,]
 #write.csv(clim2017c.2019, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2019c.csv")
 #write.csv(clim2017c.2020, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2020c.csv")
 ```
+#need to now make compiled data frame for each year and find mins, maxs, and avgs
+variables of interest:
+  -MAT mean annual temperature
+  -MWMT mean warmest month temperature
+  -MCMT mean coldest month temperature
+  -NFFD number of frost free days
+  -PAS precipitation as snow
+  -Eref Hargreaves reference evaporation
+  -CMD Hargreaves climatic moisture deficit
+  -AHM annual heat-moisture index
+  -SHM summer heat-moisture index
+  -Tave_sp spring mean temp
+  -Tave_sm summer mean temp
+  -Tmax_sp spring max temp
+  -Tmax_sm summer max temp
+  -Tmin_sp spring min temp
+  -Tmin_sm summer min temp
+  -PPT_wt winter precipitation
+  -PPT_sp spring precipitation
+  -PPT_sm summer precipitation
+  -NFFD_sp spring number of frost free days
+  -PAS_wt
+  -PAS_sp spring precipitation as snow
+  -Eref_sm summer Hargreaves reference evaporation
+  -CMD_sm summer Hargreaves climatic moisture deficit
+  -CMI_sm Summer Hogg's climate moisture index 
+  
+  
+  
+  
+```{r}
+select(MAT, MWMT, MCMT, NFFD, PAS, Eref, CMD, AHM, SHM, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, 
+       Tmin_sp, Tmin_sm, PPT_wt, PPT_sp, PPT_sm, NFFD_sp, PAS_wt, PAS_sp, Eref_sm, CMD_sm, CMI_sm)
+
+set.seed(123)
+a <- data.frame(matrix(sample(20,10), ncol = 5, nrow = 5))
+b <- data.frame(matrix(sample(20,10), ncol = 5, nrow = 5))
+c <- data.frame(matrix(sample(20,10), ncol = 5, nrow = 5))
+
+
+
+
+```
 
