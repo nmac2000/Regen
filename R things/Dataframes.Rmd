@@ -16,7 +16,7 @@ regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_
 regen <- read.csv(regen)
 site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
 site <- read.csv(site)
-GIS_i <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/from_GIS.csv"
+GIS_i <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_Points_May2.csv"
 GIS_i <- read.csv(GIS_i)
 clipGis <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/PossiblePlot.csv"
 clipGis <- read.csv(clipGis)
@@ -33,9 +33,9 @@ Format plot data
 regen$Species <- sub("^$", "NR", regen$Species)
 regen$Species <- sub("ACT", "NonCon", regen$Species)
 regen$Species <- sub("AT", "NonCon", regen$Species)
-regen$Species <- sub("SW", "Spruce", regen$Species)
-regen$Species <- sub("SE", "Spruce", regen$Species)
-regen$Species <- sub("SX", "Spruce", regen$Species)
+regen$Species <- sub("SW", "SX", regen$Species)
+regen$Species <- sub("SE", "SX", regen$Species)
+regen$Species <- sub("SX", "SX", regen$Species)
 
 
 # get rid of unnecessary columns
@@ -94,16 +94,16 @@ regen_all$NonCon_x0 <- ifelse(regen_all$Species == "NonCon", regen_all$x0, 0)
 regen_all$NonCon_x10 <- ifelse(regen_all$Species == "NonCon", regen_all$x10, 0)
 regen_all$NonCon_x30 <- ifelse(regen_all$Species == "NonCon", regen_all$x30, 0)
 regen_all$NonCon_x130 <- ifelse(regen_all$Species == "NonCon", regen_all$x130, 0)
-regen_all$Spruce_total <- ifelse(regen_all$Species == "Spruce", regen_all$total, 0)
-regen_all$Spruce_x0 <- ifelse(regen_all$Species == "Spruce", regen_all$x0, 0)
-regen_all$Spruce_x10 <- ifelse(regen_all$Species == "Spruce", regen_all$x10, 0)
-regen_all$Spruce_x30 <- ifelse(regen_all$Species == "Spruce", regen_all$x30, 0)
-regen_all$Spruce_x130 <- ifelse(regen_all$Species == "Spruce", regen_all$x130, 0)
-#regen_all$Conifer_total <- ifelse(regen_all$Species == grpl("Spruce", regen_all$total, 0)
-#regen_all$Conifer_x0 <- ifelse(regen_all$Species == "Spruce", regen_all$x0, 0)
-#regen_all$Conifer_x10 <- ifelse(regen_all$Species == "Spruce", regen_all$x10, 0)
-#regen_all$Conifer_x30 <- ifelse(regen_all$Species == "Spruce", regen_all$x30, 0)
-#regen_all$Conifer_x130 <- ifelse(regen_all$Species == "Spruce", regen_all$x130, 0)
+regen_all$SX_total <- ifelse(regen_all$Species == "SX", regen_all$total, 0)
+regen_all$SX_x0 <- ifelse(regen_all$Species == "SX", regen_all$x0, 0)
+regen_all$SX_x10 <- ifelse(regen_all$Species == "SX", regen_all$x10, 0)
+regen_all$SX_x30 <- ifelse(regen_all$Species == "SX", regen_all$x30, 0)
+regen_all$SX_x130 <- ifelse(regen_all$Species == "SX", regen_all$x130, 0)
+#regen_all$Conifer_total <- ifelse(regen_all$Species == grpl("SX", regen_all$total, 0))
+#regen_all$Conifer_x0 <- ifelse(regen_all$Species == "SX", regen_all$x0, 0)
+#regen_all$Conifer_x10 <- ifelse(regen_all$Species == "SX", regen_all$x10, 0)
+#regen_all$Conifer_x30 <- ifelse(regen_all$Species == "SX", regen_all$x30, 0)
+#regen_all$Conifer_x130 <- ifelse(regen_all$Species == "SX", regen_all$x130, 0)
 
 #Need to make it for conifer but waiting until at lab
 
@@ -157,15 +157,15 @@ regen_combo <- regen_all %>%
             NonCon_x10 = sum(NonCon_x10),
             NonCon_x30 = sum(NonCon_x30),
             NonCon_x130 = sum(NonCon_x130),
-            Spruce_count = sum(Spruce_total),
-            Spruce_x0 = sum(Spruce_x0),
-            Spruce_x10 = sum(Spruce_x10),
-            Spruce_x30 = sum(Spruce_x30),
-            Spruce_x130 = sum(Spruce_x130)) %>% 
+            SX_count = sum(SX_total),
+            SX_x0 = sum(SX_x0),
+            SX_x10 = sum(SX_x10),
+            SX_x30 = sum(SX_x30),
+            SX_x130 = sum(SX_x130)) %>% 
   ungroup()
 
 # export dataframe
-#write.csv(regen_combo, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/MeasuredPlots.csv")
+write.csv(regen_combo, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/MeasuredPlots.csv")
 ```
 
 Clip GIS data to only potential plots and edit Aspect
@@ -182,20 +182,56 @@ clipGIS1 <- clipGis %>%
   select(SampleSite_ID)
 forgotten_plots <- forgotten_plots %>% 
   select(SampleSite_ID)
-clipGis <- full_join(clipGIS1,forgotten_plots, "SampleSite_ID")
+clipGis <- bind_rows(clipGIS1,forgotten_plots)
 
-GIS_i <- semi_join(GIS_i, clipGIS, "SampleSite_ID")
+GIS_i <- GIS_i %>% 
+  rename(SampleSite_ID = "Plot_ID")
+GIS_i <- semi_join(GIS_i, clipGis, "SampleSite_ID")
 GIS_i$Card <- as.integer(GIS_i$SampleSite_ID)
 regen_combo$Card <- as.integer(regen_combo$Card, na.rm=TRUE)
 
 #Edit overstory species to our catergories
-GIS_i$Species_1 <- sub("\\bSX\\b", "Spruce", GIS_i$Species_1)
-GIS_i$Species_1 <- sub("\\bS\\b", "Spruce", GIS_i$Species_1)
-GIS_i$Species_1 <- sub("\\bSE\\b", "Spruce", GIS_i$Species_1)
-GIS_i$Species_1 <- sub("\\bPL\\b", "PLI", GIS_i$Species_1)
-GIS_i$Species_1 <- sub("\\bFD\\b", "FDI", GIS_i$Species_1)
-GIS_i$Species_1 <- sub("\\bPA\\b", "PLI", GIS_i$Species_1)
+GIS_i$SPECIES_CD_1_1 <- sub("\\bSX\\b", "SX", GIS_i$SPECIES_CD_1_1)
+GIS_i$SPECIES_CD_1_1 <- sub("\\bS\\b", "SX", GIS_i$SPECIES_CD_1_1)
+GIS_i$SPECIES_CD_1_1 <- sub("\\bSE\\b", "SX", GIS_i$SPECIES_CD_1_1)
+GIS_i$SPECIES_CD_1_1 <- sub("\\bPL\\b", "PLI", GIS_i$SPECIES_CD_1_1)
+GIS_i$SPECIES_CD_1_1 <- sub("\\bFD\\b", "FDI", GIS_i$SPECIES_CD_1_1)
+GIS_i$SPECIES_CD_1_1 <- sub("\\bPA\\b", "PLI", GIS_i$SPECIES_CD_1_1)
 
+GIS_i$SPECIES_CD_2_1 <- sub("\\bSX\\b", "SX", GIS_i$SPECIES_CD_2_1)
+GIS_i$SPECIES_CD_2_1 <- sub("\\bS\\b", "SX", GIS_i$SPECIES_CD_2_1)
+GIS_i$SPECIES_CD_2_1 <- sub("\\bSE\\b", "SX", GIS_i$SPECIES_CD_2_1)
+GIS_i$SPECIES_CD_2_1 <- sub("\\bPL\\b", "PLI", GIS_i$SPECIES_CD_2_1)
+GIS_i$SPECIES_CD_2_1 <- sub("\\bFD\\b", "FDI", GIS_i$SPECIES_CD_2_1)
+GIS_i$SPECIES_CD_2_1 <- sub("\\bPA\\b", "PLI", GIS_i$SPECIES_CD_2_1)
+
+GIS_i$SPECIES_CD_3_1 <- sub("\\bSX\\b", "SX", GIS_i$SPECIES_CD_3_1)
+GIS_i$SPECIES_CD_3_1 <- sub("\\bS\\b", "SX", GIS_i$SPECIES_CD_3_1)
+GIS_i$SPECIES_CD_3_1 <- sub("\\bSE\\b", "SX", GIS_i$SPECIES_CD_3_1)
+GIS_i$SPECIES_CD_3_1 <- sub("\\bPL\\b", "PLI", GIS_i$SPECIES_CD_3_1)
+GIS_i$SPECIES_CD_3_1 <- sub("\\bFD\\b", "FDI", GIS_i$SPECIES_CD_3_1)
+GIS_i$SPECIES_CD_3_1 <- sub("\\bPA\\b", "PLI", GIS_i$SPECIES_CD_3_1)
+
+GIS_i$SPECIES_CD_4_1 <- sub("\\bSX\\b", "SX", GIS_i$SPECIES_CD_4_1)
+GIS_i$SPECIES_CD_4_1 <- sub("\\bS\\b", "SX", GIS_i$SPECIES_CD_4_1)
+GIS_i$SPECIES_CD_4_1 <- sub("\\bSE\\b", "SX", GIS_i$SPECIES_CD_4_1)
+GIS_i$SPECIES_CD_4_1 <- sub("\\bPL\\b", "PLI", GIS_i$SPECIES_CD_4_1)
+GIS_i$SPECIES_CD_4_1 <- sub("\\bFD\\b", "FDI", GIS_i$SPECIES_CD_4_1)
+GIS_i$SPECIES_CD_4_1 <- sub("\\bPA\\b", "PLI", GIS_i$SPECIES_CD_4_1)
+
+GIS_i$SPECIES_CD_5_1 <- sub("\\bSX\\b", "SX", GIS_i$SPECIES_CD_5_1)
+GIS_i$SPECIES_CD_5_1 <- sub("\\bS\\b", "SX", GIS_i$SPECIES_CD_5_1)
+GIS_i$SPECIES_CD_5_1 <- sub("\\bSE\\b", "SX", GIS_i$SPECIES_CD_5_1)
+GIS_i$SPECIES_CD_5_1 <- sub("\\bPL\\b", "PLI", GIS_i$SPECIES_CD_5_1)
+GIS_i$SPECIES_CD_5_1 <- sub("\\bFD\\b", "FDI", GIS_i$SPECIES_CD_5_1)
+GIS_i$SPECIES_CD_5_1 <- sub("\\bPA\\b", "PLI", GIS_i$SPECIES_CD_5_1)
+
+GIS_i$SPECIES_CD_6_1 <- sub("\\bSX\\b", "SX", GIS_i$SPECIES_CD_6_1)
+GIS_i$SPECIES_CD_6_1 <- sub("\\bS\\b", "SX", GIS_i$SPECIES_CD_6_1)
+GIS_i$SPECIES_CD_6_1 <- sub("\\bSE\\b", "SX", GIS_i$SPECIES_CD_6_1)
+GIS_i$SPECIES_CD_6_1 <- sub("\\bPL\\b", "PLI", GIS_i$SPECIES_CD_6_1)
+GIS_i$SPECIES_CD_6_1 <- sub("\\bFD\\b", "FDI", GIS_i$SPECIES_CD_6_1)
+GIS_i$SPECIES_CD_6_1 <- sub("\\bPA\\b", "PLI", GIS_i$SPECIES_CD_6_1)
 
 
 #Aspect
@@ -260,18 +296,18 @@ regen_binary <- regen_GIS %>%
          NonCon_x10_bin = ifelse(NonCon_x10>0,1,0),
          NonCon_x30_bin = ifelse(NonCon_x30>0,1,0),
          NonCon_x130_bin = ifelse(NonCon_x130>0,1,0),
-         Spruce_count_bin = ifelse(Spruce_count>0,1,0),
-         Spruce_x0_bin = ifelse(Spruce_x0>0,1,0),
-         Spruce_x10_bin = ifelse(Spruce_x10>0,1,0),
-         Spruce_x30_bin = ifelse(Spruce_x30>0,1,0),
-         Spruce_x130_bin = ifelse(Spruce_x130>0,1,0))
+         SX_count_bin = ifelse(SX_count>0,1,0),
+         SX_x0_bin = ifelse(SX_x0>0,1,0),
+         SX_x10_bin = ifelse(SX_x10>0,1,0),
+         SX_x30_bin = ifelse(SX_x30>0,1,0),
+         SX_x130_bin = ifelse(SX_x130>0,1,0))
 
 create_binary_columns <- function(data) {
   binary_cols <- c("total_count", "total_x0", "total_x10", "total_x30", "total_x130",
                    "FDI_count", "FDI_x0", "FDI_x10", "FDI_x30", "FDI_x130",
                    "PLI_count", "PLI_x0", "PLI_x10", "PLI_x30", "PLI_x130",
                    "NonCon_count", "NonCon_x0", "NonCon_x10", "NonCon_x30", "NonCon_x130",
-                   "Spruce_count", "Spruce_x0", "Spruce_x10", "Spruce_x30", "Spruce_x130")
+                   "SX_count", "SX_x0", "SX_x10", "SX_x30", "SX_x130")
   
   for (col in binary_cols) {
     binary_col <- paste0(col, "_bin")
@@ -282,11 +318,11 @@ create_binary_columns <- function(data) {
 }
 
 regen_binary1 <- create_binary_columns(regen_GIS) %>% 
-  select(Card, total_count_bin:Spruce_x130_bin)
+  select(Card, total_count_bin:SX_x130_bin)
 
 
 regen_binary <- regen_binary %>% 
-  select(Card, total_count_bin:Spruce_x130_bin)
+  select(Card, total_count_bin:SX_x130_bin)
 
 library(testthat)
 test_that("Test if data frames are same", {
@@ -302,9 +338,10 @@ write.csv(bin_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/b
 
 
 ```
-
+#this is not working right now but that's okay
 ```{r}
 clipGis <- rename(clipGis, Card = SampleSite_ID)
+regen_GIS$X <- 1
 measured_clipped <- full_join(clipGis, regen_GIS, by = "Card") %>% 
   select(Card,X)
 measured_clipped$measured <- ifelse(measured_clipped$X>=0,1,0)
@@ -315,4 +352,7 @@ rename(clipGis, SampleSite_ID = Card)
 write.csv(clipGis, "C:/Users/nmac2000/Documents/regen project/Data/all_plots.csv")
 ```
 
+```{r}
+table(regen$Species)
+```
 
