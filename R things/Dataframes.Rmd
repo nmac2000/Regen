@@ -241,7 +241,7 @@ GIS_i$SPECIES_CD_6_1 <- sub("\\bPA\\b", "PLI", GIS_i$SPECIES_CD_6_1)
 
 
 
-GIS_i$Beers_aspect <- sin(GIS_i$Aspect + 45) + 1
+GIS_i$Beers_aspect <- sin(GIS_i$Aspect*(pi/180) + 45) + 1
 
 
 #Convert Aspect
