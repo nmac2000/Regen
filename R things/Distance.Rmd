@@ -8,7 +8,7 @@ output: html_document
 ```{r}
 library(tidyverse)
 regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"
-regen <- read.csv(regen)
+regen <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv")
 site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
 site <- read.csv(site)
 GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS_fixed.csv"
@@ -45,6 +45,7 @@ regen_GIS1$Distance <- as.numeric(regen_GIS1$Distance)
 ```{r}
 ggplot(regen_GIS1, aes(x = Distance, y = total_count)) +
   geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
   labs(x = "Distance (units)", y = "Total Count") +
   scale_x_continuous(name = "Distance (units)", 
                      breaks = seq(0, 1500, by = 100), 
@@ -52,16 +53,18 @@ ggplot(regen_GIS1, aes(x = Distance, y = total_count)) +
 
 ggplot(regen_GIS1, aes(x = Distance, y = total_count)) +
   geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
   labs(x = "Distance (units)", y = "Total Count") +
   scale_x_continuous(name = "Distance (units)", 
-                     breaks = seq(0, 100, by = 100),  
-                     limits = c(0, 100)) +
+                     breaks = seq(0, 150, by = 10),  
+                     limits = c(0, 150)) +
   scale_y_continuous(name = "Total Count", 
                      breaks = seq(0, 1000, by = 100),  
                      limits = c(0, 1000))
 
 ggplot(regen_GIS1, aes(x = Distance, y = FDI_count)) +
   geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
   labs(x = "Distance (units)", y = "FDI Count") +
   scale_x_continuous(name = "Distance (units)", 
                      breaks = seq(0, 1500, by = 100), 
@@ -69,10 +72,11 @@ ggplot(regen_GIS1, aes(x = Distance, y = FDI_count)) +
 
 ggplot(regen_GIS1, aes(x = Distance, y = FDI_count)) +
   geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
   labs(x = "Distance (units)", y = "FDI Count") +
   scale_x_continuous(name = "Distance (units)", 
-                     breaks = seq(0, 100, by = 100),  
-                     limits = c(0, 100)) +
+                     breaks = seq(0, 150, by = 10),  
+                     limits = c(0, 150)) +
   scale_y_continuous(name = "FDI Count", 
                      breaks = seq(0, 1000, by = 100),  
                      limits = c(0, 1000))
@@ -80,6 +84,7 @@ ggplot(regen_GIS1, aes(x = Distance, y = FDI_count)) +
 
 ggplot(regen_GIS1, aes(x = Distance, y = PLI_count)) +
   geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
   labs(x = "Distance (units)", y = "PLI Count") +
   scale_x_continuous(name = "Distance (units)", 
                      breaks = seq(0, 1500, by = 100),
@@ -87,17 +92,19 @@ ggplot(regen_GIS1, aes(x = Distance, y = PLI_count)) +
 
 ggplot(regen_GIS1, aes(x = Distance, y = PLI_count)) +
   geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
   labs(x = "Distance (units)", y = "PLI Count") +
   scale_x_continuous(name = "Distance (units)", 
-                     breaks = seq(0, 100, by = 100),
-                     limits = c(0, 100)) +
+                     breaks = seq(0, 150, by = 10),  
+                     limits = c(0, 150)) +
   scale_y_continuous(name = "PLI Count", 
-                     breaks = seq(0, 1000, by = 100),  
-                     limits = c(0, 1000))
+                     breaks = seq(0,3000, by = 100),  
+                     limits = c(0, 3000))
 
 
 ggplot(regen_GIS1, aes(x = Distance, y = SX_count)) +
   geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
   labs(x = "Distance (units)", y = "Spruce Count") +
   scale_x_continuous(name = "Distance (units)", 
                      breaks = seq(0, 1500, by = 100),  
@@ -105,10 +112,11 @@ ggplot(regen_GIS1, aes(x = Distance, y = SX_count)) +
 
 ggplot(regen_GIS1, aes(x = Distance, y = SX_count)) +
   geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
   labs(x = "Distance (units)", y = "Spruce Count") +
   scale_x_continuous(name = "Distance (units)", 
-                     breaks = seq(0, 100, by = 100),  
-                     limits = c(0, 100)) +
+                    breaks = seq(0, 150, by = 10),  
+                     limits = c(0, 150)) +
     scale_y_continuous(name = "Spruce Count", 
                      breaks = seq(0, 250, by = 100),  
                      limits = c(0, 250))

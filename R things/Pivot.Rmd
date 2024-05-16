@@ -1,0 +1,101 @@
+---
+title: "pivot longer"
+author: "Nat"
+date: "2024-05-16"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"
+regen <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv")
+site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
+site <- read.csv(site)
+GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS_fixed.csv"
+GIS <- read.csv(GIS)
+internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv"
+internal <- read.csv(internal)
+basal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/BasalArea.csv"
+basal <- read.csv(basal)
+regen_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_GIS.csv"
+regen_GIS <- read.csv(regen_GIS)
+bin_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/binary_GIS.csv"
+bin_GIS <- read.csv(bin_GIS)
+regen_binary <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_binary.csv"
+regen_binary <- read.csv(regen_binary)
+actual_coords <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Plot_coordinates_actual.csv"
+actual_coords <- read.csv(actual_coords)
+distance <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/DistanceToLiveTree.csv"
+distance <- read.csv(distance)
+regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"
+regen <- read.csv(regen)
+```
+
+
+```{r}
+# Fill in blank species, NR = no regen
+regen$Species <- sub("^$", "NR", regen$Species)
+regen$Species <- sub("ACT", "NonCon", regen$Species)
+regen$Species <- sub("AT", "NonCon", regen$Species)
+regen$Species <- sub("SW", "SX", regen$Species)
+regen$Species <- sub("SE", "SX", regen$Species)
+regen$Species <- sub("SX", "SX", regen$Species)
+
+
+# get rid of unnecessary columns
+regen<- regen %>% 
+  select(Card,Quandrant,Species,Notes,x0,x10,x30,x130) 
+
+# new column for species by plot
+regen$Plot_Sp <- paste(regen$Card, regen$Species, sep = "")
+
+#new column for total of seedlings per wedge by species
+regen<- regen%>% 
+  mutate(total = rowSums(cbind(regen$x0,regen$x10,regen$x30,regen$x130),na.rm=TRUE))
+
+#combine different wedges by height class
+
+regen_only_total <- regen %>% 
+  group_by(Card, Species, Plot_Sp) %>% 
+  summarise(across(total, sum))
+
+regen_only_x0 <- regen %>% 
+  group_by(Plot_Sp) %>% 
+  summarise(x0 = sum(x0, na.rm = TRUE))
+
+regen_only_x10 <- regen %>% 
+  group_by(Plot_Sp) %>% 
+  summarise(x10 = sum(x10, na.rm = TRUE))
+
+regen_only_x30 <- regen %>% 
+  group_by(Plot_Sp) %>% 
+  summarise(x30 = sum(x30, na.rm = TRUE))
+
+regen_only_x130 <- regen %>% 
+  group_by(Plot_Sp) %>% 
+  summarise(x130 = sum(x130, na.rm = TRUE))
+
+#combine into 1 data frame
+
+regen_all <- full_join(regen_only_total, regen_only_x0, by = "Plot_Sp") %>% 
+  full_join(regen_only_x10, by = "Plot_Sp") %>% 
+  full_join(regen_only_x30, by = "Plot_Sp") %>%
+  full_join(regen_only_x130, by = "Plot_Sp")
+
+```
+
+```{r}
+regen_all <- rename(regen_all, SampleSite_ID = "Card")
+regen_all_long <- select(regen_all, SampleSite_ID:x130)
+regen_longer_GIS <- full_join(regen_all_long, GIS, by = "SampleSite_ID")
+distance <- rename(distance, SampleSite_ID = "Card")
+regen_longer_GIS <- full_join(regen_longer_GIS, distance, by = "SampleSite_ID")
+write.csv(regen_longer_GIS,  "C:/Users/nmac2000/Documents/regen project/Data/Longer_regen.csv")
+```
+
+```{r}
+ggplot(regen_longer_GIS, aes(x=Distance, y=total)) +
+  geom_point(aes(colour = Species))
+```
+
+

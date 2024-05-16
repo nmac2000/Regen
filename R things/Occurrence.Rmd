@@ -87,21 +87,21 @@ ggplot(regen_GIS, aes(x=Aspect)) +
 #  geom_point(aes(y=PLI_count), color="red", alpha= .5) +
  # geom_point(aes(y=FDI_count), color="green", alpha=.5)  
 
-ggplot(regen_GIS, aes(x=Height_1)) +
-  geom_point(aes(y=PLI_count), color="red", alpha= .5) +
-  geom_point(aes(y=FDI_count), color="green", alpha=.5)
+#ggplot(regen_GIS, aes(x=Height_1)) +
+ # geom_point(aes(y=PLI_count), color="red", alpha= .5) +
+  #geom_point(aes(y=FDI_count), color="green", alpha=.5)
 
-ggplot(regen_GIS, aes(x=Crown_Closure_1)) +
-  geom_point(aes(y=PLI_count), color="red", alpha= .5) +
-  geom_point(aes(y=FDI_count), color="green", alpha=.5)
+#ggplot(regen_GIS, aes(x=Crown_Closure_1)) +
+ # geom_point(aes(y=PLI_count), color="red", alpha= .5) +
+  #geom_point(aes(y=FDI_count), color="green", alpha=.5)
 
-ggplot(regen_GIS, aes(x=Disturbance_Date_1)) +
-  geom_point(aes(y=PLI_count), color="red", alpha= .5) +
-  geom_point(aes(y=FDI_count), color="green", alpha=.5)
+#ggplot(regen_GIS, aes(x=Disturbance_Date_1)) +
+ # geom_point(aes(y=PLI_count), color="red", alpha= .5) +
+  #geom_point(aes(y=FDI_count), color="green", alpha=.5)
 
-ggplot(regen_GIS, aes(x=Distance_to_Perimeter)) +
-  geom_point(aes(y=PLI_count), color="red", alpha= .5) +
-  geom_point(aes(y=FDI_count), color="green", alpha=.5)
+#ggplot(regen_GIS, aes(x=Distance_to_Perimeter)) +
+ # geom_point(aes(y=PLI_count), color="red", alpha= .5) +
+  #geom_point(aes(y=FDI_count), color="green", alpha=.5)
 
 ```
 
@@ -809,14 +809,7 @@ write.csv(forSasha,  "C:/Users/nmac2000/Documents/regen project/Data/ForSasha.cs
 ```
 
 ```{r}
-regen_GIS$Beers_aspect <- sin(regen_GIS$Aspect*(pi/180) + 45) + 1
 
-
-ggplot(regen_GIS, aes(x=Aspect, y=Beers_aspect)) +
-  geom_point()
-
-ggplot(regen_GIS, aes(x=Beers_aspect, y= total_count))+
-  geom_point()
 
 ```
 
