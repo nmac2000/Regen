@@ -40,6 +40,7 @@ distance <- distance1 %>%
          Distance = "Distance.to.tree")
 regen_GIS1 <- left_join(distance, regen_GIS, by ="Card")
 regen_GIS1$Distance <- as.numeric(regen_GIS1$Distance)
+write.csv(distance,  "C:/Users/nmac2000/Documents/regen project/Regen/Data/distance.csv")
 ```
 
 ```{r}
