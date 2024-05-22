@@ -89,7 +89,7 @@ regen_all <- rename(regen_all, SampleSite_ID = "Card")
 regen_all_long <- select(regen_all, SampleSite_ID:x130)
 regen_longer_GIS <- full_join(regen_all_long, GIS, by = "SampleSite_ID")
 
-distance <- rename(distance, SampleSite_ID = "Card")
+
 regen_longer_GIS <- full_join(regen_longer_GIS, distance, by = "SampleSite_ID")
 #write.csv(regen_longer_GIS,  "C:/Users/nmac2000/Documents/regen project/Regen/Data/Longer_regen.csv")
 regen_longer_GIS$years_since <- 2023-regen_longer_GIS$FIRE_YEAR_1
@@ -154,6 +154,20 @@ ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y= Dista
 ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y= Distance)) +
   geom_boxplot(aes(group = PLI_count_bin)) 
 
+ggplot(filtered_data, aes(x = PLI_count_bin, y = Distance)) +
+  geom_boxplot(aes(group = PLI_count_bin, fill = as.factor(PLI_count_bin))) +
+  facet_wrap(~ SPECIES_CD_1_1, scales = "free_y") +
+  labs(title = "Distance by PLI Count Bin across Species",
+       x = "PLI Count Bin",
+       y = "Distance",
+       fill = "PLI Count Bin",
+       color = "PLI Count Bin") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        plot.title = element_text(hjust = 0.5)) +
+  scale_color_brewer(palette = "Set3") +
+  scale_fill_brewer(palette = "Set3")
+
 
 ggplot(filter(bin_dis_GIS, !is.na(SX_count_bin)), aes(x=SX_count_bin, y= Distance)) +
   geom_boxplot()
@@ -161,24 +175,30 @@ ggplot(filter(bin_dis_GIS, !is.na(SX_count_bin)), aes(x=SX_count_bin, y= Distanc
 ```{r}
 
 ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y= PROJ_AGE_1_1)) +
-  geom_boxplot(aes(group = FDI_count_bin))
+  geom_boxplot(aes(group = FDI_count_bin)) +
+  facet_wrap(~ SPECIES_CD_1_1)
 
 ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y= PROJ_AGE_1_1)) +
-  geom_boxplot(aes(group = PLI_count_bin))
+  geom_boxplot(aes(group = PLI_count_bin))+
+  facet_wrap(~ SPECIES_CD_1_1)
 
 ggplot(filter(bin_dis_GIS, !is.na(SX_count_bin)), aes(x=SX_count_bin, y= PROJ_AGE_1_1)) +
-  geom_boxplot(aes(group = SX_count_bin))
+  geom_boxplot(aes(group = SX_count_bin))+
+  facet_wrap(~ SPECIES_CD_1_1)
 ```
 ```{r}
 
 ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y= CROWN_CLOSURE_1)) +
-  geom_boxplot(aes(group = FDI_count_bin))
+  geom_boxplot(aes(group = FDI_count_bin))+
+  facet_wrap(~ SPECIES_CD_1_1)
 
 ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y= CROWN_CLOSURE_1)) +
-  geom_boxplot(aes(group = PLI_count_bin))
+  geom_boxplot(aes(group = PLI_count_bin))+
+  facet_wrap(~ SPECIES_CD_1_1)
 
 ggplot(filter(bin_dis_GIS, !is.na(SX_count_bin)), aes(x=SX_count_bin, y= CROWN_CLOSURE_1)) +
-  geom_boxplot(aes(group = SX_count_bin))
+  geom_boxplot(aes(group = SX_count_bin))+
+  facet_wrap(~ SPECIES_CD_1_1)
 ```
 ```{r}
 
