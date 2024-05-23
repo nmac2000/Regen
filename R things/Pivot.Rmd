@@ -1,0 +1,235 @@
+---
+title: "pivot longer"
+author: "Nat"
+date: "2024-05-16"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"
+regen <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv")
+site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
+site <- read.csv(site)
+GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS_fixed.csv"
+GIS <- read.csv(GIS)
+internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv"
+internal <- read.csv(internal)
+basal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/BasalArea.csv"
+basal <- read.csv(basal)
+regen_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_GIS.csv"
+regen_GIS <- read.csv(regen_GIS)
+bin_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/binary_GIS.csv"
+bin_GIS <- read.csv(bin_GIS)
+regen_binary <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_binary.csv"
+regen_binary <- read.csv(regen_binary)
+actual_coords <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Plot_coordinates_actual.csv"
+actual_coords <- read.csv(actual_coords)
+distance <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/distance.csv"
+distance <- read.csv(distance)
+regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"
+regen <- read.csv(regen)
+```
+
+
+```{r}
+# Fill in blank species, NR = no regen
+regen$Species <- sub("^$", "NR", regen$Species)
+regen$Species <- sub("ACT", "NonCon", regen$Species)
+regen$Species <- sub("AT", "NonCon", regen$Species)
+regen$Species <- sub("SW", "SX", regen$Species)
+regen$Species <- sub("SE", "SX", regen$Species)
+regen$Species <- sub("SX", "SX", regen$Species)
+
+
+# get rid of unnecessary columns
+regen<- regen %>% 
+  select(Card,Quandrant,Species,Notes,x0,x10,x30,x130) 
+
+# new column for species by plot
+regen$Plot_Sp <- paste(regen$Card, regen$Species, sep = "")
+
+#new column for total of seedlings per wedge by species
+regen<- regen%>% 
+  mutate(total = rowSums(cbind(regen$x0,regen$x10,regen$x30,regen$x130),na.rm=TRUE))
+
+#combine different wedges by height class
+
+regen_only_total <- regen %>% 
+  group_by(Card, Species, Plot_Sp) %>% 
+  summarise(across(total, sum))
+
+regen_only_x0 <- regen %>% 
+  group_by(Plot_Sp) %>% 
+  summarise(x0 = sum(x0, na.rm = TRUE))
+
+regen_only_x10 <- regen %>% 
+  group_by(Plot_Sp) %>% 
+  summarise(x10 = sum(x10, na.rm = TRUE))
+
+regen_only_x30 <- regen %>% 
+  group_by(Plot_Sp) %>% 
+  summarise(x30 = sum(x30, na.rm = TRUE))
+
+regen_only_x130 <- regen %>% 
+  group_by(Plot_Sp) %>% 
+  summarise(x130 = sum(x130, na.rm = TRUE))
+
+#combine into 1 data frame
+
+regen_all <- full_join(regen_only_total, regen_only_x0, by = "Plot_Sp") %>% 
+  full_join(regen_only_x10, by = "Plot_Sp") %>% 
+  full_join(regen_only_x30, by = "Plot_Sp") %>%
+  full_join(regen_only_x130, by = "Plot_Sp")
+
+```
+
+```{r}
+regen_all <- rename(regen_all, SampleSite_ID = "Card")
+regen_all_long <- select(regen_all, SampleSite_ID:x130)
+regen_longer_GIS <- full_join(regen_all_long, GIS, by = "SampleSite_ID")
+
+
+regen_longer_GIS <- full_join(regen_longer_GIS, distance, by = "SampleSite_ID")
+#write.csv(regen_longer_GIS,  "C:/Users/nmac2000/Documents/regen project/Regen/Data/Longer_regen.csv")
+regen_longer_GIS$years_since <- 2023-regen_longer_GIS$FIRE_YEAR_1
+regen_longer_GIS$years_since <- as.factor(regen_longer_GIS$years_since)
+regen_longer_GIS <- regen_longer_GIS %>% 
+  filter(!is.na(Species),
+         Species != "NR") 
+```
+
+```{r}
+ggplot(filter(regen_longer_GIS), aes(x=Distance, y=total)) +
+  geom_point(aes(colour = Species), alpha=0.8, size=1) +
+  geom_smooth(aes(colour = Species), method="loess", se=FALSE)
+
+ggplot(regen_longer_GIS, aes(x=years_since, y=total)) +
+  geom_boxplot(aes(fill = Species))+
+  theme_minimal()
+
+ggplot(regen_longer_GIS, aes(x=SPECIES_CD_1_1, y=total)) +
+  geom_boxplot(aes(fill = Species))+
+  theme_minimal()
+regen_longer_GIS$CROWN_CLOSURE_1 <- as.factor(regen_longer_GIS$CROWN_CLOSURE_1)
+ggplot(regen_longer_GIS, aes(x=CROWN_CLOSURE_1, y=total)) +
+  geom_boxplot()+
+  facet_wrap(~Species) +
+  theme_minimal()
+```
+#now graphs with occurrence instead
+```{r}
+regen_binary <- rename(regen_binary, SampleSite_ID = "Card")
+regen_binary_distance <- full_join(regen_binary, distance, by = "SampleSite_ID")
+bin_dis_GIS <- full_join(regen_binary_distance, GIS, by = "SampleSite_ID")
+bin_dis_GIS$years_since <- as.factor(2023-bin_dis_GIS$FIRE_YEAR_1)
+bin_dis_GIS$FDI_count_bin <- as.factor(bin_dis_GIS$FDI_count_bin)
+bin_dis_GIS$PLI_count_bin <- as.factor(bin_dis_GIS$PLI_count_bin)
+bin_dis_GIS$SX_count_bin <- as.factor(bin_dis_GIS$SX_count_bin)
+bin_dis_GIS <- filter(bin_dis_GIS, !is.na(SPECIES_CD_1_1))
+```
+
+```{r}
+filtered_data <- filter(bin_dis_GIS, !is.na(FDI_count_bin))
+
+# Create the plot
+ggplot(filtered_data, aes(x = FDI_count_bin, y = Distance)) +
+  geom_boxplot(aes(group = FDI_count_bin, fill = as.factor(FDI_count_bin))) +
+  facet_wrap(~ SPECIES_CD_1_1, scales = "free_y") +
+  labs(title = "Distance by FDI Count Bin across Species",
+       x = "FDI Count Bin",
+       y = "Distance",
+       fill = "FDI Count Bin",
+       color = "FDI Count Bin") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        plot.title = element_text(hjust = 0.5)) +
+  scale_color_brewer(palette = "Set3") +
+  scale_fill_brewer(palette = "Set3")
+
+ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y= Distance)) +
+  geom_boxplot(aes(group = FDI_count_bin))
+
+
+ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y= Distance)) +
+  geom_boxplot(aes(group = PLI_count_bin)) 
+
+ggplot(filtered_data, aes(x = PLI_count_bin, y = Distance)) +
+  geom_boxplot(aes(group = PLI_count_bin, fill = as.factor(PLI_count_bin))) +
+  facet_wrap(~ SPECIES_CD_1_1, scales = "free_y") +
+  labs(title = "Distance by PLI Count Bin across Species",
+       x = "PLI Count Bin",
+       y = "Distance",
+       fill = "PLI Count Bin",
+       color = "PLI Count Bin") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        plot.title = element_text(hjust = 0.5)) +
+  scale_color_brewer(palette = "Set3") +
+  scale_fill_brewer(palette = "Set3")
+
+
+ggplot(filter(bin_dis_GIS, !is.na(SX_count_bin)), aes(x=SX_count_bin, y= Distance)) +
+  geom_boxplot()
+```
+```{r}
+
+ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y= PROJ_AGE_1_1)) +
+  geom_boxplot(aes(group = FDI_count_bin)) +
+  facet_wrap(~ SPECIES_CD_1_1)
+
+ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y= PROJ_AGE_1_1)) +
+  geom_boxplot(aes(group = PLI_count_bin))+
+  facet_wrap(~ SPECIES_CD_1_1)
+
+ggplot(filter(bin_dis_GIS, !is.na(SX_count_bin)), aes(x=SX_count_bin, y= PROJ_AGE_1_1)) +
+  geom_boxplot(aes(group = SX_count_bin))+
+  facet_wrap(~ SPECIES_CD_1_1)
+```
+```{r}
+
+ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y= CROWN_CLOSURE_1)) +
+  geom_boxplot(aes(group = FDI_count_bin))+
+  facet_wrap(~ SPECIES_CD_1_1)
+
+ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y= CROWN_CLOSURE_1)) +
+  geom_boxplot(aes(group = PLI_count_bin))+
+  facet_wrap(~ SPECIES_CD_1_1)
+
+ggplot(filter(bin_dis_GIS, !is.na(SX_count_bin)), aes(x=SX_count_bin, y= CROWN_CLOSURE_1)) +
+  geom_boxplot(aes(group = SX_count_bin))+
+  facet_wrap(~ SPECIES_CD_1_1)
+```
+```{r}
+
+
+mosaicplot(~ FDI_count_bin + SPECIES_CD_1_1, 
+           data = bin_dis_GIS, 
+           color = TRUE, 
+           main = "Mosaic Plot of FDI Occurrence by Dominant Overstory Species", 
+           xlab = "Seedling Occurrence", 
+           ylab = "Species Code",
+           las = 2, # Rotate the axis labels for better readability
+           cex.axis = 0.8) # Adjust axis label size
+
+mosaicplot(~ PLI_count_bin + SPECIES_CD_1_1, 
+           data = bin_dis_GIS, 
+           color = TRUE, 
+           main = "Mosaic Plot of PLI Occurrence by Dominant Overstory Species", 
+           xlab = "Seedling Occurrence", 
+           ylab = "Species Code",
+           las = 2, # Rotate the axis labels for better readability
+           cex.axis = 0.8) # Adjust axis label size
+
+mosaicplot(~ SX_count_bin + SPECIES_CD_1_1, 
+           data = bin_dis_GIS, 
+           color = TRUE, 
+           main = "Mosaic Plot of SX Occurrence by Dominant Overstory Species", 
+           xlab = "Seedling Occurrence", 
+           ylab = "Species Code",
+           las = 2, # Rotate the axis labels for better readability
+           cex.axis = 0.8) # Adjust axis label size
+```
+
+
+

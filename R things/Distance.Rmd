@@ -1,0 +1,125 @@
+---
+title: "Model Building"
+author: "Nat"
+date: "2024-05-14"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"
+regen <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv")
+site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
+site <- read.csv(site)
+GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/GIS_fixed.csv"
+GIS <- read.csv(GIS)
+internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv"
+internal <- read.csv(internal)
+basal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/BasalArea.csv"
+basal <- read.csv(basal)
+regen_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_GIS.csv"
+regen_GIS <- read.csv(regen_GIS)
+bin_GIS <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/binary_GIS.csv"
+bin_GIS <- read.csv(bin_GIS)
+regen_binary <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/regen_binary.csv"
+regen_binary <- read.csv(regen_binary)
+actual_coords <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Plot_coordinates_actual.csv"
+actual_coords <- read.csv(actual_coords)
+distance <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/DistanceToLiveTree.csv"
+distance <- read.csv(distance)
+```
+#combining distance to seed source and regen
+```{r}
+distance1 <- distance %>% 
+  filter(X != "U")
+distance1$Distance.to.tree <- ifelse(distance1$X == "L", 4, distance1$Distance.to.tree)
+
+distance <- distance1 %>% 
+  select(Plot.ID, Distance.to.tree) %>% 
+  rename(Card = "Plot.ID",
+         Distance = "Distance.to.tree")
+regen_GIS1 <- left_join(distance, regen_GIS, by ="Card")
+regen_GIS1$Distance <- as.numeric(regen_GIS1$Distance)
+write.csv(distance,  "C:/Users/nmac2000/Documents/regen project/Regen/Data/distance.csv")
+```
+
+```{r}
+ggplot(regen_GIS1, aes(x = Distance, y = total_count)) +
+  geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
+  labs(x = "Distance (units)", y = "Total Count") +
+  scale_x_continuous(name = "Distance (units)", 
+                     breaks = seq(0, 1500, by = 100), 
+                     limits = c(0, 1500)) 
+
+ggplot(regen_GIS1, aes(x = Distance, y = total_count)) +
+  geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
+  labs(x = "Distance (units)", y = "Total Count") +
+  scale_x_continuous(name = "Distance (units)", 
+                     breaks = seq(0, 150, by = 10),  
+                     limits = c(0, 150)) +
+  scale_y_continuous(name = "Total Count", 
+                     breaks = seq(0, 1000, by = 100),  
+                     limits = c(0, 1000))
+
+ggplot(regen_GIS1, aes(x = Distance, y = FDI_count)) +
+  geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
+  labs(x = "Distance (units)", y = "FDI Count") +
+  scale_x_continuous(name = "Distance (units)", 
+                     breaks = seq(0, 1500, by = 100), 
+                     limits = c(0, 1500)) 
+
+ggplot(regen_GIS1, aes(x = Distance, y = FDI_count)) +
+  geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
+  labs(x = "Distance (units)", y = "FDI Count") +
+  scale_x_continuous(name = "Distance (units)", 
+                     breaks = seq(0, 150, by = 10),  
+                     limits = c(0, 150)) +
+  scale_y_continuous(name = "FDI Count", 
+                     breaks = seq(0, 1000, by = 100),  
+                     limits = c(0, 1000))
+
+
+ggplot(regen_GIS1, aes(x = Distance, y = PLI_count)) +
+  geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
+  labs(x = "Distance (units)", y = "PLI Count") +
+  scale_x_continuous(name = "Distance (units)", 
+                     breaks = seq(0, 1500, by = 100),
+                     limits = c(0, 1500))
+
+ggplot(regen_GIS1, aes(x = Distance, y = PLI_count)) +
+  geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
+  labs(x = "Distance (units)", y = "PLI Count") +
+  scale_x_continuous(name = "Distance (units)", 
+                     breaks = seq(0, 150, by = 10),  
+                     limits = c(0, 150)) +
+  scale_y_continuous(name = "PLI Count", 
+                     breaks = seq(0,3000, by = 100),  
+                     limits = c(0, 3000))
+
+
+ggplot(regen_GIS1, aes(x = Distance, y = SX_count)) +
+  geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
+  labs(x = "Distance (units)", y = "Spruce Count") +
+  scale_x_continuous(name = "Distance (units)", 
+                     breaks = seq(0, 1500, by = 100),  
+                     limits = c(0, 1500))
+
+ggplot(regen_GIS1, aes(x = Distance, y = SX_count)) +
+  geom_point(alpha=.5) +
+  geom_smooth(method="loess", se=FALSE) +
+  labs(x = "Distance (units)", y = "Spruce Count") +
+  scale_x_continuous(name = "Distance (units)", 
+                    breaks = seq(0, 150, by = 10),  
+                     limits = c(0, 150)) +
+    scale_y_continuous(name = "Spruce Count", 
+                     breaks = seq(0, 250, by = 100),  
+                     limits = c(0, 250))
+```
+

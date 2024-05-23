@@ -237,6 +237,7 @@ c <- data.frame(matrix(sample(20,10), ncol = 5, nrow = 5))
 clim2017.2018 <- rbind(clim2017a.2018,clim2017b.2018,clim2017c.2018)
 clim2017.2018$Year <- 1
 
+clim2017a.2019 <- subset(clim2017a.2019, select = -c(X.1))
 clim2017.2019 <- rbind(clim2017a.2019,clim2017b.2019,clim2017c.2019)
 clim2017.2019$Year <- 2
 
