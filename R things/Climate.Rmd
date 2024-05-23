@@ -8,7 +8,7 @@ output: html_document
 
 ```{r}
 library(tidyverse)
-library(ClimateNAr)
+#library(ClimateNAr)
 library(sf)
 
 regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"

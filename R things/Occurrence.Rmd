@@ -808,3 +808,20 @@ forSasha <- full_join(forcoords, actual_coords, by="Card")
 #write.csv(forSasha,  "C:/Users/nmac2000/Documents/regen project/Data/ForSasha.csv")
 ```
 
+```{r}
+for_export <- regen_binary %>% 
+  select(Card, FDI_count_bin, PLI_count_bin, Spruce_count_bin) %>% 
+  rename("Plot ID" = "Card")
+for_export <- full_join(Plot_coordinates_actual, for_export, by="Plot ID")
+for_file <- regen_GIS %>% 
+  select(Card, Species_1, Elevation,Fire_Year_1,Fire_Year_2) 
+
+for_file <- full_join(for_file, site, by ="Card")
+
+for_export <- full_join(for_export, for_file, by = "Plot ID")
+write.csv(for_export,  "/Users/natalie/Documents/Regen/Regen/Data/for_export.csv")
+write.csv(for_file,  "/Users/natalie/Documents/Regen/Regen/Data/plot_info.csv")
+regen_GIS %>%
+  filter(Card == 1425)
+```
+
