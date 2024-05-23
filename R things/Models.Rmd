@@ -1,0 +1,116 @@
+---
+title: "Models"
+author: '3034081184'
+date: "2024-05-23"
+output: html_document
+---
+
+```{r}
+#need to figure out data frames for everything and clean up code
+bin_dis_GIS1 <- bin_dis_GIS %>%
+  distinct(SampleSite_ID, .keep_all = T)
+
+```
+
+structural
+```{r}
+names(bin_dis_GIS1)  # print out the column (i.e., variable) names
+dim(bin_dis_GIS1)    # number of rows and columns
+head(bin_dis_GIS1)  # print out the first few lines of data
+
+# ensure y variable is a factor for dead versus alive
+bin_dis_GIS1$PLI.f <- as.factor(bin_dis_GIS1$PLI_count_bin)
+bin_dis_GIS1$FDI.f <- as.factor(bin_dis_GIS1$FDI_count_bin)
+# y=1 for dead trees, y=0 for live trees
+class(bin_dis_GIS1$PLI.f)
+bin_dis_GIS1$Distance <- as.numeric(bin_dis_GIS1$Distance)
+bin_dis_GIS1$CROWN_CLOSURE_1 <- as.numeric(bin_dis_GIS1$CROWN_CLOSURE_1)
+bin_dis_GIS1$PROJ_AGE_1_1 <- as.numeric(bin_dis_GIS1$PROJ_AGE_1_1)
+bin_dis_GIS1$PROJ_HEIGHT_1_1 <- as.numeric(bin_dis_GIS1$PROJ_HEIGHT_1_1)
+bin_dis_GIS1$DISTANCE_TO_PERIMETER <- as.numeric(bin_dis_GIS1$DISTANCE_TO_PERIMETER)
+bin_dis_GIS1$years_since <- as.factor(bin_dis_GIS1$years_since)
+bin_dis_GIS1$DISTURBANCE_TYPE_1 <- as.factor(bin_dis_GIS1$DISTURBANCE_TYPE_1)
+bin_dis_GIS1$BURN_SEVERITY_RATING_1 <- as.factor(bin_dis_GIS1$BURN_SEVERITY_RATING_1)
+```
+
+#why is IBM two different catergories
+```{r}
+logistic.GLM1a <- glm(PLI.f ~ Distance + years_since + CROWN_CLOSURE_1 + PROJ_AGE_1_1 + 
+                        PROJ_HEIGHT_1_1 + DISTURBANCE_TYPE_1 + DISTANCE_TO_PERIMETER + 
+                        BURN_SEVERITY_RATING_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1a)
+
+logistic.GLM1b <- glm(PLI.f ~ Distance ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1b)
+
+logistic.GLM1c <- glm(PLI.f ~ years_since ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1c)
+
+logistic.GLM1c <- glm(PLI.f ~ CROWN_CLOSURE_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1c)
+
+logistic.GLM1d <- glm(PLI.f ~ PROJ_AGE_1_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1d)
+
+logistic.GLM1e <- glm(PLI.f ~ PROJ_HEIGHT_1_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1e)
+
+logistic.GLM1f <- glm(PLI.f ~ DISTURBANCE_TYPE_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1f)
+
+logistic.GLM1g <- glm(PLI.f ~ DISTANCE_TO_PERIMETER ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1g)
+
+logistic.GLM1h <- glm(PLI.f ~ BURN_SEVERITY_RATING_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1h)
+```
+
+```{r}
+logistic.GLM2a <- glm(FDI.f ~ Distance + years_since + CROWN_CLOSURE_1 + PROJ_AGE_1_1 + 
+                        PROJ_HEIGHT_1_1 + DISTURBANCE_TYPE_1 + DISTANCE_TO_PERIMETER + 
+                        BURN_SEVERITY_RATING_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM2a)
+
+logistic.GLM2b <- glm(FDI.f ~ Distance ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM2b)
+
+logistic.GLM2c <- glm(FDI.f ~ years_since ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM2c)
+
+logistic.GLM2c <- glm(FDI.f ~ CROWN_CLOSURE_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM2c)
+
+logistic.GLM2d <- glm(FDI.f ~ PROJ_AGE_1_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM2d)
+
+logistic.GLM2e <- glm(FDI.f ~ PROJ_HEIGHT_1_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM2e)
+
+logistic.GLM2f <- glm(FDI.f ~ DISTURBANCE_TYPE_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM2f)
+
+logistic.GLM2g <- glm(FDI.f ~ DISTANCE_TO_PERIMETER ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM2g)
+
+logistic.GLM2h <- glm(FDI.f ~ BURN_SEVERITY_RATING_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM2h)
+```
+

@@ -120,8 +120,9 @@ ggplot(regen_longer_GIS, aes(x=CROWN_CLOSURE_1, y=total)) +
 #now graphs with occurrence instead
 ```{r}
 regen_binary <- rename(regen_binary, SampleSite_ID = "Card")
-regen_binary_distance <- full_join(regen_binary, distance, by = "SampleSite_ID")
-bin_dis_GIS <- full_join(regen_binary_distance, GIS, by = "SampleSite_ID")
+distance <- rename(distance, SampleSite_ID = "Card")
+regen_binary_distance <- left_join(distance, regen_binary, by = "SampleSite_ID")
+bin_dis_GIS <- left_join(regen_binary_distance, GIS, by = "SampleSite_ID")
 bin_dis_GIS$years_since <- as.factor(2023-bin_dis_GIS$FIRE_YEAR_1)
 bin_dis_GIS$FDI_count_bin <- as.factor(bin_dis_GIS$FDI_count_bin)
 bin_dis_GIS$PLI_count_bin <- as.factor(bin_dis_GIS$PLI_count_bin)
