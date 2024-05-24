@@ -89,7 +89,7 @@ regen_all <- rename(regen_all, SampleSite_ID = "Card")
 regen_all_long <- select(regen_all, SampleSite_ID:x130)
 regen_longer_GIS <- full_join(regen_all_long, GIS, by = "SampleSite_ID")
 
-
+distance <- rename(distance, SampleSite_ID = "Card")
 regen_longer_GIS <- full_join(regen_longer_GIS, distance, by = "SampleSite_ID")
 #write.csv(regen_longer_GIS,  "C:/Users/nmac2000/Documents/regen project/Regen/Data/Longer_regen.csv")
 regen_longer_GIS$years_since <- 2023-regen_longer_GIS$FIRE_YEAR_1
@@ -119,8 +119,8 @@ ggplot(regen_longer_GIS, aes(x=CROWN_CLOSURE_1, y=total)) +
 ```
 #now graphs with occurrence instead
 ```{r}
-regen_binary <- rename(regen_binary, SampleSite_ID = "Card")
-distance <- rename(distance, SampleSite_ID = "Card")
+#regen_binary <- rename(regen_binary, SampleSite_ID = "Card")
+#distance <- rename(distance, SampleSite_ID = "Card")
 regen_binary_distance <- left_join(distance, regen_binary, by = "SampleSite_ID")
 bin_dis_GIS <- left_join(regen_binary_distance, GIS, by = "SampleSite_ID")
 bin_dis_GIS$years_since <- as.factor(2023-bin_dis_GIS$FIRE_YEAR_1)
