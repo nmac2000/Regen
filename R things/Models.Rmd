@@ -18,6 +18,9 @@ names(bin_dis_GIS1)  # print out the column (i.e., variable) names
 dim(bin_dis_GIS1)    # number of rows and columns
 head(bin_dis_GIS1)  # print out the first few lines of data
 
+#need to put this somewhere else later on
+bin_dis_GIS1$DISTURBANCE_TYPE_1<- sub( "IBM  ", "IBM", bin_dis_GIS1$DISTURBANCE_TYPE_1)
+
 # ensure y variable is a factor for dead versus alive
 bin_dis_GIS1$PLI.f <- as.factor(bin_dis_GIS1$PLI_count_bin)
 bin_dis_GIS1$FDI.f <- as.factor(bin_dis_GIS1$FDI_count_bin)
@@ -54,36 +57,43 @@ summary(logistic.GLM1a1)
 
 logistic.GLM1b <- glm(PLI.f ~ Distance ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM1b)
+summary(logistic.GLM1b) #not significant on own
 
 logistic.GLM1c <- glm(PLI.f ~ years_since ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM1c)
+summary(logistic.GLM1c) #significant on own
 
 logistic.GLM1c <- glm(PLI.f ~ CROWN_CLOSURE_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM1c)
+summary(logistic.GLM1c) #not significant on own
 
 logistic.GLM1d <- glm(PLI.f ~ PROJ_AGE_1_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM1d)
+summary(logistic.GLM1d) #significant on own
 
 logistic.GLM1e <- glm(PLI.f ~ PROJ_HEIGHT_1_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM1e)
+summary(logistic.GLM1e) #significant on own
 
 logistic.GLM1f <- glm(PLI.f ~ DISTURBANCE_TYPE_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM1f)
+summary(logistic.GLM1f) #significant on own 
 
 logistic.GLM1g <- glm(PLI.f ~ DISTANCE_TO_PERIMETER ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM1g)
+summary(logistic.GLM1g) #significant on own
 
 logistic.GLM1h <- glm(PLI.f ~ BURN_SEVERITY_RATING_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM1h)
+summary(logistic.GLM1h) #significant on own
 ```
+```{r}
+logistic.GLM1.1a <- glm(PLI.f ~  years_since + PROJ_HEIGHT_1_1 + DISTURBANCE_TYPE_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1.1a)
+```
+
+
 
 ```{r}
 bin_dis_GIS1$linpred.GLM1a <- predict(logistic.GLM1a) # Estimated logit using the linear part
@@ -182,36 +192,44 @@ summary(logistic.GLM2a)
 
 logistic.GLM2b <- glm(FDI.f ~ Distance ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM2b)
+summary(logistic.GLM2b) #sig
 
 logistic.GLM2c <- glm(FDI.f ~ years_since ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM2c)
+summary(logistic.GLM2c) #insig
 
 logistic.GLM2c <- glm(FDI.f ~ CROWN_CLOSURE_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM2c)
+summary(logistic.GLM2c) #insig
 
 logistic.GLM2d <- glm(FDI.f ~ PROJ_AGE_1_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM2d)
+summary(logistic.GLM2d) #sig
 
 logistic.GLM2e <- glm(FDI.f ~ PROJ_HEIGHT_1_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM2e)
+summary(logistic.GLM2e) #sig
 
 logistic.GLM2f <- glm(FDI.f ~ DISTURBANCE_TYPE_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM2f)
+summary(logistic.GLM2f) #insig
 
 logistic.GLM2g <- glm(FDI.f ~ DISTANCE_TO_PERIMETER ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM2g)
+summary(logistic.GLM2g) #almost sig
 
 logistic.GLM2h <- glm(FDI.f ~ BURN_SEVERITY_RATING_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM2h)
+summary(logistic.GLM2h) #almost sig
 ```
+```{r}
+logistic.GLM2a <- glm(FDI.f ~ Distance + PROJ_HEIGHT_1_1 +
+                        BURN_SEVERITY_RATING_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM2a)
+```
+
+
 ```{r}
 bin_dis_GIS1$linpred.GLM2a <- predict(logistic.GLM2a) # Estimated logit using the linear part
 bin_dis_GIS1$yhat.GLM2a <- fitted(logistic.GLM2a) # Estimated probability using inverse logityhat values
