@@ -42,7 +42,7 @@ bin_dis_GIS1 <- bin_dis_GIS1 %>%
          !is.na(PLI.f), !is.na(FDI.f))
 ```
 
-#why is IBM two different catergories
+
 ```{r}
 logistic.GLM1a <- glm(PLI.f ~ Distance + years_since + CROWN_CLOSURE_1 + PROJ_AGE_1_1 + 
                         PROJ_HEIGHT_1_1 + DISTURBANCE_TYPE_1 + DISTANCE_TO_PERIMETER + 
@@ -63,9 +63,9 @@ logistic.GLM1c <- glm(PLI.f ~ years_since ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(logistic.GLM1c) #significant on own
 
-logistic.GLM1c <- glm(PLI.f ~ CROWN_CLOSURE_1 ,
+logistic.GLM1c1 <- glm(PLI.f ~ CROWN_CLOSURE_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(logistic.GLM1c) #not significant on own
+summary(logistic.GLM1c1) #not significant on own
 
 logistic.GLM1d <- glm(PLI.f ~ PROJ_AGE_1_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
@@ -91,6 +91,34 @@ summary(logistic.GLM1h) #significant on own
 logistic.GLM1.1a <- glm(PLI.f ~  years_since + PROJ_HEIGHT_1_1 + DISTURBANCE_TYPE_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(logistic.GLM1.1a)
+
+logistic.GLM1.1b <- glm(PLI.f ~  years_since + PROJ_AGE_1_1 + DISTURBANCE_TYPE_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1.1b)
+
+logistic.GLM1.1c <- glm(PLI.f ~  years_since + PROJ_AGE_1_1 + DISTURBANCE_TYPE_1 + DISTANCE_TO_PERIMETER + BURN_SEVERITY_RATING_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1.1c)
+
+logistic.GLM1.1d <- glm(PLI.f ~  years_since + PROJ_AGE_1_1 + DISTURBANCE_TYPE_1 + DISTANCE_TO_PERIMETER,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1.1d)
+
+logistic.GLM1.1e <- glm(PLI.f ~   PROJ_AGE_1_1 + PROJ_HEIGHT_1_1 + DISTURBANCE_TYPE_1 + DISTANCE_TO_PERIMETER,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1.1e)
+
+logistic.GLM1.1f <- glm(PLI.f ~ PROJ_HEIGHT_1_1 + DISTANCE_TO_PERIMETER,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1.1f)
+
+logistic.GLM1.1g <- glm(PLI.f ~ years_since + PROJ_HEIGHT_1_1 + DISTANCE_TO_PERIMETER,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1.1g)
+
+logistic.GLM1.1h <- glm(PLI.f ~ years_since + PROJ_HEIGHT_1_1 + DISTANCE_TO_PERIMETER,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.GLM1.1h)
 ```
 
 
@@ -248,3 +276,8 @@ plot(bin_dis_GIS1$FDI.f,bin_dis_GIS1$yhat.GLM2a,pch=8,
   ylab="Predicted Prob(dead)", xlab="Dead (=1) or Alive (=0) as Recorded")
 par(mfrow=c(1,1),mai=c(1,1,1,1),cex=1)
 ```
+
+```{r}
+
+```
+

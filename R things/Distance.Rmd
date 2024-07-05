@@ -124,4 +124,8 @@ ggplot(regen_GIS1, aes(x = Distance, y = SX_count)) +
                      breaks = seq(0, 250, by = 100),  
                      limits = c(0, 250))
 ```
+```{r}
+table(regen_GIS$FIRE_NUMBER_1, regen_GIS$FIRE_YEAR_1)
+filter(regen_GIS, FIRE_NUMBER_1 == "C51974")
+```
 

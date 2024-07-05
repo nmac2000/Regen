@@ -835,5 +835,7 @@ table(bin_dis_GIS$BEC_Zone, bin_dis_GIS$BEC_Subzone)
 table(bin_dis_GIS$BEC_Subzone, bin_dis_GIS$BEC_Variant)
 table(bin_dis_GIS$BEC_Zone, bin_dis_GIS$SX_count_bin)
 unique(bin_dis_GIS$DISTURBANCE_TYPE_1)
+table(bin_dis_GIS1$FIRE_NUMBER_1, bin_dis_GIS1$BURN_SEVERITY_RATING_1)
+range(bin_dis_GIS1$Elevation)
 ```
 
