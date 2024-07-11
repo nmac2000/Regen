@@ -269,6 +269,7 @@ Now it's plot data with GIS data
 
 regen_GIS <- left_join(regen_combo,GIS_i, by = "Card") %>% 
   ungroup()
+regen_GIStest <- left_join(regen_GIS, fire_severity, by = "Card")
 write.csv(regen_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_GIS.csv")
 ```
 

@@ -28,6 +28,8 @@ regen_binary <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframe
 regen_binary <- read.csv(regen_binary)
 actual_coords <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Plot_coordinates_actual.csv"
 actual_coords <- read.csv(actual_coords)
+fire_severity <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/FireSeverity.csv"
+fire_severity <- read.csv(fire_severity)
 
 ```
 
@@ -104,6 +106,11 @@ ggplot(regen_GIS, aes(x=Aspect)) +
   #geom_point(aes(y=FDI_count), color="green", alpha=.5)
 
 ```
+```{r}
+ggplot(bin_dis_GIS, aes(x=BURN_SEVERITY_RATING_1,y=PLI_count_bin)) +
+  geom_()
+```
+
 
 # deliverables for Anya
 making tables for different categorical variables and seeing how they have been sampled
@@ -836,6 +843,21 @@ table(bin_dis_GIS$BEC_Subzone, bin_dis_GIS$BEC_Variant)
 table(bin_dis_GIS$BEC_Zone, bin_dis_GIS$SX_count_bin)
 unique(bin_dis_GIS$DISTURBANCE_TYPE_1)
 table(bin_dis_GIS1$FIRE_NUMBER_1, bin_dis_GIS1$BURN_SEVERITY_RATING_1)
-range(bin_dis_GIS1$Elevation)
+table(bin_dis_GIS1$DISTURBANCE_TYPE_1)
+blank_disturbance <- bin_dis_GIS1 %>% 
+  filter(DISTURBANCE_TYPE_1 == "") %>% 
+  select(SampleSite_ID, DISTURBANCE_TYPE_1, FIRE_YEAR_1)
+#write.csv(blank_disturbance, "C:/Users/nmac2000/Documents/regen project/Data/blank_disturbance.csv", row.names = F)
+bin_dis_GIS1 %>% 
+  filter(DISTURBANCE_TYPE_1 == "") %>% 
+  filter(FIRE_YEAR_1 == 2010) %>% 
+  select(SampleSite_ID, DISTURBANCE_TYPE_1, FIRE_YEAR_1)
+
 ```
+```{r}
+fire_severity <- fire_severity %>% 
+  select(Card, MEAN, MAX)
+
+```
+
 

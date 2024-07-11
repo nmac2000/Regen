@@ -123,6 +123,8 @@ ggplot(regen_longer_GIS, aes(x=CROWN_CLOSURE_1, y=total)) +
 #distance <- rename(distance, SampleSite_ID = "Card")
 regen_binary_distance <- left_join(distance, regen_binary, by = "SampleSite_ID")
 bin_dis_GIS <- left_join(regen_binary_distance, GIS, by = "SampleSite_ID")
+fire_severity <- rename(fire_severity, SampleSite_ID = "Card")
+bin_dis_GIS <- left_join(bin_dis_GIS, fire_severity)
 bin_dis_GIS$years_since <- as.factor(2023-bin_dis_GIS$FIRE_YEAR_1)
 bin_dis_GIS$FDI_count_bin <- as.factor(bin_dis_GIS$FDI_count_bin)
 bin_dis_GIS$PLI_count_bin <- as.factor(bin_dis_GIS$PLI_count_bin)
@@ -230,6 +232,214 @@ mosaicplot(~ SX_count_bin + SPECIES_CD_1_1,
            ylab = "Species Code",
            las = 2, # Rotate the axis labels for better readability
            cex.axis = 0.8) # Adjust axis label size
+```
+
+```{r}
+#PLISTOP
+ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y=Distance)) +
+  geom_boxplot(aes(group = PLI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Distance to nearest live tree by PLI seedling Occurrence",
+    x = "PLI Occurrence",
+    y = "Distance (m)",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y= years_since)) +
+  geom_boxplot(aes(group = PLI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Years since fire by PLI seedling Occurrence",
+    x = "PLI Occurrence",
+    y = "Years",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y= PROJ_HEIGHT_1_1)) +
+  geom_boxplot(aes(group = PLI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Pre-fire stand projected height by PLI seedling Occurrence",
+    x = "PLI Occurrence",
+    y = "Projected height (m)",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y= DISTANCE_TO_PERIMETER)) +
+  geom_boxplot(aes(group = PLI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Distance to burn perimeter by PLI seedling Occurrence",
+    x = "PLI Occurrence",
+    y = "Distance (m)",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y= MEAN)) +
+  geom_boxplot(aes(group = PLI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Burn Severity by PLI seedling Occurrence",
+    x = "PLI Occurrence",
+    y = "nDBR",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y= CROWN_CLOSURE_1)) +
+  geom_boxplot(aes(group = PLI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Pre-fire crown closure by PLI seedling Occurrence",
+    x = "PLI Occurrence",
+    y = "Crown CLosure (%)",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y= PROJ_AGE_1_1)) +
+  geom_boxplot(aes(group = PLI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Pre-fire projected age by PLI seedling Occurrence",
+    x = "PLI Occurrence",
+    y = "Age (years)",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(PLI_count_bin)), aes(x=PLI_count_bin, y= PATCH_SIZE_1)) +
+  geom_boxplot(aes(group = PLI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Fire Severity patch size by PLI seedling Occurrence",
+    x = "PLI Occurrence",
+    y = "Patch size (?)",
+  ) +
+  theme_minimal()
+
+mosaicplot(~ PLI_count_bin + SPECIES_CD_1_1, 
+           data = bin_dis_GIS, 
+           color = TRUE, 
+           main = "PLI Occurrence by Dominant Overstory Species", 
+           xlab = "Seedling Occurrence", 
+           ylab = "Species Code",
+           las = 2, # Rotate the axis labels for better readability
+           cex.axis = 0.8) # Adjust axis label size
+
+mosaicplot(~ PLI_count_bin + DISTURBANCE_TYPE_1, 
+           data = bin_dis_GIS1, 
+           color = TRUE, 
+           main = "PLI Occurrence by Pre-fire Disturbance", 
+           xlab = "Seedling Occurrence", 
+           ylab = "Disturbance Code",
+           las = 2, # Rotate the axis labels for better readability
+           cex.axis = 0.8) # Adjust axis label size
+
+mosaicplot(~ PLI_count_bin + BURN_SEVERITY_RATING_1, 
+           data = bin_dis_GIS1, 
+           color = TRUE, 
+           main = "PLI Occurrence by Burn Severity", 
+           xlab = "Seedling Occurrence", 
+           ylab = "Severity",
+           las = 2, # Rotate the axis labels for better readability
+           cex.axis = 0.8) # Adjust axis label size
+#PLISTOP
+```
+```{r}
+ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y=Distance)) +
+  geom_boxplot(aes(group = FDI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Distance to nearest live tree by FDI seedling Occurrence",
+    x = "FDI Occurrence",
+    y = "Distance (m)",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y= years_since)) +
+  geom_boxplot(aes(group = FDI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Years since fire by FDI seedling Occurrence",
+    x = "FDI Occurrence",
+    y = "Years",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y= PROJ_HEIGHT_1_1)) +
+  geom_boxplot(aes(group = FDI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Pre-fire stand projected height by FDI seedling Occurrence",
+    x = "FDI Occurrence",
+    y = "Projected height (m)",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y= DISTANCE_TO_PERIMETER)) +
+  geom_boxplot(aes(group = FDI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Distance to burn perimeter by FDI seedling Occurrence",
+    x = "FDI Occurrence",
+    y = "Distance (m)",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y= MEAN)) +
+  geom_boxplot(aes(group = FDI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Burn Severity by FDI seedling Occurrence",
+    x = "FDI Occurrence",
+    y = "nDBR",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y= CROWN_CLOSURE_1)) +
+  geom_boxplot(aes(group = FDI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Pre-fire crown closure by FDI seedling Occurrence",
+    x = "FDI Occurrence",
+    y = "Crown CLosure (%)",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y= PROJ_AGE_1_1)) +
+  geom_boxplot(aes(group = FDI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Pre-fire projected age by FDI seedling Occurrence",
+    x = "FDI Occurrence",
+    y = "Age (years)",
+  ) +
+  theme_minimal()
+
+ggplot(filter(bin_dis_GIS, !is.na(FDI_count_bin)), aes(x=FDI_count_bin, y= PATCH_SIZE_1)) +
+  geom_boxplot(aes(group = FDI_count_bin), fill = "skyblue", color = "darkblue", outlier.color = "red") +
+  labs(
+    title = "Fire Severity patch size by FDI seedling Occurrence",
+    x = "FDI Occurrence",
+    y = "Patch size (?)",
+  ) +
+  theme_minimal()
+
+mosaicplot(~ FDI_count_bin + SPECIES_CD_1_1, 
+           data = bin_dis_GIS, 
+           color = TRUE, 
+           main = "FDI Occurrence by Dominant Overstory Species", 
+           xlab = "Seedling Occurrence", 
+           ylab = "Species Code",
+           las = 2, # Rotate the axis labels for better readability
+           cex.axis = 0.8) # Adjust axis label size
+
+mosaicplot(~ FDI_count_bin + DISTURBANCE_TYPE_1, 
+           data = bin_dis_GIS1, 
+           color = TRUE, 
+           main = "FDI Occurrence by Pre-fire Disturbance", 
+           xlab = "Seedling Occurrence", 
+           ylab = "Disturbance Code",
+           las = 2, # Rotate the axis labels for better readability
+           cex.axis = 0.8) # Adjust axis label size
+
+mosaicplot(~ FDI_count_bin + BURN_SEVERITY_RATING_1, 
+           data = bin_dis_GIS1, 
+           color = TRUE, 
+           main = "FDI Occurrence by Burn Severity", 
+           xlab = "Seedling Occurrence", 
+           ylab = "Severity",
+           las = 2, # Rotate the axis labels for better readability
+           cex.axis = 0.8) # Adjust axis label size
+```
+```{r}
+bin_dis_GIS1 %>% 
+  filter(is.na(BURN_SEVERITY_RATING_1)) %>% 
+  select(SampleSite_ID, FIRE_NUMBER_1, Distance)
 ```
 
 
