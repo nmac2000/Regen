@@ -31,13 +31,13 @@ bin_dis_GIS1$CROWN_CLOSURE_1 <- as.numeric(bin_dis_GIS1$CROWN_CLOSURE_1)
 bin_dis_GIS1$PROJ_AGE_1_1 <- as.numeric(bin_dis_GIS1$PROJ_AGE_1_1)
 bin_dis_GIS1$PROJ_HEIGHT_1_1 <- as.numeric(bin_dis_GIS1$PROJ_HEIGHT_1_1)
 bin_dis_GIS1$DISTANCE_TO_PERIMETER <- as.numeric(bin_dis_GIS1$DISTANCE_TO_PERIMETER)
-bin_dis_GIS1$years_since <- as.numeric(bin_dis_GIS1$years_since)
+bin_dis_GIS1$years_since <- as.numeric(2023-bin_dis_GIS1$FIRE_YEAR_1)
 bin_dis_GIS1$DISTURBANCE_TYPE_1 <- as.factor(bin_dis_GIS1$DISTURBANCE_TYPE_1)
 bin_dis_GIS1$BURN_SEVERITY_RATING_1 <- factor(bin_dis_GIS1$BURN_SEVERITY_RATING_1, 
                                                  levels = c("Unburned", "Low", "Medium", "High", "Unknown"))
 bin_dis_GIS1$SPECIES_CD_1_1 <- factor(bin_dis_GIS1$SPECIES_CD_1_1, levels = c("PLI", "FDI", "AT", "SX"))
 
-bin_dis_GIS1 <- bin_dis_GIS1 %>% 
+#bin_dis_GIS1 <- bin_dis_GIS1 %>% 
   filter(!is.na(Distance), !is.na(years_since), !is.na(CROWN_CLOSURE_1),
          !is.na(PROJ_AGE_1_1), !is.na(PROJ_HEIGHT_1_1), !is.na(DISTURBANCE_TYPE_1),
          !is.na(DISTANCE_TO_PERIMETER), !is.na(BURN_SEVERITY_RATING_1),
@@ -235,6 +235,26 @@ structure.PLI.3c <- glm(PLI.f ~   Distance + years_since  +
                         MEAN +  SPECIES_CD_1_1 + SPECIES_CD_2_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3c)
+
+structure.PLI.3d <- glm(PLI.f ~   Distance + years_since  + 
+                        PROJ_HEIGHT_1_1 + DISTANCE_TO_PERIMETER +  
+                        MEAN +  SPECIES_CD_1_1 + SPECIES_CD_2_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.3d)
+
+
+structure.PLI.3e <- glm(PLI.f ~   DISTURBANCE_TYPE_1 + years_since  + 
+                        PROJ_HEIGHT_1_1 + DISTANCE_TO_PERIMETER +  
+                        MEAN +  SPECIES_CD_1_1 + SPECIES_CD_2_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.3e)
+
+structure.PLI.3f <- glm(PLI.f ~  Distance + DISTURBANCE_TYPE_1 + years_since  + 
+                        PROJ_HEIGHT_1_1 + DISTANCE_TO_PERIMETER +  
+                        MEAN +  SPECIES_CD_1_1 + SPECIES_CD_2_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.3f)
+lrtest(structure.PLI.2d, structure.PLI.3f)
 ```
 ```
 Step 4 attempt 3
