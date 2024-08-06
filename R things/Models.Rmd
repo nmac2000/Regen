@@ -38,7 +38,7 @@ bin_dis_GIS1$BURN_SEVERITY_RATING_1 <- factor(bin_dis_GIS1$BURN_SEVERITY_RATING_
 bin_dis_GIS1$SPECIES_CD_1_1 <- factor(bin_dis_GIS1$SPECIES_CD_1_1, levels = c("PLI", "FDI", "AT", "SX"))
 
 #bin_dis_GIS1 <- bin_dis_GIS1 %>% 
-  filter(!is.na(Distance), !is.na(years_since), !is.na(CROWN_CLOSURE_1),
+#  filter(!is.na(Distance), !is.na(years_since), !is.na(CROWN_CLOSURE_1),
          !is.na(PROJ_AGE_1_1), !is.na(PROJ_HEIGHT_1_1), !is.na(DISTURBANCE_TYPE_1),
          !is.na(DISTANCE_TO_PERIMETER), !is.na(BURN_SEVERITY_RATING_1),
          !is.na(PLI.f), !is.na(FDI.f), !is.na(MEAN))

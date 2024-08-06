@@ -855,8 +855,19 @@ bin_dis_GIS1 %>%
 
 ```
 ```{r}
-fire_severity <- fire_severity %>% 
-  select(Card, MEAN, MAX)
+age.na <- bin_dis_GIS1 %>% 
+  filter(is.na(PROJ_AGE_1_1))
+#, !is.na(years_since), !is.na(CROWN_CLOSURE_1),
+         !is.na(PROJ_AGE_1_1), !is.na(PROJ_HEIGHT_1_1), !is.na(DISTURBANCE_TYPE_1),
+         !is.na(DISTANCE_TO_PERIMETER), !is.na(BURN_SEVERITY_RATING_1),
+         !is.na(PLI.f), !is.na(FDI.f), !is.na(MEAN))
+ggplot(age.na, aes(x= PLI_count_bin)) +
+  geom_bar()
+
+burn.na <- bin_dis_GIS1 %>% 
+  filter(is.na(BURN_SEVERITY_RATING_1))
+ggplot(burn.na, aes(x= PLI_count_bin)) +
+  geom_bar()
 
 ```
 
