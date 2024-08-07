@@ -1,0 +1,224 @@
+---
+title: "Models2"
+author: "Nat"
+date: "2024-08-07"
+output: html_document
+---
+
+
+```{r}
+#need to figure out data frames for everything and clean up code
+bin_dis_GIS1 <- bin_dis_GIS %>%
+  distinct(SampleSite_ID, .keep_all = T)
+
+```
+
+structural
+```{r}
+names(bin_dis_GIS1)  # print out the column (i.e., variable) names
+dim(bin_dis_GIS1)    # number of rows and columns
+head(bin_dis_GIS1)  # print out the first few lines of data
+
+#need to put this somewhere else later on
+bin_dis_GIS1$DISTURBANCE_TYPE_1<- sub( "IBM  ", "IBM", bin_dis_GIS1$DISTURBANCE_TYPE_1)
+
+# ensure y variable is a factor for dead versus alive
+bin_dis_GIS1$PLI.f <- as.factor(bin_dis_GIS1$PLI_count_bin)
+bin_dis_GIS1$FDI.f <- as.factor(bin_dis_GIS1$FDI_count_bin)
+# y=1 for dead trees, y=0 for live trees
+class(bin_dis_GIS1$PLI.f)
+bin_dis_GIS1$Distance <- as.numeric(bin_dis_GIS1$Distance)
+bin_dis_GIS1$CROWN_CLOSURE_1 <- as.numeric(bin_dis_GIS1$CROWN_CLOSURE_1)
+bin_dis_GIS1$PROJ_AGE_1_1 <- as.numeric(bin_dis_GIS1$PROJ_AGE_1_1)
+bin_dis_GIS1$PROJ_HEIGHT_1_1 <- as.numeric(bin_dis_GIS1$PROJ_HEIGHT_1_1)
+bin_dis_GIS1$DISTANCE_TO_PERIMETER <- as.numeric(bin_dis_GIS1$DISTANCE_TO_PERIMETER)
+bin_dis_GIS1$years_since <- as.numeric(2023-bin_dis_GIS1$FIRE_YEAR_1)
+bin_dis_GIS1$DISTURBANCE_TYPE_1 <- as.factor(bin_dis_GIS1$DISTURBANCE_TYPE_1)
+bin_dis_GIS1$BURN_SEVERITY_RATING_1 <- factor(bin_dis_GIS1$BURN_SEVERITY_RATING_1, 
+                                                 levels = c("Unburned", "Low", "Medium", "High", "Unknown"))
+bin_dis_GIS1$SPECIES_CD_1_1 <- factor(bin_dis_GIS1$SPECIES_CD_1_1, levels = c("PLI", "FDI", "AT", "SX"))
+
+bin_dis_GIS1 <- bin_dis_GIS1 %>% 
+  filter(!is.na(Distance), !is.na(years_since), !is.na(CROWN_CLOSURE_1),
+         !is.na(PROJ_AGE_1_1), !is.na(PROJ_HEIGHT_1_1), !is.na(DISTURBANCE_TYPE_1),
+         !is.na(DISTANCE_TO_PERIMETER), !is.na(BURN_SEVERITY_RATING_1),
+         !is.na(PLI.f), !is.na(FDI.f), !is.na(MEAN))
+```
+
+Step 1
+```{r}
+structure.PLI.full <- glm(PLI.f ~ Distance + years_since + CROWN_CLOSURE_1 + PROJ_AGE_1_1 + 
+                        PROJ_HEIGHT_1_1 + DISTURBANCE_TYPE_1 + DISTANCE_TO_PERIMETER + 
+                        BURN_SEVERITY_RATING_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.full)
+
+logistic.null <- glm(PLI.f ~ 1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(logistic.null)
+
+structure.PLIa <- glm(PLI.f ~ Distance ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIa) #not significant on own
+
+structure.PLIb <- glm(PLI.f ~ years_since ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIb) #significant on own
+
+structure.PLIc <- glm(PLI.f ~ CROWN_CLOSURE_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIc) #not significant on own
+
+structure.PLId <- glm(PLI.f ~ PROJ_AGE_1_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLId) #significant on own
+
+structure.PLIe <- glm(PLI.f ~ PROJ_HEIGHT_1_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIe) #significant on own
+
+structure.PLIf <- glm(PLI.f ~ DISTURBANCE_TYPE_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIf) #significant on own 
+
+
+structure.PLIg <- glm(PLI.f ~ DISTANCE_TO_PERIMETER ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIg) #significant on own
+
+structure.PLIh <- glm(PLI.f ~ BURN_SEVERITY_RATING_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIh) #significant on own
+
+structure.PLIi <- glm(PLI.f ~ MEAN ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIi)
+
+structure.PLIj <- glm(PLI.f ~ SPECIES_CD_1_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIj)
+
+structure.PLIk <- glm(PLI.f ~ PATCH_SIZE_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIk)
+
+structure.PLIl <- glm(PLI.f ~ SPECIES_PCT_1_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIl)
+
+structure.PLIm <- glm(PLI.f ~ SPECIES_CD_2_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIm)
+
+structure.PLIn <- glm(PLI.f ~ SPECIES_CD_3_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIn)
+
+lrtest(structure.PLIj, logistic.null)
+lrtest(structure.PLIm, logistic.null)
+lrtest(structure.PLIn, logistic.null)
+```
+Compare categorical variables to null model
+```{r}
+library(lmtest)
+lrtest(structure.PLIf, logistic.null)
+lrtest(structure.PLIh, logistic.null)
+```
+
+Step 2 with dNBR
+```{r}
+structure.PLI.2a <- glm(PLI.f ~ years_since  + MEAN  + SPECIES_CD_1_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2a)
+lrtest(structure.PLI.2a, glm(PLI.f ~ years_since  + MEAN,family=binomial(link = "logit"), data=bin_dis_GIS1))
+
+structure.PLI.2b <- glm(PLI.f ~ years_since  + MEAN  + SPECIES_CD_1_1 + SPECIES_CD_2_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2b)
+lrtest(structure.PLI.2b, structure.PLI.2a) #restrictions justified, remove SPECIES_CD_2_1
+
+structure.PLI.2c <- glm(PLI.f ~ years_since  + MEAN  + SPECIES_CD_1_1 + SPECIES_CD_3_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2c)
+lrtest(structure.PLI.2c, structure.PLI.2a) #restrictions justified, remove SPECIES_CD_3_1
+
+structure.PLI.2d <- glm(PLI.f ~ years_since  + MEAN  + SPECIES_CD_1_1 + PROJ_HEIGHT_1_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2d)
+lrtest(structure.PLI.2d, structure.PLI.2a) #restrictions justified, remove PROJ_HEIGHT_1_1
+
+structure.PLI.2e <- glm(PLI.f ~ years_since  + SPECIES_CD_1_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2e)
+lrtest(structure.PLI.2e, glm(PLI.f ~ years_since , family=binomial(link = "logit"), data=bin_dis_GIS1))
+
+structure.PLI.2f <- glm(PLI.f ~ years_since  + SPECIES_CD_1_1 + SPECIES_CD_2_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2f)
+lrtest(structure.PLI.2f, structure.PLI.2e) # restrictions justified, remove SPECIES_CD_2_1
+
+structure.PLI.2g <- glm(PLI.f ~ years_since  + SPECIES_CD_1_1 + PROJ_HEIGHT_1_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2g)
+lrtest(structure.PLI.2g, structure.PLI.2e) #restrictions justified, remove PROJ_HEIGHT_1_1
+
+structure.PLI.2h <- glm(PLI.f ~ years_since  + SPECIES_CD_1_1 + DISTANCE_TO_PERIMETER,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2h)
+lrtest(structure.PLI.2h, structure.PLI.2e) #restrictions justified, remove DISTANCE_TO_PERIMETER
+
+structure.PLI.2i <- glm(PLI.f ~ years_since  + SPECIES_CD_1_1 + PATCH_SIZE_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2i)
+lrtest(structure.PLI.2i, structure.PLI.2e) #restrictions justified, remove PATCH_SIZE_1
+
+structure.PLI.2j <- glm(PLI.f ~ years_since  + MEAN  + SPECIES_CD_1_1 + DISTANCE_TO_PERIMETER,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2j)
+lrtest(structure.PLI.2j, structure.PLI.2a) #restrictions justified, remove DISTANCE_TO_PERIMETER
+
+structure.PLI.2k <- glm(PLI.f ~ years_since  + MEAN  + SPECIES_CD_1_1 + PATCH_SIZE_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2k)
+lrtest(structure.PLI.2k, structure.PLI.2a) #restrictions justified, remove PATCH_SIZE_1
+
+structure.PLI.2l <- glm(PLI.f ~ years_since  + SPECIES_CD_1_1 + BURN_SEVERITY_RATING_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2l)
+lrtest(structure.PLI.2l, structure.PLI.2e) #restrictions justified, remove BURN_SEVERITY_RATING_1
+
+structure.PLI.2m <- glm(PLI.f ~ years_since  + SPECIES_CD_1_1 + BURN_SEVERITY_RATING_1 +MEAN,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2m)
+lrtest(structure.PLI.2m, structure.PLI.2a) #restrictions justified, remove BURN_SEVERITY_RATING_1
+
+structure.PLI.2n <- glm(PLI.f ~ years_since  + SPECIES_CD_1_1 + DISTURBANCE_TYPE_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2n)
+lrtest(structure.PLI.2n, structure.PLI.2e) #restictions justified, remove DISTURBANCE_TYPE_1
+
+structure.PLI.2o <- glm(PLI.f ~ years_since  + SPECIES_CD_1_1 + DISTURBANCE_TYPE_1 +MEAN,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2o)
+lrtest(structure.PLI.2o, structure.PLI.2a) #restictions justified, remove DISTURBANCE_TYPE_1
+
+structure.PLI.2p <- glm(PLI.f ~ years_since  + SPECIES_CD_1_1 + Distance,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2p)
+lrtest(structure.PLI.2p, structure.PLI.2e) #restictions justified, remove Distance
+
+structure.PLI.2q <- glm(PLI.f ~ years_since  + SPECIES_CD_1_1 + Distance +MEAN,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2q)
+lrtest(structure.PLI.2q, structure.PLI.2a) #restictions justified, remove Distance
+
+structure.PLI.2r <- glm(PLI.f ~ years_since  + SPECIES_CD_1_1 + PROJ_AGE_1_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2r)
+lrtest(structure.PLI.2r, structure.PLI.2e)
+
+structure.PLI.2s <- glm(PLI.f ~ years_since  + SPECIES_CD_1_1 + PROJ_AGE_1_1 + MEAN,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.2s)
+lrtest(structure.PLI.2s, structure.PLI.2e)
+``````
