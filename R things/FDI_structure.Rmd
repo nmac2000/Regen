@@ -354,6 +354,8 @@ structure.FDI.4l <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIE
 summary(structure.FDI.4l)
 lrtest(structure.FDI.4l, structure.FDI.4k)
 
+lrtest(structure.FDI.4k, structure.FDI.2l)
+
 test()
 ```
 
