@@ -125,11 +125,20 @@ regen_binary_distance <- left_join(distance, regen_binary, by = "SampleSite_ID")
 bin_dis_GIS <- left_join(regen_binary_distance, GIS, by = "SampleSite_ID")
 fire_severity <- rename(fire_severity, SampleSite_ID = "Card")
 bin_dis_GIS <- left_join(bin_dis_GIS, fire_severity)
+
+bin_dis_GIS <- left_join(bin_dis_GIS, BARC)
 bin_dis_GIS$years_since <- as.factor(2023-bin_dis_GIS$FIRE_YEAR_1)
 bin_dis_GIS$FDI_count_bin <- as.factor(bin_dis_GIS$FDI_count_bin)
 bin_dis_GIS$PLI_count_bin <- as.factor(bin_dis_GIS$PLI_count_bin)
 bin_dis_GIS$SX_count_bin <- as.factor(bin_dis_GIS$SX_count_bin)
 bin_dis_GIS <- filter(bin_dis_GIS, !is.na(SPECIES_CD_1_1))
+
+BARC <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/BARC.csv")
+BARC <- BARC %>% 
+  select(Card, MEAN) %>% 
+  mutate(BARC = round(MEAN)) %>% 
+  rename(SampleSite_ID = "Card")
+bin_dis_GIS <- left_join(bin_dis_GIS, BARC, by = "SampleSite_ID")
 ```
 
 ```{r}
@@ -438,8 +447,7 @@ mosaicplot(~ FDI_count_bin + BURN_SEVERITY_RATING_1,
 ```
 ```{r}
 bin_dis_GIS1 %>% 
-  filter(is.na(SPECIES_CD_1_1)) %>% 
-  select(SampleSite_ID, FIRE_NUMBER_1, Distance)
+  filter(is.na(BARC.y))
 ```
 
 

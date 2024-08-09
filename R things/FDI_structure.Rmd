@@ -181,6 +181,18 @@ structure.FDI.2k <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIE
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.2k)
 lrtest(structure.FDI.2k, structure.FDI.2e)
+
+structure.FDI.2l <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
+                          PROJ_AGE_1_1 + PATCH_SIZE_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.2l)
+lrtest(structure.FDI.2l, structure.FDI.2e)
+
+structure.FDI.2m <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
+                          PROJ_AGE_1_1 + PATCH_SIZE_1 + CROWN_CLOSURE_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.2m)
+lrtest(structure.FDI.2m, structure.FDI.2l)
 ```
 
 ```{r}
@@ -242,16 +254,107 @@ summary(structure.FDI.3j)
 lrtest(structure.FDI.3j, structure.FDI.3e) #restrictions justified
 
 structure.FDI.3k <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + MEAN,
+                          PROJ_AGE_1_1 + MEAN + PATCH_SIZE_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3k)
-lrtest(structure.FDI.3k, structure.FDI.2e)
+lrtest(structure.FDI.3k, structure.FDI.3e)
 
-structure.FDI.3l <- glm(FDI.f ~  Distance + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_HEIGHT_1_1 ,
+structure.FDI.3m <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
+                          PROJ_AGE_1_1 + MEAN + PATCH_SIZE_1 + CROWN_CLOSURE_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.3l)
-lrtest(structure.FDI.3l, structure.FDI.2e)
+summary(structure.FDI.3m)
+lrtest(structure.FDI.3m, structure.FDI.3k)
+
+code
+```
+
+```{r}
+structure.FDI.4 <- glm(FDI.f ~ years_since + BARC.y ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4)
+lrtest(structure.FDI.4, glm(FDI.f ~ years_since   ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1))
+
+structure.FDI.4a <- glm(FDI.f ~ years_since + BARC.y + SPECIES_CD_1_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4a)
+lrtest(structure.FDI.4a, structure.FDI.4)
+
+structure.FDI.4b <- glm(FDI.f ~ years_since + BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4b)
+lrtest(structure.FDI.4b, structure.FDI.4a) #restrictions not justified
+
+structure.FDI.4c <- glm(FDI.f ~ years_since + BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1 + PROJ_HEIGHT_1_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4c)
+lrtest(structure.FDI.4c, structure.FDI.4b) 
+
+structure.FDI.4c1 <- glm(FDI.f ~ years_since + BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1 + PROJ_AGE_1_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4c1)
+lrtest(structure.FDI.4c1, structure.FDI.4b) 
+
+structure.FDI.4c2 <- glm(FDI.f ~ years_since + BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1 + PROJ_AGE_1_1 +PROJ_HEIGHT_1_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4c2)
+lrtest(structure.FDI.4c2, structure.FDI.4c) 
+lrtest(structure.FDI.4c2, structure.FDI.4c1)
+
+structure.FDI.4d <- glm(FDI.f ~ years_since + BARC.y +SPECIES_CD_1_1 + SPECIES_CD_2_1 + Distance + PROJ_AGE_1_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4d)
+lrtest(structure.FDI.4d, structure.FDI.4b)
+
+structure.FDI.4e <- glm(FDI.f ~ years_since + BARC.y +SPECIES_CD_1_1 + SPECIES_CD_2_1 + Distance +
+                          PROJ_AGE_1_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4e)
+lrtest(structure.FDI.4e, structure.FDI.4d) 
+
+structure.FDI.4f <- glm(FDI.f ~  Distance + MEAN + years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
+                          PROJ_AGE_1_1 + BARC.y,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4f)
+lrtest(structure.FDI.4f, structure.FDI.4e) #restrictions justified
+
+structure.FDI.4g <- glm(FDI.f ~  Distance +years_since + BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
+                          PROJ_AGE_1_1 + SPECIES_PCT_1_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4g)
+lrtest(structure.FDI.4g, structure.FDI.4e) #restrictions justified
+
+structure.FDI.4h <- glm(FDI.f ~  Distance +years_since + BARC.y +SPECIES_CD_1_1 + SPECIES_CD_2_1 +
+                          PROJ_AGE_1_1 + DISTANCE_TO_PERIMETER,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4h)
+lrtest(structure.FDI.4h, structure.FDI.4e)
+
+structure.FDI.4i <- glm(FDI.f ~  Distance +years_since +BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
+                          PROJ_AGE_1_1 + SPECIES_CD_3_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4i)
+lrtest(structure.FDI.4i, structure.FDI.4e) # restrictions justified
+
+structure.FDI.4j <- glm(FDI.f ~  Distance +years_since + BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
+                          PROJ_AGE_1_1 + DISTURBANCE_TYPE_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4j)
+lrtest(structure.FDI.4j, structure.FDI.4e) #restrictions justified
+
+structure.FDI.4k <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
+                          PROJ_AGE_1_1 + BARC.y + PATCH_SIZE_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4k)
+lrtest(structure.FDI.4k, structure.FDI.4e)
+
+structure.FDI.4l <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
+                          PROJ_AGE_1_1 + BARC.y+ PATCH_SIZE_1 + CROWN_CLOSURE_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.FDI.4l)
+lrtest(structure.FDI.4l, structure.FDI.4k)
+
+test()
 ```
 
 ```{r}
@@ -264,7 +367,7 @@ bin_dis_GIS1$resid.GLM.FDI.2e <- resid(structure.FDI.2e) # the deviances
 # and the dead=1 (it is dead) trees to all have high predicted prob (dead). 
 par(mfrow=c(1,1),mai=c(1,1,0.6,0.6),cex=0.8)
 plot(bin_dis_GIS1$FDI.f,bin_dis_GIS1$yhat.GLM.FDI.2e,pch=8,
-  main="Model 1: Predicted Prob for Seedling Occurrence (PLI)",
+  main="Model 1: Predicted Prob for Seedling Occurrence (FDI)",
   ylab="Predicted Prob(occurrence)", xlab="Seedling (=1) or No seedling(=0) as Recorded")
 par(mfrow=c(1,1),mai=c(1,1,1,1),cex=1)
 ```
