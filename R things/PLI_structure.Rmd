@@ -44,7 +44,7 @@ bin_dis_GIS1 <- bin_dis_GIS1 %>%
   filter(!is.na(Distance), !is.na(years_since), !is.na(CROWN_CLOSURE_1),
          !is.na(PROJ_AGE_1_1), !is.na(PROJ_HEIGHT_1_1), !is.na(DISTURBANCE_TYPE_1),
          !is.na(DISTANCE_TO_PERIMETER), !is.na(BURN_SEVERITY_RATING_1),
-         !is.na(PLI.f), !is.na(FDI.f), !is.na(MEAN))
+         !is.na(PLI.f), !is.na(FDI.f), !is.na(MEAN.y))
 ```
 
 Step 1
@@ -120,6 +120,16 @@ structure.PLIo <- glm(PLI.f ~ BARC.y ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLIo)
 lrtest(structure.PLIo, logistic.null)
+
+structure.PLIp <- glm(PLI.f ~ BARC.x ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIp)
+lrtest(structure.PLIp, logistic.null)
+
+structure.PLIq <- glm(PLI.f ~ BARC.z ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLIq)
+lrtest(structure.PLIq, logistic.null)
 
 lrtest(structure.PLIj, logistic.null)
 lrtest(structure.PLIm, logistic.null)
@@ -323,6 +333,16 @@ structure.PLI.3m <- glm(PLI.f ~ years_since  + BARC.y + SPECIES_CD_1_1 +
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3m)
 lrtest(structure.PLI.3m, structure.PLI.3b)
+
+structure.PLI.3n <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.3n)
+
+
+structure.PLI.3o <- glm(PLI.f ~ years_since  + BARC.z + SPECIES_CD_1_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(structure.PLI.3o)
+
 
 test()
 

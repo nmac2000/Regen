@@ -1,0 +1,51 @@
+---
+title: "Quick Tings"
+author: "Nat"
+date: "2024-08-21"
+output: html_document
+---
+
+```{r}
+
+C50234 <- c(116332565.918876, 49909874.349555, 30796949.500179, 34004677.232753985, 1621064.836388)
+C50418 <- c(677308683.835513, 73679400.000014, 200375999.999988, 373487400.0000214, 29892599.999979)
+C50647 <- c(2392988423.228636, 350504308.072642, 635719295.400265, 1001860026.217338, 404904793.538248)
+C50183 <- c(52683300.000006, 24973200.000003, 15185700.000003, 12404700.000001, 119700)
+C50186 <- c(162387000.000003, 64405800.000004, 61408800.000019, 36291599.999981, 280800.000001)
+
+
+fire_df <- data.frame(
+  FireNumber = c("C50234", "C50647", "C50418"),
+  TotalArea = c(C50234[1], C50647[1], C50418[1]),
+  Class1 = c(C50234[2], C50647[2], C50418[2]),
+  Class2 = c(C50234[3], C50647[3], C50418[3]),
+  Class3 = c(C50234[4], C50647[4], C50418[4]),
+  Class4 = c(C50234[5], C50647[5], C50418[5])
+)
+
+percents_df <- data.frame(
+  FireNumber = fire_df$FireNumber,
+  Per1 = numeric(nrow(fire_df)),
+  Per2 = numeric(nrow(fire_df)),
+  Per3 = numeric(nrow(fire_df)),
+  Per4 = numeric(nrow(fire_df))
+)
+
+# Loop through each row of the data frame
+for (i in 1:nrow(fire_df)) {
+  total_area <- fire_df$TotalArea[i]
+  class1 <- fire_df$Class1[i]
+  class2 <- fire_df$Class2[i]
+  class3 <- fire_df$Class3[i]
+  class4 <- fire_df$Class4[i]
+  
+  # Calculate the percents
+  percents_df$Per1[i] <- class1 / total_area
+  percents_df$Per2[i] <- class2 / total_area
+  percents_df$Per3[i] <- class3 / total_area
+  percents_df$Per4[i] <- class4 / total_area
+}
+
+
+
+```

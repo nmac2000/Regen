@@ -10,6 +10,7 @@ output: html_document
 bin_dis_GIS1 <- bin_dis_GIS %>%
   distinct(SampleSite_ID, .keep_all = T)
 
+write.csv(bin_dis_GIS,  "C:/Users/nmac2000/Documents/regen project.csv")
 ```
 
 structural

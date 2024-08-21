@@ -1,0 +1,42 @@
+---
+title: "Site"
+author: "Nat"
+date: "2024-08-21"
+output: html_document
+---
+
+```{r}
+library(lmtest)
+bin_dis_GIS1$SOILNAME_1 <- as.factor(bin_dis_GIS1$SOILNAME_1)
+bin_dis_GIS2 <- bin_dis_GIS1 %>% 
+  filter(SOILNAME_1 != "NO SOILS DATA")
+
+site.PLI.null <- glm(PLI.f ~ 1,
+                     family=binomial(link = "logit"), data = bin_dis_GIS2)
+
+site.PLIa <- glm(PLI.f ~ SOILNAME_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.PLIa)
+
+lrtest(site.PLIa, site.PLI.null)
+
+site.FDI.null <- glm(FDI.f ~ 1,
+                     family=binomial(link = "logit"), data = bin_dis_GIS1)
+
+site.FDIa <- glm(FDI.f ~ SOILNAME_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDIa)
+
+lrtest(site.FDIa, site.FDI.null)
+
+site.PLIb <- glm(PLI.f ~ PARENT_SOILS ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.PLIb)
+lrtest(site.PLIb, site.PLI.null)
+
+site.PLIc <- glm(PLI.f ~ PARENT_SOILS + SOILNAME_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+lrtest(site.PLIc, site.PLIb)
+lrtest(site.PLIc, site.PLIa)
+
+```
