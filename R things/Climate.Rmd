@@ -105,8 +105,8 @@ forClim2023 <- forClim1 %>%
 #clim2003.2004 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2003, period='Year_2004.ann', MSY='SY')
 #clim2003.2005 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2003, period='Year_2005.ann', MSY='SY')
 #clim2003.2006 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2003, period='Year_2006.ann', MSY='SY')
-clim2003.2007 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2003, period='Year_2007.ann', MSY='SY')
-clim2003.2008 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2003, period='Year_2008.ann', MSY='SY')
+#clim2003.2007 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2003, period='Year_2007.ann', MSY='SY')
+#clim2003.2008 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2003, period='Year_2008.ann', MSY='SY')
 #write.csv(clim2003.2004, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2003/2004.csv")
 clim2003.2004 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2003/2004.csv")
 #write.csv(clim2003.2005, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2003/2005.csv")
@@ -135,53 +135,69 @@ clim2009.2014 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main
 
 #clim2009.normal <- ClimateNA_API2(ClimateBC_NA='BC', forClim2009, period='Normal_1981_2010.nrm', MSY='SY')
 #write.csv(clim2009.normal, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2009/normal.csv")
+clim2009.normal <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2009/normal.csv")
 
 #clim2010.2011 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2010, period='Year_2011.ann', MSY='SY')
 #clim2010.2012 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2010, period='Year_2012.ann', MSY='SY')
 #clim2010.2013 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2010, period='Year_2013.ann', MSY='SY')
-clim2010.2014 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2010, period='Year_2014.ann', MSY='SY')
-clim2010.2015 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2010, period='Year_2015.ann', MSY='SY')
+#clim2010.2014 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2010, period='Year_2014.ann', MSY='SY')
+#clim2010.2015 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2010, period='Year_2015.ann', MSY='SY')
 #write.csv(clim2010.2011, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2010/2011.csv")
 clim2010.2011 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2010/2011.csv")
 #write.csv(clim2010.2012, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2010/2012.csv")
 clim2010.2012 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2010/2012.csv")
 #write.csv(clim2010.2013, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2010/2013.csv")
-#clim2010.2013 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2010/2013.csv")
-write.csv(clim2010.2012, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2010/2014.csv")
+clim2010.2013 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2010/2013.csv")
+#write.csv(clim2010.2012, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2010/2014.csv")
 clim2010.2014 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2010/2014.csv")
-write.csv(clim2010.2013, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2010/2015.csv")
+#write.csv(clim2010.2013, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2010/2015.csv")
 clim2010.2015 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2010/2015.csv")
 
 #clim2010.normal <- ClimateNA_API2(ClimateBC_NA='BC', forClim2010, period='Normal_1981_2010.nrm', MSY='SY')
 #write.csv(clim2010.normal, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2010/normal.csv")
+clim2010.normal <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2010/normal.csv")
 
 #clim2015.2016 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2015, period='Year_2016.ann', MSY='SY')
 #clim2015.2017 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2015, period='Year_2017.ann', MSY='SY')
 #clim2015.2018 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2015, period='Year_2018.ann', MSY='SY')
+#clim2015.2019 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2015, period='Year_2019.ann', MSY='SY')
+#clim2015.2020 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2015, period='Year_2020.ann', MSY='SY')
 #write.csv(clim2015.2016, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2015/2016.csv")
 clim2015.2016 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2015/2016.csv")
 #write.csv(clim2015.2017, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2015/2017.csv")
 clim2015.2017 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2015/2017.csv")
 #write.csv(clim2015.2018, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2015/2018.csv")
 clim2015.2018 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2015/2018.csv")
+#write.csv(clim2015.2019, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2015/2019.csv")
+clim2015.2019 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2015/2019.csv")
+#write.csv(clim2015.2020, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2015/2020.csv")
+clim2015.2020 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2015/2020.csv")
 
 #clim2015.normal <- ClimateNA_API2(ClimateBC_NA='BC', forClim2015, period='Normal_1981_2010.nrm', MSY='SY')
 #write.csv(clim2015.normal, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2015/normal.csv")
+clim2015.normal <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2015/normal.csv")
 
 ###
 
 #clim2016.2017 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2016, period='Year_2017.ann', MSY='SY')
 #clim2016.2018 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2016, period='Year_2018.ann', MSY='SY')
 #clim2016.2019 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2016, period='Year_2019.ann', MSY='SY')
+#clim2016.2020 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2016, period='Year_2020.ann', MSY='SY')
+#clim2016.2021 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2016, period='Year_2021.ann', MSY='SY')
 #write.csv(clim2016.2017, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2016/2017.csv")
 clim2016.2017 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2016/2017.csv")
 #write.csv(clim2016.2018, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2016/2018.csv")
 clim2016.2018 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2016/2018.csv")
 #write.csv(clim2016.2019, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2016/2019.csv")
 clim2016.2019 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2016/2019.csv")
+#write.csv(clim2016.2020, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2016/2020.csv")
+clim2016.2018 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2016/2020.csv")
+#write.csv(clim2016.2021, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2016/2021.csv")
+clim2016.2019 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2016/2021.csv")
 
 #clim2016.normal <- ClimateNA_API2(ClimateBC_NA='BC', forClim2016, period='Normal_1981_2010.nrm', MSY='SY')
 #write.csv(clim2016.normal, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2016/normal.csv")
+clim2016.normal <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2016/normal.csv")
 
 
 ###2017 data needs to be split up
@@ -192,41 +208,62 @@ forClim2017c <- forClim2017[201:288,]
 #clim2017a.2018 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017a, period='Year_2018.ann', MSY='SY')
 #clim2017a.2019 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017a, period='Year_2019.ann', MSY='SY')
 #clim2017a.2020 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017a, period='Year_2020.ann', MSY='SY')
+#clim2017a.2021 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017a, period='Year_2021.ann', MSY='SY')
+#clim2017a.2022 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017a, period='Year_2022.ann', MSY='SY')
 #write.csv(clim2017a.2018, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2018a.csv")
 clim2017a.2018 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2018a.csv")
 #write.csv(clim2017a.2019, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2019a.csv")
 clim2017a.2019 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2019a.csv")
 #write.csv(clim2017a.2020, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2020a.csv")
 clim2017a.2020 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2020a.csv")
+#write.csv(clim2017a.2021, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2021a.csv")
+clim2017a.2021 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2021a.csv")
+#write.csv(clim2017a.2022, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2022a.csv")
+clim2017a.2022 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2022a.csv")
 
 #clim2017a.normal <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017a, period='Normal_1981_2010.nrm', MSY='SY')
 #write.csv(clim2017a.normal, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/normala.csv")
+clim2017a.normal <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/normala.csv")
 
 #clim2017b.2018 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017b, period='Year_2018.ann', MSY='SY')
 #clim2017b.2019 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017b, period='Year_2019.ann', MSY='SY')
 #clim2017b.2020 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017b, period='Year_2020.ann', MSY='SY')
+#clim2017b.2021 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017b, period='Year_2021.ann', MSY='SY')
+#clim2017b.2022 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017b, period='Year_2022.ann', MSY='SY')
 #write.csv(clim2017b.2018, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2018b.csv")
 clim2017b.2018 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2018b.csv")
 #write.csv(clim2017b.2019, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2019b.csv")
 clim2017b.2019 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2019b.csv")
 #write.csv(clim2017b.2020, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2020b.csv")
 clim2017b.2020 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2020b.csv")
+#write.csv(clim2017b.2021, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2021b.csv")
+clim2017b.2021 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2021b.csv")
+#write.csv(clim2017b.2022, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2022b.csv")
+clim2017b.2022 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2022b.csv")
 
 #clim2017b.normal <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017b, period='Normal_1981_2010.nrm', MSY='SY')
 #write.csv(clim2017b.normal, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/normalb.csv")
+clim2017b.normal <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/normalb.csv")
 
 #clim2017c.2018 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017c, period='Year_2018.ann', MSY='SY')
 #clim2017c.2019 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017c, period='Year_2019.ann', MSY='SY')
 #clim2017c.2020 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017c, period='Year_2020.ann', MSY='SY')
+#clim2017c.2021 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017c, period='Year_2021.ann', MSY='SY')
+#clim2017c.2022 <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017c, period='Year_2022.ann', MSY='SY')
 #write.csv(clim2017c.2018, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2018c.csv")
 clim2017c.2018 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2018c.csv")
 #write.csv(clim2017c.2019, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2019c.csv")
 clim2017c.2019 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2019c.csv")
 #write.csv(clim2017c.2020, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2020c.csv")
 clim2017c.2020 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2020c.csv")
+#write.csv(clim2017c.2021, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2021c.csv")
+clim2017c.2021 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2021c.csv")
+#write.csv(clim2017c.2022, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/2022c.csv")
+clim2017c.2022 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/2022c.csv")
 
 #clim2017c.normal <- ClimateNA_API2(ClimateBC_NA='BC', forClim2017c, period='Normal_1981_2010.nrm', MSY='SY')
 #write.csv(clim2017c.normal, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/normalc.csv")
+clim2017c.normal <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/normalc.csv")
 ```
 #need to now make compiled data frame for each year and find mins, maxs, and avgs
 variables of interest:
@@ -262,14 +299,6 @@ variables of interest:
 select(MAT, MWMT, MCMT, NFFD, PAS, Eref, CMD, AHM, SHM, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, 
        Tmin_sp, Tmin_sm, PPT_wt, PPT_sp, PPT_sm, NFFD_sp, PAS_wt, PAS_sp, Eref_sm, CMD_sm, CMI_sm)
 
-set.seed(123)
-a <- data.frame(matrix(sample(20,10), ncol = 5, nrow = 5))
-b <- data.frame(matrix(sample(20,10), ncol = 5, nrow = 5))
-c <- data.frame(matrix(sample(20,10), ncol = 5, nrow = 5))
-
-
-
-
 ```
 
 #Combine different years
@@ -288,10 +317,19 @@ clim2017.2020 <- rbind(clim2017a.2020,clim2017b.2020,clim2017c.2020)
 clim2017.2020$Year <- 3
 clim2017.2020 <- subset(clim2017.2020, select = -c(X))
 
+clim2017.2021 <- rbind(clim2017a.2021,clim2017b.2021,clim2017c.2021)
+clim2017.2021$Year <- 4
+clim2017.2021 <- subset(clim2017.2021, select = -c(X))
+
+clim2017.2022 <- rbind(clim2017a.2022,clim2017b.2022,clim2017c.2022)
+clim2017.2022$Year <- 5
+clim2017.2022 <- subset(clim2017.2022, select = -c(X))
+
 clim2017.normal <- rbind(clim2017a.normal,clim2017b.normal,clim2017c.normal)
 clim2017.normal$Year <- 0
+clim2017.normal <- select(clim2017.normal, -X)
 
-clim2017 <- rbind(clim2017.2018, clim2017.2019, clim2017.2020, clim2017.normal)
+clim2017 <- rbind(clim2017.2018, clim2017.2019, clim2017.2020, clim2017.2021, clim2017.2022, clim2017.normal)
 
 #2003
 #clim2003.2004$Year <- 1
@@ -304,36 +342,52 @@ clim2017 <- rbind(clim2017.2018, clim2017.2019, clim2017.2020, clim2017.normal)
 clim2009.2010$Year <- 1
 clim2009.2011$Year <-2
 clim2009.2012$Year <-3
+clim2009.2013$Year <-4
+clim2009.2014$Year <-5
 clim2009.normal$Year <- 0
-clim2009 <- rbind(clim2009.2010, clim2009.2011, clim2009.2012)
+clim2009 <- rbind(clim2009.2010, clim2009.2011, clim2009.2012, clim2009.2013, clim2009.2014)
 clim2009 <- subset(clim2009, select = -c(X))
+clim2009.normal <- select(clim2009.normal, -X)
 clim2009 <- rbind(clim2009, clim2009.normal)
+
 
 #2010
 clim2010.2011$Year <- 1
 clim2010.2012$Year <-2
 clim2010.2013$Year <-3
+clim2010.2014$Year <-4
+clim2010.2015$Year <-5
 clim2010.normal$Year <- 0
-clim2010 <- rbind(clim2010.2011,clim2010.2012,clim2010.2013)
+clim2010 <- rbind(clim2010.2011,clim2010.2012,clim2010.2013,clim2010.2014,clim2010.2015)
 clim2010 <- subset(clim2010, select = -c(X))
+clim2010.normal <- select(clim2010.normal, -X)
 clim2010 <- rbind(clim2010, clim2010.normal)
 
 #2015
 clim2015.2016$Year <- 1
 clim2015.2017$Year <-2
 clim2015.2018$Year <-3
+clim2015.2019$Year <-4
+clim2015.2020$Year <-5
 clim2015.normal$Year <- 0
-clim2015 <- rbind(clim2015.2016,clim2015.2017,clim2015.2018)
+clim2015 <- rbind(clim2015.2016,clim2015.2017,clim2015.2018,clim2015.2019,clim2015.2020)
 clim2015 <- subset(clim2015, select = -c(X))
+clim2015.normal <- select(clim2015.normal, -X)
 clim2015 <- rbind(clim2015, clim2015.normal)
 
 #2016
 clim2016.2017$Year <- 1
 clim2016.2018$Year <-2
 clim2016.2019$Year <-3
+clim2016.2020$Year <-4
+clim2016.2021$Year <-5
 clim2016.normal$Year <- 0
-clim2016 <- rbind(clim2016.2017,clim2016.2018,clim2016.2019)
+clim2016.2017 <-select(clim2016.2017, -X) 
+clim2016.2018 <-select(clim2016.2018, -X) 
+clim2016.2019 <-select(clim2016.2017, -X) 
+clim2016 <- rbind(clim2016.2017,clim2016.2018,clim2016.2019,clim2016.2020,clim2016.2021)
 clim2016 <- subset(clim2016, select = -c(X))
+clim2016.normal <- select(clim2016.normal, -X)
 clim2016 <- rbind(clim2016, clim2016.normal)
 
 #All
@@ -344,10 +398,13 @@ clim.all <- clim.all %>%
 ```
 need to decide what to do about plots with multiple plot locations
 ```{r}
-clim.all %>% 
+no_duplicates <- clim.all %>% 
   group_by(ID1) %>% 
   summarise(count = n()) %>% 
-  filter(count > 4)
+  filter(count <= 6)
+
+clim.all <- clim.all %>% 
+  filter(ID1 %in% no_duplicates$ID1)
 ```
 
 
@@ -523,10 +580,44 @@ zscores <- Reduce(function(x, y) merge(x, y, by = "ID1"), data_frames)
 zscore.sums <- zscores %>%
   group_by(ID1) %>% 
   filter(!ID1 %in% c(1111, 13, 1460, 1461, 1467, 193)) %>% 
-  summarize(hot.dry.sum = sum(across(starts_with("hot.dry."))),
+  summarize(hot.dry.sum = sum(across(starts_with("hot.dry"))),
             cool.wet.sum = sum(across(starts_with("cool.wet"))))
 
+zscore.sums <- rename(zscore.sums, SampleSite_ID = "ID1")
+zscore.sums$SampleSite_ID <- as.numeric(zscore.sums$SampleSite_ID)
+zscores.regen <- left_join(zscore.sums, bin_dis_GIS, by= "SampleSite_ID") 
+zscores.regen <- select(zscores.regen, SampleSite_ID, hot.dry.sum, cool.wet.sum, PLI_count_bin, FDI_count_bin)
 
+```
+
+#little bit of modeling
+```{r}
+zscores.regen$PLI.f <- as.factor(zscores.regen$PLI_count_bin)
+zscores.regen$FDI.f <- as.factor(zscores.regen$FDI_count_bin)
+
+climate.PLIa <- glm(PLI.f ~ hot.dry.sum ,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIa)
+
+climate.PLIb <- glm(PLI.f ~ cool.wet.sum ,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIb)
+
+climate.PLIc <- glm(PLI.f ~ hot.dry.sum + cool.wet.sum,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIc)
+
+climate.FDIa <- glm(FDI.f ~ hot.dry.sum ,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.FDIa)
+
+climate.FDIb <- glm(FDI.f ~ cool.wet.sum ,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.FDIb)
+
+climate.FDIc <- glm(FDI.f ~ hot.dry.sum + cool.wet.sum,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.FDIc)
 ```
 
 
@@ -536,66 +627,12 @@ zscore.sums <- zscores %>%
 
 #need to rethink these with 30 year normal in there as well.
 ```{r}
-clim2003 <- clim2003 %>% 
-  select(ID1, MAT, MWMT, MAP, NFFD, PAS, Eref, CMD, CMI, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, Tmin_sp,
-         Tmin_sm, NFFD_sp, PAS_sp)
 
-clim2003.summary <- clim2003 %>% 
-  group_by(ID1) %>% 
-  summarize(MAT.av = mean(MAT),
-         MAT.min = min(MAT),
-         MAT.max = max(MAT),
-         MWMT.av = mean(MWMT),
-         MWMT.min = min(MWMT),
-         MWMT.max = max(MWMT),
-         MAP.av = mean(MAP),
-         MAP.min = min(MAP),
-         MAP.max = max(MAP),
-         NFFD.av = mean(NFFD),
-         NFFD.min = min(NFFD),
-         NFFD.max = max(NFFD),
-         PAS.av = mean(PAS),
-         PAS.min = min(PAS),
-         PAS.max = max(PAS),
-         Eref.av = mean(Eref),
-         Eref.min = min(Eref),
-         Eref.max = max(Eref),
-         CMD.av = mean(CMD),
-         CMD.min = min(CMD),
-         CMD.max = max(CMD),
-         CMI.av = mean(CMI),
-         CMI.min = min(CMI),
-         CMI.max = max(CMI),
-         Tave_sp.av = mean(Tave_sp),
-         Tave_sp.min = min(Tave_sp),
-         Tave_sp.max = max(Tave_sp),
-         Tave_sm.av = mean(Tave_sm),
-         Tave_sm.min = min(Tave_sm),
-         Tave_sm.max = max(Tave_sm),
-         Tmax_sp.av = mean(Tmax_sp),
-         Tmax_sp.min = min(Tmax_sp),
-         Tmax_sp.max = max(Tmax_sp),
-         Tmax_sm.av = mean(Tmax_sm),
-         Tmax_sm.min = min(Tmax_sm),
-         Tmax_sm.max = max(Tmax_sm),
-         Tmin_sp.av = mean(Tmin_sp),
-         Tmin_sp.min = min(Tmin_sp),
-         Tmin_sp.max = max(Tmin_sp),
-         Tmin_sm.av = mean(Tmin_sm),
-         Tmin_sm.min = min(Tmin_sm),
-         Tmin_sm.max = max(Tmin_sm),
-         NFFD_sp.av = mean(NFFD_sp),
-         NFFD_sp.min = min(NFFD_sp),
-         NFFD_sp.max = max(NFFD_sp),
-         PAS_sp.av = mean(PAS_sp),
-         PAS_sp.min = min(PAS_sp),
-         PAS_sp.max = max(PAS_sp)) %>% 
-  select(ID1, MAT.av:last_col())
-
-#2005
+#2009
 clim2009 <- clim2009 %>% 
   select(ID1, MAT, MWMT, MAP, NFFD, PAS, Eref, CMD, CMI, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, Tmin_sp,
-         Tmin_sm, NFFD_sp, PAS_sp)
+         Tmin_sm, NFFD_sp, PAS_sp, Year) %>% 
+  filter(Year > 0)
 
 clim2009.summary <- clim2009 %>% 
   group_by(ID1) %>% 
@@ -652,7 +689,8 @@ clim2009.summary <- clim2009 %>%
 #2010
 clim2010 <- clim2010 %>% 
   select(ID1, MAT, MWMT, MAP, NFFD, PAS, Eref, CMD, CMI, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, Tmin_sp,
-         Tmin_sm, NFFD_sp, PAS_sp)
+         Tmin_sm, NFFD_sp, PAS_sp, Year) %>% 
+  filter(Year > 0)
 
 clim2010.summary <- clim2010 %>% 
   group_by(ID1) %>% 
@@ -709,7 +747,8 @@ clim2010.summary <- clim2010 %>%
 #2015
 clim2015 <- clim2015 %>% 
   select(ID1, MAT, MWMT, MAP, NFFD, PAS, Eref, CMD, CMI, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, Tmin_sp,
-         Tmin_sm, NFFD_sp, PAS_sp)
+         Tmin_sm, NFFD_sp, PAS_sp, Year) %>% 
+  filter(Year > 0)
 
 clim2015.summary <- clim2015 %>% 
   group_by(ID1) %>% 
@@ -766,7 +805,8 @@ clim2015.summary <- clim2015 %>%
 #2016
 clim2016 <- clim2016 %>% 
   select(ID1, MAT, MWMT, MAP, NFFD, PAS, Eref, CMD, CMI, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, Tmin_sp,
-         Tmin_sm, NFFD_sp, PAS_sp)
+         Tmin_sm, NFFD_sp, PAS_sp, Year) %>% 
+  filter(Year > 0)
 
 clim2016.summary <- clim2016 %>% 
   group_by(ID1) %>% 
@@ -823,7 +863,8 @@ clim2016.summary <- clim2016 %>%
 #2017
 clim2017 <- clim2017 %>% 
   select(ID1, MAT, MWMT, MAP, NFFD, PAS, Eref, CMD, CMI, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, Tmin_sp,
-         Tmin_sm, NFFD_sp, PAS_sp)
+         Tmin_sm, NFFD_sp, PAS_sp, Year) %>% 
+  filter(Year > 0)
 
 clim2017.summary <- clim2017 %>% 
   group_by(ID1) %>% 

@@ -7,8 +7,8 @@ output: html_document
 
 ```{r}
 library(lmtest)
-bin_dis_GIS1$SOILNAME_1 <- as.factor(bin_dis_GIS1$SOILNAME_1)
-bin_dis_GIS2 <- bin_dis_GIS1 %>% 
+bin_dis_GIS1$SOILNAME_ <- as.factor(bin_dis_GIS1$SOILNAME_1)
+bin_dis_GIS2 <- bin_dis_GIS %>% 
   filter(SOILNAME_1 != "NO SOILS DATA")
 
 site.PLI.null <- glm(PLI.f ~ 1,

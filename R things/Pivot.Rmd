@@ -476,12 +476,17 @@ ggplot(idk, aes(x=SOILNAME_1, y=FDI_count)) +
   geom_point() +
 #  facet_wrap(vars(FIRE_NUMBER_1)) +
   labs(
-    title = "PLI Seedling Occurrence by Soil Type",
+    title = "FDI Seedling Occurrence by Soil Type",
     x = "Soil Type",
     y = "Count",
     las = 2
   ) +
   theme(axis.text.x = element_text(angle = -90, hjust = 1, vjust = 0.5))
+
+bin_dis_GIS1 %>% 
+#  filter(SOILNAME_1 == "NO SOILS DATA") %>%
+  group_by(PLI_count_bin) %>% 
+  summarize(count=n())
 
 ```
 ```{r}
