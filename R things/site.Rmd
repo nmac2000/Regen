@@ -8,31 +8,46 @@ output: html_document
 ```{r}
 library(lmtest)
 bin_dis_GIS1$SOILNAME_ <- as.factor(bin_dis_GIS1$SOILNAME_1)
-bin_dis_GIS2 <- bin_dis_GIS %>% 
+bin_dis_GIS2 <- bin_dis_GIS1 %>% 
   filter(SOILNAME_1 != "NO SOILS DATA")
 
-site.PLI.null <- glm(PLI.f ~ 1,
+site.PLI.null.1 <- glm(PLI.f ~ 1,
+                     family=binomial(link = "logit"), data = bin_dis_GIS1)
+site.PLI.null.2 <- glm(PLI.f ~ 1,
                      family=binomial(link = "logit"), data = bin_dis_GIS2)
 
 site.PLIa <- glm(PLI.f ~ SOILNAME_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLIa)
+lrtest(site.PLIa, site.PLI.null.1)
 
-lrtest(site.PLIa, site.PLI.null)
+site.PLIb <- glm(PLI.f ~ PARENT_SOILS ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.PLIb)
+lrtest(site.PLIb, site.PLI.null.1)
 
-site.FDI.null <- glm(FDI.f ~ 1,
+site.PLIa2 <- glm(PLI.f ~ SOILNAME_1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS2)
+summary(site.PLIa)
+lrtest(site.PLIa2, site.PLI.null.2)
+
+site.PLIb2 <- glm(PLI.f ~ PARENT_SOILS ,
+    family=binomial(link = "logit"), data=bin_dis_GIS2)
+summary(site.PLIb2)
+lrtest(site.PLIb2, site.PLI.null.2)
+
+site.PLIc2 <- glm(PLI.f ~ PARENT_SOILS + SOILNAME_1,
+    family=binomial(link = "logit"), data=bin_dis_GIS2)
+lrtest(site.PLIc2, site.PLIb2)
+lrtest(site.PLIc2, site.PLIa2)
+
+site.FDI.null.1 <- glm(FDI.f ~ 1,
                      family=binomial(link = "logit"), data = bin_dis_GIS1)
 
 site.FDIa <- glm(FDI.f ~ SOILNAME_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.FDIa)
-
-lrtest(site.FDIa, site.FDI.null)
-
-site.PLIb <- glm(PLI.f ~ PARENT_SOILS ,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(site.PLIb)
-lrtest(site.PLIb, site.PLI.null)
+lrtest(site.FDIa, site.FDI.null.1)
 
 site.PLIc <- glm(PLI.f ~ PARENT_SOILS + SOILNAME_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
