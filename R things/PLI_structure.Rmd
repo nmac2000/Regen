@@ -9,7 +9,8 @@ output: html_document
 ```{r}
 #need to figure out data frames for everything and clean up code
 bin_dis_GIS1 <- bin_dis_GIS %>%
-  distinct(SampleSite_ID, .keep_all = T)
+  distinct(SampleSite_ID, .keep_all = T) %>% 
+  filter(!SampleSite_ID %in% not_measured$SampleSite_ID)
 
 ```
 

@@ -523,6 +523,16 @@ ggplot(bin_dis_GIS1, aes(x=BARC.x, y=MEAN)) +
 
 filter(bin_dis_GIS1, BARC.z == 4)
 ```
+# Summary Tables
+```{r}
+bin_dis_GIS1 %>% 
+#  select(BARC.y, PLI_count_bin, FDI_count_bin) %>% 
+  filter(FDI_count_bin == 1) %>% 
+  group_by(FIRE_YEAR_1) %>% 
+  summarize(count = n())
+
+
+```
 
 
 
