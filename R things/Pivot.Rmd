@@ -528,8 +528,96 @@ filter(bin_dis_GIS1, BARC.z == 4)
 bin_dis_GIS1 %>% 
 #  select(BARC.y, PLI_count_bin, FDI_count_bin) %>% 
   filter(FDI_count_bin == 1) %>% 
-  group_by(FIRE_YEAR_1) %>% 
+  group_by(FIRE_NUMBER_1 ) %>% 
   summarize(count = n())
+
+for_summary <- regen_longer_GIS %>% 
+  filter(SampleSite_ID %in% bin_dis_GIS1$SampleSite_ID)
+
+
+for_summary %>% 
+  group_by(Species) %>% 
+  summarise(total = sd(x30))
+
+bin_dis_GIS1 %>%  
+  filter(SX_count_bin == 1) %>% 
+  summarize(count = n())
+
+
+for_summary1 <- regen %>% 
+  filter(Card %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  ungroup
+
+quadrant_order <- c("NE", "SE", "SW", "NW")
+
+for_summary1$total <- rowSums(for_summary1[, c("x0", "x10", "x30", "x130")], na.rm=T)
+
+
+
+
+SX_mean <- for_summary1 %>% 
+  filter(Species == "SX") %>% 
+  mutate(Quandrant = factor(Quandrant, levels = quadrant_order)) %>%
+  group_by(Quandrant) %>% 
+  summarize(sum = sum(total, na.rm = TRUE),
+            mean = round(sum/39, 3))
+
+for_summary1 %>% 
+  filter(Species == "SX",
+         !is.na(total)) %>% 
+  group_by(Card) %>% 
+  summarize(sum = n()) %>% 
+  ungroup() 
+
+  summarize(sd = sqrt((sum(total-mean(total, na.rm = T), na.rm = T)^2)/38),
+            sd1 = sd(total, na.rm = T),
+            mean = mean(total, na.rm = T))
+
+SX_n <- bin_dis_GIS1 %>%  
+  filter(SX_count_bin == 1) %>% 
+  summarize(count = n())
+SX_n <- as.list(SX_n[1])
+
+SX_NE_mean <- SX_mean$mean[1]
+
+SX_NE_total <- for_summary1 %>% 
+  filter(Species == "SX",
+         Quandrant == "NE",
+         !is.na(total))
+SX_NE_total <- as.list(SX_NE_total$total)
+
+sqrt(sum(across((SX_NE_total-SX_NE_mean))^2/SX_n))
+  
+# pull samplesite_id for each species from where i got total plots with species present and then turn the NA's into zeros 
+# for summary_1 and filter by the samplesite_id and then find the means
+
+for_summary1 <- for_summary1 %>% 
+  select(-Notes, -x) %>% 
+  mutate(across(everything(), .fns = ~replace_na(.,0)))   
+  
+SX_n <- bin_dis_GIS1 %>%  
+  filter(SX_count_bin == 1) 
+
+FDI_n <- bin_dis_GIS1 %>%  
+  filter(FDI_count_bin == 1) 
+
+AT_n <- bin_dis_GIS1 %>%  
+  filter(NonCon_count_bin == 1) 
+
+PLI_n <- bin_dis_GIS1 %>%  
+  filter(PLI_count_bin == 1) 
+
+
+for_summary1 %>% 
+  filter(Card %in% SX_n$SampleSite_ID,
+         Species == "SX") %>% 
+  complete(Card, Quandrant = c("NE", "SE", "NW", "SW"), 
+           fill = list(Species = "SX", x0 = 0, x10 = 0, x30 = 0, x130 = 0, total = 0)) %>% 
+  mutate(Quandrant = factor(Quandrant, levels = quadrant_order)) %>%
+  group_by(Card) %>% 
+  summarise(count = sum(total), mean = round(mean(total), 3), sd = round(sd(total), 3))
+
+
 
 
 ```
