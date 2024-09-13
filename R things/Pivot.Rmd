@@ -29,6 +29,8 @@ distance <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/distance
 distance <- read.csv(distance)
 regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"
 regen <- read.csv(regen)
+fire_severity <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/FireSeverity.csv"
+fire_severity <- read.csv(fire_severity)
 ```
 
 
@@ -617,9 +619,68 @@ for_summary1 %>%
   group_by(Card) %>% 
   summarise(count = sum(total), mean = round(mean(total), 3), sd = round(sd(total), 3))
 
+bin_dis_GIS1 %>% 
+  filter(is.na(Elevation))
+
+bin_dis_GIS1 %>% 
+  select(-X.x, -X.y, -UNIQUE_ID, -Contract ) %>% 
+  filter(SampleSite_ID %in% c(270, 407, 413, 417, 540, 1052, 1209, 1401, 1487, 1526, 1560, 1573, 1583, 1592,
+                              1594, 1605, 1607, 1617, 1624, 1628, 2251, 2253)) 
+  select(BARC.y) %>% 
+  table()
+  
+new_regen <- regen_GIS %>% 
+  distinct(SampleSite_ID, .keep_all = T) %>% 
+  filter(SampleSite_ID %in% bin_dis_GIS1$SampleSite_ID) 
+
+new_regen$years_since <- bin_dis_GIS1$years_since
+new_regen$MEAN.x <- bin_dis_GIS1$MEAN.x
+new_regen$MAX <- bin_dis_GIS1$MAX
+new_regen$BARC.y <- bin_dis_GIS1$BARC.y
+
+new_regen <- new_regen %>% 
+  filter(!SampleSite_ID %in% c(456, 1108, 1422, 1643, 361, 1514))
+
+highlighted_sites <- new_regen %>% 
+  filter(SampleSite_ID %in% c(270, 407, 413, 417, 540, 1052, 1209, 1401, 1487, 1526, 1560, 1573, 1583, 1592,
+                              1594, 1605, 1607, 1617, 1624, 1628, 2251, 2253)) 
+new_regen %>% 
+  filter(SPECIES_CD_1_1 != "FDI",
+         SPECIES_CD_1_1 != "PLI",
+         SPECIES_CD_1_1 != "AT",
+         SPECIES_CD_1_1 != "SX")
+
+ggplot(new_regen, aes(x=COFRAG_1, y =FDI_count)) +
+  geom_point() +
+  geom_point(data = highlighted_sites, color = "darkred", 
+             position = position_jitter(width = 0.2))
+
+highlighted_sites1 <- bin_dis_GIS1 %>% 
+  filter(SampleSite_ID %in% c(270, 407, 413, 417, 540, 1052, 1209, 1401, 1487, 1526, 1560, 1573, 1583, 1592,
+                              1594, 1605, 1607, 1617, 1624, 1628, 2251, 2253)) 
+
+ggplot(bin_dis_GIS1, aes(x=FDI_count_bin, y =DISTANCE_TO_PERIMETER)) +
+  geom_boxplot() +
+  geom_point(data = highlighted_sites1, color = "darkred", 
+             position = position_jitter(width = 0.2))
+  
+
+bin_dis_GIS1 %>% 
+  filter(!SampleSite_ID %in% not_measured$SampleSite_ID) %>% 
+  filter(SPECIES_CD_1_1 == "") %>% 
+  select(SampleSite_ID,  PLI_count_bin)
+
+bin_dis_GIS1 %>% 
+  filter(SPECIES_CD_1_1 == "") %>% 
+#  filter(HARVEST_DATE_1 != "") %>% 
+  select(SampleSite_ID, SPECIES_CD_1_1, FIRE_YEAR_1, HARVEST_DATE_1) #%>% 
+  mutate(years_since_harvest = FIRE_YEAR_1-lubridate::year(HARVEST_DATE_1)) %>% 
+  filter(years_since_harvest > 20)
 
 
 
+table(bin_dis_GIS1$PARENT_SOILS, bin_dis_GIS1$BEC_Subzone)
+table(bin_dis_GIS1$BEC_Zone, bin_dis_GIS1$BEC_Subzone)  
 ```
 
 

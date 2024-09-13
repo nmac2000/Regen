@@ -1,0 +1,92 @@
+---
+title: "FDI_site"
+author: "Nat"
+date: "2024-09-12"
+output: html_document
+---
+
+```{r}
+site.FDI.null <- glm(FDI.f ~ 1 ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.null)
+
+site.FDI.a <- glm(FDI.f ~ years_since ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.a)
+lrtest(site.FDI.a, site.FDI.null)
+
+site.FDI.b <- glm(FDI.f ~ Aspect ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.b)
+lrtest(site.FDI.b, site.FDI.null)
+
+site.FDI.c <- glm(FDI.f ~ Beers_aspect ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.c)
+lrtest(site.FDI.c, site.FDI.null)
+
+site.FDI.d <- glm(FDI.f ~ Elevation ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.d)
+lrtest(site.FDI.d, site.FDI.null)
+
+site.FDI.e <- glm(FDI.f ~ Slope ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.e)
+lrtest(site.FDI.e, site.FDI.null)
+
+site.FDI.f <- glm(FDI.f ~ Solar_Radiation ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.f)
+lrtest(site.FDI.f, site.FDI.null)
+
+site.FDI.g <- glm(FDI.f ~ TWI ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.g)
+lrtest(site.FDI.g, site.FDI.null)
+
+site.FDI.h <- glm(FDI.f ~ BEC_Zone ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.h)
+lrtest(site.FDI.h, site.FDI.null)
+
+site.FDI.i <- glm(FDI.f ~ BEC_Subzone ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.i)
+lrtest(site.FDI.i, site.FDI.null)
+
+#site.FDI.j <- glm(FDI.f ~ BEC_Variant ,
+#    family=binomial(link = "logit"), data=bin_dis_GIS1)
+#summary(site.FDI.j)
+#lrtest(site.FDI.j, site.FDI.null)
+#figure out NAs
+
+site.FDI.k <- glm(FDI.f ~ PARENT_SOILS ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.k)
+lrtest(site.FDI.k, site.FDI.null)
+
+```
+
+```{r}
+site.FDI.2a <- glm(FDI.f ~ years_since + BEC_Subzone,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.2a)
+lrtest(site.FDI.2a, site.FDI.a)
+
+site.FDI.2b <- glm(FDI.f ~ years_since + BEC_Subzone + PARENT_SOILS,
+    family=binomial(link = "logit"), data=bin_dis_GIS2)
+summary(site.FDI.2b)
+lrtest(site.FDI.2b, site.FDI.2a)
+
+site.FDI.2c <- glm(FDI.f ~ years_since + BEC_Subzone + PARENT_SOILS + Elevation,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.2c)
+lrtest(site.FDI.2c, site.FDI.2b)
+
+site.FDI.2d <- glm(FDI.f ~ years_since + BEC_Subzone + PARENT_SOILS + Slope,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.2d)
+lrtest(site.FDI.2d, site.FDI.2b)
+```
+

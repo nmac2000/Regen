@@ -10,7 +10,8 @@ output: html_document
 #need to figure out data frames for everything and clean up code
 bin_dis_GIS1 <- bin_dis_GIS %>%
   distinct(SampleSite_ID, .keep_all = T) %>% 
-  filter(!SampleSite_ID %in% not_measured$SampleSite_ID)
+  filter(!SampleSite_ID %in% not_measured$SampleSite_ID) %>% 
+  filter(!SampleSite_ID %in% c(456, 496, 1108, 1422, 1514, 1643))
 
 ```
 
@@ -38,10 +39,10 @@ bin_dis_GIS1$DISTURBANCE_TYPE_1 <- as.factor(bin_dis_GIS1$DISTURBANCE_TYPE_1)
 bin_dis_GIS1$BURN_SEVERITY_RATING_1 <- factor(bin_dis_GIS1$BURN_SEVERITY_RATING_1, 
                                                  levels = c("Unburned", "Low", "Medium", "High", "Unknown"))
 bin_dis_GIS1$SPECIES_CD_1_1 <- factor(bin_dis_GIS1$SPECIES_CD_1_1, levels = c("PLI", "FDI", "AT", "SX"))
-bin_dis_GIS1$BARC.y <- as.factor(bin_dis_GIS1$BARC.y)
+bin_dis_GIS1$BARC.x <- as.factor(bin_dis_GIS1$BARC.x)
 
 
-bin_dis_GIS1 <- bin_dis_GIS1 %>% 
+#bin_dis_GIS1 <- bin_dis_GIS1 %>% 
   filter(!is.na(Distance), !is.na(years_since), !is.na(CROWN_CLOSURE_1),
          !is.na(PROJ_AGE_1_1), !is.na(PROJ_HEIGHT_1_1), !is.na(DISTURBANCE_TYPE_1),
          !is.na(DISTANCE_TO_PERIMETER), !is.na(BURN_SEVERITY_RATING_1),
@@ -258,91 +259,84 @@ lrtest(structure.PLI.2v, structure.PLI.2e)
 
 ```{r}
 
-structure.PLI.3a <- glm(PLI.f ~ years_since  + BARC.y,
+structure.PLI.3a <- glm(PLI.f ~ years_since  + BARC.x,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3a)
 lrtest(structure.PLI.3a, structure.PLIb)
 
-structure.PLI.3b <- glm(PLI.f ~ years_since  + BARC.y + SPECIES_CD_1_1,
+structure.PLI.3b <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3b)
 lrtest(structure.PLI.3b, structure.PLI.3a)
 lrtest(structure.PLI.3b, structure.PLI.2e)
 
-structure.PLI.3c <- glm(PLI.f ~ years_since  + BARC.y + SPECIES_CD_1_1 +
+structure.PLI.3c <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1 +
                           SPECIES_CD_2_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3c)
 lrtest(structure.PLI.3c, structure.PLI.3b) #restrictions justified
 
-structure.PLI.3d <- glm(PLI.f ~ years_since  + BARC.y + SPECIES_CD_1_1 +
+structure.PLI.3d <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1 +
                           PROJ_HEIGHT_1_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3d)
 lrtest(structure.PLI.3d, structure.PLI.3b) #restrictions justified
 
-structure.PLI.3e <- glm(PLI.f ~ years_since  + BARC.y + SPECIES_CD_1_1 +
+structure.PLI.3e <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1 +
                           DISTANCE_TO_PERIMETER,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3e)
 lrtest(structure.PLI.3e, structure.PLI.3b) #restrictions justified
 
-structure.PLI.3f <- glm(PLI.f ~ years_since  + BARC.y + SPECIES_CD_1_1 +
+structure.PLI.3f <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1 +
                           PATCH_SIZE_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3f)
 lrtest(structure.PLI.3f, structure.PLI.3b) #restrictions justified
 
-structure.PLI.3g <- glm(PLI.f ~ years_since  + BARC.y + SPECIES_CD_1_1 +
+structure.PLI.3g <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1 +
                           MEAN,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3g)
 lrtest(structure.PLI.3g, structure.PLI.3b) #restrictions justified
 
-structure.PLI.3h <- glm(PLI.f ~ years_since  + BARC.y + SPECIES_CD_1_1 +
+structure.PLI.3h <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1 +
                           DISTURBANCE_TYPE_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3h)
 lrtest(structure.PLI.3h, structure.PLI.3b) #restrictions justified
 
-structure.PLI.3i <- glm(PLI.f ~ years_since  + BARC.y + SPECIES_CD_1_1 +
+structure.PLI.3i <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1 +
                           Distance,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3i)
 lrtest(structure.PLI.3i, structure.PLI.3b)
 
-structure.PLI.3j <- glm(PLI.f ~ years_since  + BARC.y + SPECIES_CD_1_1 +
+structure.PLI.3j <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1 +
                          PROJ_AGE_1_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3j)
 lrtest(structure.PLI.3j, structure.PLI.3b)
 
-structure.PLI.3k <- glm(PLI.f ~ years_since  + BARC.y + SPECIES_CD_1_1 +
+structure.PLI.3k <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1 +
                          SPECIES_CD_3_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3k)
 lrtest(structure.PLI.3k, structure.PLI.3b)
 
-structure.PLI.3l <- glm(PLI.f ~ years_since  + BARC.y + SPECIES_CD_1_1 +
+structure.PLI.3l <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1 +
                          SPECIES_PCT_1_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3l)
 lrtest(structure.PLI.3l, structure.PLI.3b)
 
-structure.PLI.3m <- glm(PLI.f ~ years_since  + BARC.y + SPECIES_CD_1_1 +
+structure.PLI.3m <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1 +
                          CROWN_CLOSURE_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3m)
 lrtest(structure.PLI.3m, structure.PLI.3b)
 
-structure.PLI.3n <- glm(PLI.f ~ years_since  + BARC.x + SPECIES_CD_1_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.PLI.3n)
 
-
-structure.PLI.3o <- glm(PLI.f ~ years_since  + BARC.z + SPECIES_CD_1_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.PLI.3o)
 
 
 test()
@@ -351,9 +345,9 @@ test()
 ```
 
 ```{r}
-bin_dis_GIS1$linpred.GLM2a <- predict(structure.PLI.2e) # Estimated logit using the linear part
-bin_dis_GIS1$yhat.GLM2a <- fitted(structure.PLI.2e) # Estimated probability using inverse logityhat values
-bin_dis_GIS1$resid.GLM2a <- resid(structure.PLI.2e) # the deviances 
+bin_dis_GIS1$linpred.GLM2a <- predict(structure.PLI.2b) # Estimated logit using the linear part
+bin_dis_GIS1$yhat.GLM2a <- fitted(structure.PLI.2b) # Estimated probability using inverse logityhat values
+bin_dis_GIS1$resid.GLM2a <- resid(structure.PLI.2b) # the deviances 
 
 # Graph of predicted probabilities ranges for dead versus alive
 # Would like the dead=0 (it is alive) trees to have all low predicted prob(dead) 
