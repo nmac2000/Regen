@@ -10,9 +10,9 @@ output: html_document
 bin_dis_GIS1 <- bin_dis_GIS1
 
 bin_dis_GIS1$BEC_Subzone <- factor(bin_dis_GIS1$BEC_Subzone, 
-                                                 levels = c("xv", "dk", "xm", "dc", "mk", "xc"))
+                                                 levels = c("dk", "xm", "dc", "mk", "xc"))
 bin_dis_GIS1$BEC_Zone <- factor(bin_dis_GIS1$BEC_Zone,
-                                                  levels = c("MS", "IDF", "SBPS"))
+                                                  levels = c("IDF", "SBPS"))
 
 
 ```

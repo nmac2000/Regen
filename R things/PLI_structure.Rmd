@@ -36,8 +36,6 @@ bin_dis_GIS1$PROJ_HEIGHT_1_1 <- as.numeric(bin_dis_GIS1$PROJ_HEIGHT_1_1)
 bin_dis_GIS1$DISTANCE_TO_PERIMETER <- as.numeric(bin_dis_GIS1$DISTANCE_TO_PERIMETER)
 bin_dis_GIS1$years_since <- as.numeric(2023-bin_dis_GIS1$FIRE_YEAR_1)
 bin_dis_GIS1$DISTURBANCE_TYPE_1 <- as.factor(bin_dis_GIS1$DISTURBANCE_TYPE_1)
-bin_dis_GIS1$BURN_SEVERITY_RATING_1 <- factor(bin_dis_GIS1$BURN_SEVERITY_RATING_1, 
-                                                 levels = c("Unburned", "Low", "Medium", "High", "Unknown"))
 bin_dis_GIS1$SPECIES_CD_1_1 <- factor(bin_dis_GIS1$SPECIES_CD_1_1, levels = c("PLI", "FDI", "AT", "SX"))
 bin_dis_GIS1$BARC.x <- as.factor(bin_dis_GIS1$BARC.x)
 

@@ -60,3 +60,37 @@ bin_dis_GIS1 <- bin_dis_GIS1 %>%
 # remove VRI non-treed sites
 bin_dis_GIS1 <- bin_dis_GIS1 %>% 
   filter(SPECIES_CD_1_1 != "")
+
+# remove MS BEC zone (not enough observations)
+bin_dis_GIS1 <- bin_dis_GIS1 %>% 
+  filter(BEC_Zone != "MS")
+# ensure y variable is a factor for dead versus alive
+bin_dis_GIS1$PLI.f <- as.factor(bin_dis_GIS1$PLI_count_bin)
+bin_dis_GIS1$FDI.f <- as.factor(bin_dis_GIS1$FDI_count_bin)
+# y=1 for dead trees, y=0 for live trees
+class(bin_dis_GIS1$PLI.f)
+bin_dis_GIS1$Distance <- as.numeric(bin_dis_GIS1$Distance)
+bin_dis_GIS1$CROWN_CLOSURE_1 <- as.numeric(bin_dis_GIS1$CROWN_CLOSURE_1)
+bin_dis_GIS1$PROJ_AGE_1_1 <- as.numeric(bin_dis_GIS1$PROJ_AGE_1_1)
+bin_dis_GIS1$PROJ_HEIGHT_1_1 <- as.numeric(bin_dis_GIS1$PROJ_HEIGHT_1_1)
+bin_dis_GIS1$DISTANCE_TO_PERIMETER <- as.numeric(bin_dis_GIS1$DISTANCE_TO_PERIMETER)
+bin_dis_GIS1$years_since <- as.numeric(2023-bin_dis_GIS1$FIRE_YEAR_1)
+bin_dis_GIS1$DISTURBANCE_TYPE_1 <- as.factor(bin_dis_GIS1$DISTURBANCE_TYPE_1)
+bin_dis_GIS1$SPECIES_CD_1_1 <- factor(bin_dis_GIS1$SPECIES_CD_1_1, levels = c("PLI", "FDI", "AT", "SX"))
+bin_dis_GIS1$BARC.x <- as.factor(bin_dis_GIS1$BARC.x)
+
+# combine parent material categories
+
+table(bin_dis_GIS_test$PARENT_SOILS)
+bin_dis_GIS_test <- bin_dis_GIS1 %>% 
+  filter(!PARENT_SOILS %in% c("ORGANIC ", "ROCK ")) %>% 
+  mutate()
+
+
+#write.csv(bin_dis_GIS1, "C:/Users/nmac2000/Documents/regen project/Regen/Data/bin_dis.csv")
+bin_dis_GIS1 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/bin_dis.csv", header = TRUE)
+bin_dis_GIS1 <- bin_dis_GIS1 %>% 
+  select(-X, -X.x)
+  
+  
+  

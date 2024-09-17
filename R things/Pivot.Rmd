@@ -678,8 +678,9 @@ bin_dis_GIS1 %>%
   filter(years_since_harvest > 20)
 
 
-
-table(bin_dis_GIS1$PARENT_SOILS, bin_dis_GIS1$BEC_Subzone)
+filter <- bin_dis_GIS1 %>% 
+  filter(TEXTURE_1 != "")
+table(filter$PARENT_SOILS, filter$TEXTURE_1)
 table(bin_dis_GIS1$BEC_Zone, bin_dis_GIS1$BEC_Subzone)  
 ```
 
