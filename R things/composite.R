@@ -82,7 +82,7 @@ bin_dis_GIS1$BARC.x <- as.factor(bin_dis_GIS1$BARC.x)
 # combine parent material categories
 
 table(bin_dis_GIS_test$PARENT_SOILS)
-bin_dis_GIS_test <- bin_dis_GIS1 %>% 
+bin_dis_GIS1 <- bin_dis_GIS1 %>% 
   filter(!PARENT_SOILS %in% c("ORGANIC ", "ROCK ")) %>% 
   mutate()
 

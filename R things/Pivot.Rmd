@@ -536,6 +536,9 @@ bin_dis_GIS1 %>%
 for_summary <- regen_longer_GIS %>% 
   filter(SampleSite_ID %in% bin_dis_GIS1$SampleSite_ID)
 
+for_summary %>% 
+  filter(SampleSite_ID %in% bin_dis_GIS1$SampleSite_ID)
+
 
 for_summary %>% 
   group_by(Species) %>% 
@@ -681,7 +684,28 @@ bin_dis_GIS1 %>%
 filter <- bin_dis_GIS1 %>% 
   filter(TEXTURE_1 != "")
 table(filter$PARENT_SOILS, filter$TEXTURE_1)
-table(bin_dis_GIS1$BEC_Zone, bin_dis_GIS1$BEC_Subzone)  
+table(bin_dis_GIS1$BEC_Zone, bin_dis_GIS1$BEC_Subzone) 
+
+for_summary1 <- for_summary %>% 
+  mutate(totaltph = total*200) %>% 
+  mutate(x0tph = x0*200) %>%
+  mutate(x10tph = x10*200) %>%
+  mutate(x30tph = x30*200) %>%
+  mutate(x130tph = x130*200) 
+  
+for_summary1 %>% 
+  group_by(Species) %>% 
+  summarise(total = sum(x10tph)/320)
+
+regen_GIS %>% 
+  filter(SampleSite_ID %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  filter(str_detect(SpeciesAll, "PLI|FDI|SX")) %>% 
+  summarise(total = n())
+
+bin_dis_GIS1 %>% 
+  group_by(total_x130_bin) %>% 
+  summarise(total = n())
+
 ```
 
 
