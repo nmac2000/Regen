@@ -46,6 +46,15 @@ bin_dis_GIS1$BARC.x <- as.factor(bin_dis_GIS1$BARC.x)
          !is.na(DISTANCE_TO_PERIMETER), !is.na(BURN_SEVERITY_RATING_1),
          !is.na(PLI.f), !is.na(FDI.f), !is.na(MEAN.y))
 ```
+```{r}
+pairs(~ Distance  +CROWN_CLOSURE_1 +PROJ_AGE_1_1 +PROJ_HEIGHT_1_1 +DISTANCE_TO_PERIMETER +
+        PATCH_SIZE_1 + MEAN, 
+      data=bin_dis_GIS1, main="Scatterplot Matrix for Structure data")
+
+pairs(~ PATCH_SIZE_1 + MEAN + BARC.x, 
+      data=bin_dis_GIS1, main="Scatterplot Matrix for Structure data")
+```
+
 
 Step 1
 ```{r}

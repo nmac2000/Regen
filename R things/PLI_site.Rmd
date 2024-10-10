@@ -17,6 +17,13 @@ bin_dis_GIS1$BEC_Zone <- factor(bin_dis_GIS1$BEC_Zone,
 
 ```
 
+
+```{r}
+pairs(~ Aspect + Beers_aspect + Elevation + Slope + Solar_Radiation +TWI, 
+      data=bin_dis_GIS1, main="Scatterplot Matrix for Site data")
+```
+
+
 ```{r}
 site.PLI.null <- glm(PLI.f ~ 1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)

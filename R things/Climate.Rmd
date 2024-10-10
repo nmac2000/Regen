@@ -191,9 +191,9 @@ clim2016.2018 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main
 #write.csv(clim2016.2019, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2016/2019.csv")
 clim2016.2019 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2016/2019.csv")
 #write.csv(clim2016.2020, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2016/2020.csv")
-clim2016.2018 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2016/2020.csv")
+clim2016.2020 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2016/2020.csv")
 #write.csv(clim2016.2021, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2016/2021.csv")
-clim2016.2019 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2016/2021.csv")
+clim2016.2021 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2016/2021.csv")
 
 #clim2016.normal <- ClimateNA_API2(ClimateBC_NA='BC', forClim2016, period='Normal_1981_2010.nrm', MSY='SY')
 #write.csv(clim2016.normal, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2016/normal.csv")
@@ -347,7 +347,7 @@ clim2009.2014$Year <-5
 clim2009.normal$Year <- 0
 clim2009 <- rbind(clim2009.2010, clim2009.2011, clim2009.2012, clim2009.2013, clim2009.2014)
 clim2009 <- subset(clim2009, select = -c(X))
-clim2009.normal <- select(clim2009.normal, -X)
+#clim2009.normal <- select(clim2009.normal, -X)
 clim2009 <- rbind(clim2009, clim2009.normal)
 
 
@@ -360,7 +360,7 @@ clim2010.2015$Year <-5
 clim2010.normal$Year <- 0
 clim2010 <- rbind(clim2010.2011,clim2010.2012,clim2010.2013,clim2010.2014,clim2010.2015)
 clim2010 <- subset(clim2010, select = -c(X))
-clim2010.normal <- select(clim2010.normal, -X)
+#clim2010.normal <- select(clim2010.normal, -X)
 clim2010 <- rbind(clim2010, clim2010.normal)
 
 #2015
@@ -372,7 +372,7 @@ clim2015.2020$Year <-5
 clim2015.normal$Year <- 0
 clim2015 <- rbind(clim2015.2016,clim2015.2017,clim2015.2018,clim2015.2019,clim2015.2020)
 clim2015 <- subset(clim2015, select = -c(X))
-clim2015.normal <- select(clim2015.normal, -X)
+#clim2015.normal <- select(clim2015.normal, -X)
 clim2015 <- rbind(clim2015, clim2015.normal)
 
 #2016
@@ -382,9 +382,7 @@ clim2016.2019$Year <-3
 clim2016.2020$Year <-4
 clim2016.2021$Year <-5
 clim2016.normal$Year <- 0
-clim2016.2017 <-select(clim2016.2017, -X) 
-clim2016.2018 <-select(clim2016.2018, -X) 
-clim2016.2019 <-select(clim2016.2017, -X) 
+clim2016.2018$X <- 1
 clim2016 <- rbind(clim2016.2017,clim2016.2018,clim2016.2019,clim2016.2020,clim2016.2021)
 clim2016 <- subset(clim2016, select = -c(X))
 clim2016.normal <- select(clim2016.normal, -X)
@@ -401,10 +399,15 @@ need to decide what to do about plots with multiple plot locations
 no_duplicates <- clim.all %>% 
   group_by(ID1) %>% 
   summarise(count = n()) %>% 
-  filter(count <= 6)
+  filter(count <= 6) %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID)
 
-clim.all <- clim.all %>% 
-  filter(ID1 %in% no_duplicates$ID1)
+clim.all %>% 
+  group_by(ID1) %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  summarise(count = n())  
+
+
 ```
 
 

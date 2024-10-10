@@ -703,7 +703,13 @@ regen_GIS %>%
   summarise(total = n())
 
 bin_dis_GIS1 %>% 
-  group_by(total_x130_bin) %>% 
+  group_by(DRAIN_1) %>% 
+  summarise(total = n())
+
+bin_dis_GIS1 %>% 
+  select(FIRE_YEAR_1, FDI_count_bin, PLI_count_bin) %>% 
+  filter(FDI_count_bin == 1 | PLI_count_bin==1) %>% 
+  group_by(FIRE_YEAR_1) %>% 
   summarise(total = n())
 
 ```

@@ -3,7 +3,7 @@
 ############################
 
 # Fire Severity
-bin_dis_GIS1 <- bin_dis_GIS %>%
+bin_dis_GIS1 <- bin_dis_GIS1 %>%
   distinct(SampleSite_ID, .keep_all = T) %>% 
   filter(!SampleSite_ID %in% not_measured$SampleSite_ID) %>% 
   filter(!SampleSite_ID %in% c(456, 496, 1108, 1422, 1514, 1643))
@@ -28,7 +28,7 @@ bin_dis_GIS1 <- within(bin_dis_GIS1, {
 
 
 # NA value cleanup
-bin_dis_GIS1 <- bin_dis_GIS %>%
+bin_dis_GIS1 <- bin_dis_GIS1 %>%
   distinct(SampleSite_ID, .keep_all = T) %>% 
   filter(!SampleSite_ID %in% not_measured$SampleSite_ID) %>% 
   filter(!SampleSite_ID %in% c(456, 496, 1108, 1422, 1514, 1643))
