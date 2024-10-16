@@ -250,36 +250,47 @@ write.csv(GIS_i, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/GIS
 # Fire Severity
 ```{r}
 regen_combo$SampleSite_ID <- as.integer(regen_combo$Card, na.rm=TRUE)
-GIS_i$SampleSite_ID <- as.integer(GIS_i$Plot_ID, na.rm=TRUE)
 regen_GIS <- left_join(regen_combo,GIS_i, by = "SampleSite_ID") %>% 
   ungroup()
+
 
 fire_severity <- fire_severity %>% 
   select(Card, MEAN) %>% 
   rename(SampleSite_ID = Card)
 
-fire_severity <- fire_severity %>% 
-  mutate(MEAN = ifelse(SampleSite_ID == 1153, MEAN[which(SampleSite_ID == 2626)] , MEAN),
-         MEAN = ifelse(SampleSite_ID == 1182, MEAN[which(SampleSite_ID == 2644)] , MEAN),
-         MEAN = ifelse(SampleSite_ID == 1500, MEAN[which(SampleSite_ID == 1760)] , MEAN),
-         MEAN = ifelse(SampleSite_ID == 1501, MEAN[which(SampleSite_ID == 1761)] , MEAN),
-         MEAN = ifelse(SampleSite_ID == 1502, MEAN[which(SampleSite_ID == 1770)] , MEAN),
-         MEAN = ifelse(SampleSite_ID == 1503, MEAN[which(SampleSite_ID == 1771)] , MEAN),
-         MEAN = ifelse(SampleSite_ID == 1531, MEAN[which(SampleSite_ID == 1791)] , MEAN),
-         MEAN = ifelse(SampleSite_ID == 1192, MEAN[which(SampleSite_ID == 2644)] , MEAN),
-         MEAN = ifelse(SampleSite_ID == 1484, mean(c(0.485442, 0.462872, 0.575654, 0.470040)), MEAN),
-         MEAN = ifelse(SampleSite_ID == 1504, mean(c(0.356386, 0.246404)), MEAN))
+# Fix some fire severity values that were close to other plots
+new_rows <- data.frame(
+  SampleSite_ID = c(1153, 1182, 1500, 1501, 1502, 1503, 1531, 1192, 1484, 1504),
+  MEAN = c(
+    fire_severity$MEAN[which(fire_severity$SampleSite_ID == 2626)],
+    fire_severity$MEAN[which(fire_severity$SampleSite_ID == 2644)],
+    fire_severity$MEAN[which(fire_severity$SampleSite_ID == 1760)],
+    fire_severity$MEAN[which(fire_severity$SampleSite_ID == 1761)],
+    fire_severity$MEAN[which(fire_severity$SampleSite_ID == 1770)],
+    fire_severity$MEAN[which(fire_severity$SampleSite_ID == 1771)],
+    fire_severity$MEAN[which(fire_severity$SampleSite_ID == 1791)],
+    fire_severity$MEAN[which(fire_severity$SampleSite_ID == 2644)],
+    mean(c(0.485442, 0.462872, 0.575654, 0.470040)),
+    mean(c(0.356386, 0.246404))
+  )
+)
+
+# Combine the new rows with the existing dataframe
+fire_severity <- bind_rows(fire_severity, new_rows)
+
 
 fire_severity <- within(fire_severity, {   
   BARC.x <- NA # need to initialize variable
-  BARC.x[MEAN < .105] <- "1"
-  BARC.x[MEAN >= .105 & MEAN < 0.275] <- "2"
-  BARC.x[MEAN >= 0.275 & MEAN < 0.66] <- "3"
+  BARC.x[MEAN < .105] <- 1
+  BARC.x[MEAN >= .105 & MEAN < 0.275] <- 2
+  BARC.x[MEAN >= 0.275 & MEAN < 0.66] <- 3
   BARC.x[MEAN >= 0.66] <- 4
    } )
 
 regen_GIS <- full_join(regen_GIS, fire_severity, by = "SampleSite_ID")
-write.csv(regen_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_GIS.csv")
+
+
+regen_GIS %>% filter(is.na(MEAN))
 ```
 
 # Adding distance to live tree
@@ -289,22 +300,33 @@ distance <-  distance %>%
   select(SampleSite_ID, Distance)
 regen_GIS <- full_join(regen_GIS, distance, by = "SampleSite_ID")
 
+
 regen_GIS <- regen_GIS %>%
   mutate(Distance = ifelse(SampleSite_ID == 1511, 4, Distance)) %>%
-  mutate(Distance = ifelse(SampleSite_ID == 3, 4, Distance))
+  mutate(Distance = ifelse(SampleSite_ID == 3, 4, Distance)) %>% 
+  mutate(Distance = ifelse(SampleSite_ID == 330, 4, Distance))
 ```
 
 # Removing Unmeasured Plots
 ```{r}
 not_measured_list <-c(2042, 1840, 1701, 2208, 1609, 2646, 1598, 1942, 2043, 1623, 2269, 2115, 1482, 2213, 2334,
                                1936, 1724, 193, 318, 1209, 1267, 499, 1836, 361, 545, 907,
-                               1467, 1297, 1423, 1831, 585, 1796, 2271, 1807, 865, 315)
-
-
+                               1467, 1297, 1423, 1831, 585, 1796, 2271, 1807, 865, 315, 329)
 
 not_measured <- regen_GIS %>% 
   filter(SampleSite_ID %in% not_measured_list) %>% 
   select(SampleSite_ID)
+
+regen_GIS <- regen_GIS %>%
+  distinct(SampleSite_ID, .keep_all = T) %>% 
+  filter(!SampleSite_ID %in% not_measured$SampleSite_ID) %>% 
+  filter(!SampleSite_ID %in% c(456, 496, 1108, 1422, 1514, 1643)) %>% 
+  filter(!is.na(UNIQUE_ID))
+
+regen_GIS %>% 
+  filter(is.na(Distance))
+write.csv(regen_GIS,  "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_GIS.csv")
+regen_GIS <- read.csv("C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_GIS.csv")
 ```
 
 
@@ -345,5 +367,47 @@ write.csv(regen_binary, "C:/Users/nmac2000/Documents/regen project/Regen/Datafra
 
 ```
 
+# For Analysis
+```{r}
+bin_dis_GIS1 <- read.csv("C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_binary.csv")
+
+# ensure y variable is a factor for seedling presence vs absence
+bin_dis_GIS1$PLI.f <- as.factor(bin_dis_GIS1$PLI_count_bin)
+bin_dis_GIS1$FDI.f <- as.factor(bin_dis_GIS1$FDI_count_bin)
+# y=1 for regeneration, y=0 for no regeneration
+class(bin_dis_GIS1$PLI.f)
+bin_dis_GIS1$Distance <- as.numeric(bin_dis_GIS1$Distance)
+bin_dis_GIS1$CROWN_CLOSURE_1 <- as.numeric(bin_dis_GIS1$CROWN_CLOSURE_1)
+bin_dis_GIS1$PROJ_AGE_1_1 <- as.numeric(bin_dis_GIS1$PROJ_AGE_1_1)
+bin_dis_GIS1$PROJ_HEIGHT_1_1 <- as.numeric(bin_dis_GIS1$PROJ_HEIGHT_1_1)
+bin_dis_GIS1$DISTANCE_TO_PERIMETER <- as.numeric(bin_dis_GIS1$DISTANCE_TO_PERIMETER)
+bin_dis_GIS1$years_since <- as.numeric(2023-bin_dis_GIS1$FIRE_YEAR_1)
+bin_dis_GIS1$DISTURBANCE_TYPE_1 <- as.factor(bin_dis_GIS1$DISTURBANCE_TYPE_1)
+bin_dis_GIS1$SPECIES_CD_1_1 <- factor(bin_dis_GIS1$SPECIES_CD_1_1, levels = c("PLI", "FDI", "AT", "SX"))
+bin_dis_GIS1$BARC.x <- as.factor(bin_dis_GIS1$BARC.x)
+
+# remove plots with NA values
+# remove VRI non-treed sites
+bin_dis_GIS1 <- bin_dis_GIS1 %>% 
+  filter(SPECIES_CD_1_1 != "")
+
+# remove MS BEC zone (not enough observations)
+bin_dis_GIS1 <- bin_dis_GIS1 %>% 
+  filter(BEC_Zone != "MS")
+
+# remove organic and rock parent material
+bin_dis_GIS1 <- bin_dis_GIS1 %>% 
+  filter(!PARENT_SOILS %in% c("ORGANIC ", "ROCK "))
+
+# combine parent material categories
+table(bin_dis_GIS1$PARENT_SOILS)
+table(bin_dis_GIS$PARENT_SOILS)
+bin_dis_GIS1 <- bin_dis_GIS1 %>%
+  mutate(PARENT_SOILS = ifelse(PARENT_SOILS == "FLUVIAL ", "GLACIOFLUVIAL ", PARENT_SOILS)) %>% 
+  mutate(PARENT_SOILS = ifelse(PARENT_SOILS == "LACUSTRINE ", "GLACIOLACUSTRINE ", PARENT_SOILS)) %>% 
+  mutate(PARENT_SOILS = trimws(PARENT_SOILS))
+
+write.csv(bin_dis_GIS1, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/bin_dis_GIS1.csv")
+```
 
 

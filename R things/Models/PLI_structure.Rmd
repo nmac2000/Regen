@@ -6,46 +6,9 @@ output: html_document
 ---
 
 
-```{r}
-#need to figure out data frames for everything and clean up code
-bin_dis_GIS1 <- bin_dis_GIS %>%
-  distinct(SampleSite_ID, .keep_all = T) %>% 
-  filter(!SampleSite_ID %in% not_measured$SampleSite_ID) %>% 
-  filter(!SampleSite_ID %in% c(456, 496, 1108, 1422, 1514, 1643))
-
-```
 
 structural
-```{r}
-names(bin_dis_GIS1)  # print out the column (i.e., variable) names
-dim(bin_dis_GIS1)    # number of rows and columns
-head(bin_dis_GIS1)  # print out the first few lines of data
 
-#need to put this somewhere else later on
-bin_dis_GIS1$DISTURBANCE_TYPE_1<- sub( "IBM  ", "IBM", bin_dis_GIS1$DISTURBANCE_TYPE_1)
-
-# ensure y variable is a factor for dead versus alive
-bin_dis_GIS1$PLI.f <- as.factor(bin_dis_GIS1$PLI_count_bin)
-bin_dis_GIS1$FDI.f <- as.factor(bin_dis_GIS1$FDI_count_bin)
-# y=1 for dead trees, y=0 for live trees
-class(bin_dis_GIS1$PLI.f)
-bin_dis_GIS1$Distance <- as.numeric(bin_dis_GIS1$Distance)
-bin_dis_GIS1$CROWN_CLOSURE_1 <- as.numeric(bin_dis_GIS1$CROWN_CLOSURE_1)
-bin_dis_GIS1$PROJ_AGE_1_1 <- as.numeric(bin_dis_GIS1$PROJ_AGE_1_1)
-bin_dis_GIS1$PROJ_HEIGHT_1_1 <- as.numeric(bin_dis_GIS1$PROJ_HEIGHT_1_1)
-bin_dis_GIS1$DISTANCE_TO_PERIMETER <- as.numeric(bin_dis_GIS1$DISTANCE_TO_PERIMETER)
-bin_dis_GIS1$years_since <- as.numeric(2023-bin_dis_GIS1$FIRE_YEAR_1)
-bin_dis_GIS1$DISTURBANCE_TYPE_1 <- as.factor(bin_dis_GIS1$DISTURBANCE_TYPE_1)
-bin_dis_GIS1$SPECIES_CD_1_1 <- factor(bin_dis_GIS1$SPECIES_CD_1_1, levels = c("PLI", "FDI", "AT", "SX"))
-bin_dis_GIS1$BARC.x <- as.factor(bin_dis_GIS1$BARC.x)
-
-
-#bin_dis_GIS1 <- bin_dis_GIS1 %>% 
-  filter(!is.na(Distance), !is.na(years_since), !is.na(CROWN_CLOSURE_1),
-         !is.na(PROJ_AGE_1_1), !is.na(PROJ_HEIGHT_1_1), !is.na(DISTURBANCE_TYPE_1),
-         !is.na(DISTANCE_TO_PERIMETER), !is.na(BURN_SEVERITY_RATING_1),
-         !is.na(PLI.f), !is.na(FDI.f), !is.na(MEAN.y))
-```
 ```{r}
 pairs(~ Distance  +CROWN_CLOSURE_1 +PROJ_AGE_1_1 +PROJ_HEIGHT_1_1 +DISTANCE_TO_PERIMETER +
         PATCH_SIZE_1 + MEAN, 

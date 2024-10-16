@@ -29,76 +29,22 @@ distance <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/distance
 distance <- read.csv(distance)
 regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"
 regen <- read.csv(regen)
-fire_severity <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/FireSeverity.csv"
-fire_severity <- read.csv(fire_severity)
-```
-
-
-```{r}
-# Fill in blank species, NR = no regen
-regen$Species <- sub("^$", "NR", regen$Species)
-regen$Species <- sub("ACT", "NonCon", regen$Species)
-regen$Species <- sub("AT", "NonCon", regen$Species)
-regen$Species <- sub("SW", "SX", regen$Species)
-regen$Species <- sub("SE", "SX", regen$Species)
-regen$Species <- sub("SX", "SX", regen$Species)
-
-
-# get rid of unnecessary columns
-regen<- regen %>% 
-  select(Card,Quandrant,Species,Notes,x0,x10,x30,x130) 
-
-# new column for species by plot
-regen$Plot_Sp <- paste(regen$Card, regen$Species, sep = "")
-
-#new column for total of seedlings per wedge by species
-regen<- regen%>% 
-  mutate(total = rowSums(cbind(regen$x0,regen$x10,regen$x30,regen$x130),na.rm=TRUE))
-
-#combine different wedges by height class
-
-regen_only_total <- regen %>% 
-  group_by(Card, Species, Plot_Sp) %>% 
-  summarise(across(total, sum))
-
-regen_only_x0 <- regen %>% 
-  group_by(Plot_Sp) %>% 
-  summarise(x0 = sum(x0, na.rm = TRUE))
-
-regen_only_x10 <- regen %>% 
-  group_by(Plot_Sp) %>% 
-  summarise(x10 = sum(x10, na.rm = TRUE))
-
-regen_only_x30 <- regen %>% 
-  group_by(Plot_Sp) %>% 
-  summarise(x30 = sum(x30, na.rm = TRUE))
-
-regen_only_x130 <- regen %>% 
-  group_by(Plot_Sp) %>% 
-  summarise(x130 = sum(x130, na.rm = TRUE))
-
-#combine into 1 data frame
-
-regen_all <- full_join(regen_only_total, regen_only_x0, by = "Plot_Sp") %>% 
-  full_join(regen_only_x10, by = "Plot_Sp") %>% 
-  full_join(regen_only_x30, by = "Plot_Sp") %>%
-  full_join(regen_only_x130, by = "Plot_Sp")
 
 ```
 
-```{r}
-regen_all <- rename(regen_all, SampleSite_ID = "Card")
-regen_all_long <- select(regen_all, SampleSite_ID:x130)
-regen_longer_GIS <- full_join(regen_all_long, GIS, by = "SampleSite_ID")
 
-#distance <- rename(distance, SampleSite_ID = "Card")
-regen_longer_GIS <- full_join(regen_longer_GIS, distance, by = "SampleSite_ID")
+
+```{r}
+
+
+
 #write.csv(regen_longer_GIS,  "C:/Users/nmac2000/Documents/regen project/Regen/Data/Longer_regen.csv")
 regen_longer_GIS$years_since <- 2023-regen_longer_GIS$FIRE_YEAR_1
 regen_longer_GIS$years_since <- as.factor(regen_longer_GIS$years_since)
 regen_longer_GIS <- regen_longer_GIS %>% 
   filter(!is.na(Species),
          Species != "NR") 
+
 ```
 
 ```{r}
@@ -119,29 +65,7 @@ ggplot(regen_longer_GIS, aes(x=CROWN_CLOSURE_1, y=total)) +
   facet_wrap(~Species) +
   theme_minimal()
 ```
-#now graphs with occurrence instead
-```{r}
-regen_binary <- rename(regen_binary, SampleSite_ID = "Card")
-#distance <- rename(distance, SampleSite_ID = "Card")
-regen_binary_distance <- left_join(distance, regen_binary, by = "SampleSite_ID")
-bin_dis_GIS <- left_join(regen_binary_distance, GIS, by = "SampleSite_ID")
-#fire_severity <- rename(fire_severity, SampleSite_ID = "Card")
-bin_dis_GIS <- left_join(bin_dis_GIS, fire_severity)
 
-bin_dis_GIS <- left_join(bin_dis_GIS, BARC)
-bin_dis_GIS$years_since <- as.factor(2023-bin_dis_GIS$FIRE_YEAR_1)
-bin_dis_GIS$FDI_count_bin <- as.factor(bin_dis_GIS$FDI_count_bin)
-bin_dis_GIS$PLI_count_bin <- as.factor(bin_dis_GIS$PLI_count_bin)
-bin_dis_GIS$SX_count_bin <- as.factor(bin_dis_GIS$SX_count_bin)
-bin_dis_GIS <- filter(bin_dis_GIS, !is.na(SPECIES_CD_1_1))
-
-BARC <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/BARC.csv")
-BARC <- BARC %>% 
-  select(Card, MEAN) %>% 
-  mutate(BARC = round(MEAN)) %>% 
-  rename(SampleSite_ID = "Card")
-bin_dis_GIS <- left_join(bin_dis_GIS, BARC, by = "SampleSite_ID")
-```
 
 ```{r}
 filtered_data <- filter(bin_dis_GIS, !is.na(FDI_count_bin))
@@ -469,9 +393,6 @@ ggplot(bin_dis_GIS1, aes(x=BURN_SEVERITY_RATING_1, y=MEAN)) +
   ) +
   theme_minimal()
 
-idk <- left_join(distance, regen_GIS1, by = "SampleSite_ID")
-idk <- idk %>% 
-  distinct(SampleSite_ID, .keep_all = T)
 
 ggplot(idk, aes(x=SOILNAME_1, y=FDI_count)) +
   geom_boxplot(fill = "skyblue", color = "darkblue", outlier.color = "red") +
@@ -491,40 +412,7 @@ bin_dis_GIS1 %>%
   summarize(count=n())
 
 ```
-```{r}
-bin_dis_GIS1$BARC.x <- bin_dis_GIS1$BARC.y 
 
-bin_dis_GIS1 <- within(bin_dis_GIS1, {   
-  BARC.x <- NA # need to initialize variable
-  BARC.x[MEAN < .105] <- "1"
-  BARC.x[MEAN >= .105 & MEAN < 0.275] <- "2"
-  BARC.x[MEAN >= 0.275 & MEAN < 0.66] <- "3"
-  BARC.x[MEAN >= 0.66] <- 4
-   } )
-
-bin_dis_GIS1 <- within(bin_dis_GIS1, {   
-  BARC.z <- NA # need to initialize variable
-  BARC.z[MAX < .105] <- "1"
-  BARC.z[MAX >= .105 & MAX < 0.275] <- "2"
-  BARC.z[MAX >= 0.275 & MAX < 0.66] <- "3"
-  BARC.z[MAX >= 0.66] <- 4
-   } )
-
-bin_dis_GIS1$BARC.z <- as.factor(bin_dis_GIS1$BARC.z)
-
-ggplot(bin_dis_GIS1, aes(x=BARC.x, y=MEAN)) +
-  geom_boxplot(fill = "skyblue", color = "darkblue", outlier.color = "red") +
-  geom_jitter(position=position_jitter(height=0, width=0.35)) +
-#  facet_wrap(vars(FIRE_NUMBER_1)) +
-  labs(
-    title = "Fire Severity",
-    x = "Fire Severity",
-    y = "dNBR",
-  ) +
-  theme_minimal()
-
-filter(bin_dis_GIS1, BARC.z == 4)
-```
 # Summary Tables
 ```{r}
 bin_dis_GIS1 %>% 
