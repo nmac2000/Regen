@@ -9,33 +9,46 @@ output: html_document
 Load packages and data
 ```{r}
 library(tidyverse)
+library(lmtest)
 
-
-# plots with Card#B removed, ask Anya what they are
 regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"
 regen <- read.csv(regen)
-site <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Site.csv"
-site <- read.csv(site)
 GIS_i <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_Points_May2.csv"
 GIS_i <- read.csv(GIS_i)
 clipGis <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/PossiblePlot.csv"
 clipGis <- read.csv(clipGis)
-internal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Internal.csv"
-internal <- read.csv(internal)
-basal <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/BasalArea.csv"
-basal <- read.csv(basal)
+distance <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/distance.csv"
+distance <- read.csv(distance)
+fire_severity <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/FireSeverity.csv"
+fire_severity <- read.csv(fire_severity)
 
 ```
 
-Format plot data
+# Format plot data
 ```{r}
 # Fill in blank species, NR = no regen
 regen$Species <- sub("^$", "NR", regen$Species)
-regen$Species <- sub("ACT", "NonCon", regen$Species)
-regen$Species <- sub("AT", "NonCon", regen$Species)
+regen$Species <- sub("ACT", "AT", regen$Species)
 regen$Species <- sub("SW", "SX", regen$Species)
 regen$Species <- sub("SE", "SX", regen$Species)
 regen$Species <- sub("SX", "SX", regen$Species)
+
+regen <- regen %>%
+  mutate(
+    x0 = ifelse(is.na(x0), 0, x0),
+    x10 = ifelse(is.na(x10), 0, x10),
+    x30 = ifelse(is.na(x30), 0, x30),
+    x130 = ifelse(is.na(x130), 0, x130)
+  )
+
+regen <- regen %>%
+  mutate(Species = ifelse(
+    (x0 > 0 | x10 > 0 | x30 > 0 | x130 > 0) & Species == "NR",
+    "PLI",
+    Species
+  ))
+
+
 
 
 # get rid of unnecessary columns
@@ -79,33 +92,21 @@ regen_all <- full_join(regen_only_total, regen_only_x0, by = "Plot_Sp") %>%
   full_join(regen_only_x130, by = "Plot_Sp")
 
 # now i want to have columns for each species
-regen_all$FDI_total <- ifelse(regen_all$Species == "FDI", regen_all$total, 0)
-regen_all$FDI_x0 <- ifelse(regen_all$Species == "FDI", regen_all$x0, 0)
-regen_all$FDI_x10 <- ifelse(regen_all$Species == "FDI", regen_all$x10, 0)
-regen_all$FDI_x30 <- ifelse(regen_all$Species == "FDI", regen_all$x30, 0)
-regen_all$FDI_x130 <- ifelse(regen_all$Species == "FDI", regen_all$x130, 0)
-regen_all$PLI_total <- ifelse(regen_all$Species == "PLI", regen_all$total, 0)
-regen_all$PLI_x0 <- ifelse(regen_all$Species == "PLI", regen_all$x0, 0)
-regen_all$PLI_x10 <- ifelse(regen_all$Species == "PLI", regen_all$x10, 0)
-regen_all$PLI_x30 <- ifelse(regen_all$Species == "PLI", regen_all$x30, 0)
-regen_all$PLI_x130 <- ifelse(regen_all$Species == "PLI", regen_all$x130, 0)
-regen_all$NonCon_total <- ifelse(regen_all$Species == "NonCon", regen_all$total, 0)
-regen_all$NonCon_x0 <- ifelse(regen_all$Species == "NonCon", regen_all$x0, 0)
-regen_all$NonCon_x10 <- ifelse(regen_all$Species == "NonCon", regen_all$x10, 0)
-regen_all$NonCon_x30 <- ifelse(regen_all$Species == "NonCon", regen_all$x30, 0)
-regen_all$NonCon_x130 <- ifelse(regen_all$Species == "NonCon", regen_all$x130, 0)
-regen_all$SX_total <- ifelse(regen_all$Species == "SX", regen_all$total, 0)
-regen_all$SX_x0 <- ifelse(regen_all$Species == "SX", regen_all$x0, 0)
-regen_all$SX_x10 <- ifelse(regen_all$Species == "SX", regen_all$x10, 0)
-regen_all$SX_x30 <- ifelse(regen_all$Species == "SX", regen_all$x30, 0)
-regen_all$SX_x130 <- ifelse(regen_all$Species == "SX", regen_all$x130, 0)
-#regen_all$Conifer_total <- ifelse(regen_all$Species == grpl("SX", regen_all$total, 0))
-#regen_all$Conifer_x0 <- ifelse(regen_all$Species == "SX", regen_all$x0, 0)
-#regen_all$Conifer_x10 <- ifelse(regen_all$Species == "SX", regen_all$x10, 0)
-#regen_all$Conifer_x30 <- ifelse(regen_all$Species == "SX", regen_all$x30, 0)
-#regen_all$Conifer_x130 <- ifelse(regen_all$Species == "SX", regen_all$x130, 0)
 
-#Need to make it for conifer but waiting until at lab
+create_species_columns <- function(data, species_list, columns) {
+  for (species in species_list) {
+    for (col in columns) {
+      new_col_name <- paste0(species, "_", col)
+      data[[new_col_name]] <- ifelse(data$Species == species, data[[col]], 0)
+    }
+  }
+  return(data)
+}
+species_list <- c("FDI", "PLI", "AT", "SX")
+columns <- c("total", "x0", "x10", "x30", "x130")
+
+regen_all <- create_species_columns(regen_all, species_list, columns)
+
 
 
 # remove NR rows for plots that have other species present
@@ -116,21 +117,7 @@ regen_all <- regen_all %>%
   select(-has_nr, -num_rows)
 
 
-## Check if we removed the correct values
-# look into plots that have counts larger than zero. Seems like there should have been a species recorded
-#(plots 1505, 1529, 1567, 1647, 1739, 2318)
-regen_retained <- regen_all %>% 
-  group_by(Card) %>% 
-  mutate(has_nr = any(Species == "NR"), num_rows = n()) %>% 
-  filter(num_rows == 1 | !(has_nr & Species == "NR")) %>% 
-  select(-has_nr, -num_rows)
-
-## Create dataframe with removed rows
-regen_removed <- regen_all %>%
-  anti_join(regen_retained, by = c("Card", "Species"))
-
 # combine rows for same plot
-##Add conifer##
 regen_combo <- regen_all %>%
   group_by(Card) %>%
   summarize(SpeciesAll = paste(Species, collapse = ", "),
@@ -152,11 +139,11 @@ regen_combo <- regen_all %>%
             PLI_x10 = sum(PLI_x10),
             PLI_x30 = sum(PLI_x30),
             PLI_x130 = sum(PLI_x130),
-            NonCon_count = sum(NonCon_total),
-            NonCon_x0 = sum(NonCon_x0),
-            NonCon_x10 = sum(NonCon_x10),
-            NonCon_x30 = sum(NonCon_x30),
-            NonCon_x130 = sum(NonCon_x130),
+            AT_count = sum(AT_total),
+            AT_x0 = sum(AT_x0),
+            AT_x10 = sum(AT_x10),
+            AT_x30 = sum(AT_x30),
+            AT_x130 = sum(AT_x130),
             SX_count = sum(SX_total),
             SX_x0 = sum(SX_x0),
             SX_x10 = sum(SX_x10),
@@ -168,7 +155,7 @@ regen_combo <- regen_all %>%
 write.csv(regen_combo, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/MeasuredPlots.csv")
 ```
 
-Clip GIS data to only potential plots and edit Aspect
+# Add GIS Data
 ```{r}
 # add GIS data
 regen$Card <- as.integer(regen$Card)
@@ -260,21 +247,69 @@ write.csv(GIS_i, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/GIS
 
 ```
 
-
-
-
-Now it's plot data with GIS data
+# Fire Severity
 ```{r}
-
-
-regen_GIS <- left_join(regen_combo,GIS_i, by = "Card") %>% 
+regen_combo$SampleSite_ID <- as.integer(regen_combo$Card, na.rm=TRUE)
+GIS_i$SampleSite_ID <- as.integer(GIS_i$Plot_ID, na.rm=TRUE)
+regen_GIS <- left_join(regen_combo,GIS_i, by = "SampleSite_ID") %>% 
   ungroup()
-regen_GIStest <- left_join(regen_GIS, fire_severity, by = "Card")
+
+fire_severity <- fire_severity %>% 
+  select(Card, MEAN) %>% 
+  rename(SampleSite_ID = Card)
+
+fire_severity <- fire_severity %>% 
+  mutate(MEAN = ifelse(SampleSite_ID == 1153, MEAN[which(SampleSite_ID == 2626)] , MEAN),
+         MEAN = ifelse(SampleSite_ID == 1182, MEAN[which(SampleSite_ID == 2644)] , MEAN),
+         MEAN = ifelse(SampleSite_ID == 1500, MEAN[which(SampleSite_ID == 1760)] , MEAN),
+         MEAN = ifelse(SampleSite_ID == 1501, MEAN[which(SampleSite_ID == 1761)] , MEAN),
+         MEAN = ifelse(SampleSite_ID == 1502, MEAN[which(SampleSite_ID == 1770)] , MEAN),
+         MEAN = ifelse(SampleSite_ID == 1503, MEAN[which(SampleSite_ID == 1771)] , MEAN),
+         MEAN = ifelse(SampleSite_ID == 1531, MEAN[which(SampleSite_ID == 1791)] , MEAN),
+         MEAN = ifelse(SampleSite_ID == 1192, MEAN[which(SampleSite_ID == 2644)] , MEAN),
+         MEAN = ifelse(SampleSite_ID == 1484, mean(c(0.485442, 0.462872, 0.575654, 0.470040)), MEAN),
+         MEAN = ifelse(SampleSite_ID == 1504, mean(c(0.356386, 0.246404)), MEAN))
+
+fire_severity <- within(fire_severity, {   
+  BARC.x <- NA # need to initialize variable
+  BARC.x[MEAN < .105] <- "1"
+  BARC.x[MEAN >= .105 & MEAN < 0.275] <- "2"
+  BARC.x[MEAN >= 0.275 & MEAN < 0.66] <- "3"
+  BARC.x[MEAN >= 0.66] <- 4
+   } )
+
+regen_GIS <- full_join(regen_GIS, fire_severity, by = "SampleSite_ID")
 write.csv(regen_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_GIS.csv")
 ```
 
+# Adding distance to live tree
+```{r}
 
-Occurrence
+distance <-  distance %>% 
+  select(SampleSite_ID, Distance)
+regen_GIS <- full_join(regen_GIS, distance, by = "SampleSite_ID")
+
+regen_GIS <- regen_GIS %>%
+  mutate(Distance = ifelse(SampleSite_ID == 1511, 4, Distance)) %>%
+  mutate(Distance = ifelse(SampleSite_ID == 3, 4, Distance))
+```
+
+# Removing Unmeasured Plots
+```{r}
+not_measured_list <-c(2042, 1840, 1701, 2208, 1609, 2646, 1598, 1942, 2043, 1623, 2269, 2115, 1482, 2213, 2334,
+                               1936, 1724, 193, 318, 1209, 1267, 499, 1836, 361, 545, 907,
+                               1467, 1297, 1423, 1831, 585, 1796, 2271, 1807, 865, 315)
+
+
+
+not_measured <- regen_GIS %>% 
+  filter(SampleSite_ID %in% not_measured_list) %>% 
+  select(SampleSite_ID)
+```
+
+
+
+# Occurrence
 ```{r}
 regen_binary <- regen_GIS %>% 
   mutate(total_count_bin = ifelse(total_count>0,1,0),
@@ -292,68 +327,23 @@ regen_binary <- regen_GIS %>%
          PLI_x10_bin = ifelse(PLI_x10>0,1,0),
          PLI_x30_bin = ifelse(PLI_x30>0,1,0),
          PLI_x130_bin = ifelse(PLI_x130>0,1,0),
-         NonCon_count_bin = ifelse(NonCon_count>0,1,0),
-         NonCon_x0_bin = ifelse(NonCon_x0>0,1,0),
-         NonCon_x10_bin = ifelse(NonCon_x10>0,1,0),
-         NonCon_x30_bin = ifelse(NonCon_x30>0,1,0),
-         NonCon_x130_bin = ifelse(NonCon_x130>0,1,0),
+         AT_count_bin = ifelse(AT_count>0,1,0),
+         AT_x0_bin = ifelse(AT_x0>0,1,0),
+         AT_x10_bin = ifelse(AT_x10>0,1,0),
+         AT_x30_bin = ifelse(AT_x30>0,1,0),
+         AT_x130_bin = ifelse(AT_x130>0,1,0),
          SX_count_bin = ifelse(SX_count>0,1,0),
          SX_x0_bin = ifelse(SX_x0>0,1,0),
          SX_x10_bin = ifelse(SX_x10>0,1,0),
          SX_x30_bin = ifelse(SX_x30>0,1,0),
          SX_x130_bin = ifelse(SX_x130>0,1,0))
 
-create_binary_columns <- function(data) {
-  binary_cols <- c("total_count", "total_x0", "total_x10", "total_x30", "total_x130",
-                   "FDI_count", "FDI_x0", "FDI_x10", "FDI_x30", "FDI_x130",
-                   "PLI_count", "PLI_x0", "PLI_x10", "PLI_x30", "PLI_x130",
-                   "NonCon_count", "NonCon_x0", "NonCon_x10", "NonCon_x30", "NonCon_x130",
-                   "SX_count", "SX_x0", "SX_x10", "SX_x30", "SX_x130")
-  
-  for (col in binary_cols) {
-    binary_col <- paste0(col, "_bin")
-    data[[binary_col]] <- ifelse(data[[col]] > 0, 1, 0)
-  }
-  
-  return(data)
-}
-
-regen_binary1 <- create_binary_columns(regen_GIS) %>% 
-  select(Card, total_count_bin:SX_x130_bin)
-
-
-regen_binary <- regen_binary %>% 
-  select(Card, total_count_bin:SX_x130_bin)
-
-library(testthat)
-test_that("Test if data frames are same", {
-  expect_equal(regen_binary,regen_binary1)
-})
-
-#combing binary with GIS data
-bin_GIS <- left_join(regen_binary,GIS_i, by = "Card") %>% 
-  ungroup()
 
 write.csv(regen_binary, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_binary.csv")
-write.csv(bin_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/binary_GIS.csv")
+# ? not what why this is: write.csv(bin_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/binary_GIS.csv")
 
 
 ```
-#this is not working right now but that's okay
-```{r}
-clipGis <- rename(clipGis, Card = SampleSite_ID)
-regen_GIS$X <- 1
-measured_clipped <- full_join(clipGis, regen_GIS, by = "Card") %>% 
-  select(Card,X)
-measured_clipped$measured <- ifelse(measured_clipped$X>=0,1,0)
-measured_clipped[is.na(measured_clipped)] <- 0
-sum(measured_clipped$measured == 1)
-clipGis$measured <- measured_clipped$measured
-rename(clipGis, SampleSite_ID = Card)
-write.csv(clipGis, "C:/Users/nmac2000/Documents/regen project/Data/all_plots.csv")
-```
 
-```{r}
-table(regen$Species)
-```
+
 

@@ -32,346 +32,6 @@ fire_severity <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Datafram
 fire_severity <- read.csv(fire_severity)
 
 ```
-
-# some plots (not that useful)
-
-```{r}
-#plots###############################################################################################
-head(regen_GIS)
-names(regen_GIS)
-
-
-## Making plots. Need to make them look better
-
-
-ggplot(regen_GIS, aes(x=PARENT_SOILS,y=total_count)) +
-  geom_boxplot()
-
-ggplot(regen_GIS, aes(x=BURN_SEVERITY_RATING_1,y=total_count)) +
-  geom_boxplot()
-
-ggplot(regen_GIS, aes(x=BEC_Zone,y=total_count)) +
-  geom_boxplot()
-
-#will maybe have to combine some of these (what is PL)
-#ggplot(regen_GIS, aes(x=Species_1,y=total_count)) +
- # geom_boxplot()
-
-ggplot(regen_GIS, aes(x=DRAIN_1,y=total_count)) +
-  geom_boxplot()
-
-ggplot(regen_GIS, aes(x=DRAIN_1)) +
-  geom_boxplot(aes(y=total_count), color="blue",position = "dodge") +
-  geom_boxplot(aes(y=PLI_count), color = "red", position = "dodge")
-
-ggplot(regen_GIS, aes(x=Solar_Radiation)) +
-  geom_point(aes(y=PLI_count), color="red", alpha= .5) +
-  geom_point(aes(y=FDI_count), color="green", alpha=.5)
-
-ggplot(regen_GIS, aes(x=TWI)) +
-  geom_point(aes(y=PLI_count), color="red", alpha= .5) +
-  geom_point(aes(y=FDI_count), color="green", alpha=.5) 
-
-ggplot(regen_GIS, aes(x=COFRAG_1)) +
-  geom_point(aes(y=PLI_count), color="red", alpha= .5) +
-  geom_point(aes(y=FDI_count), color="green", alpha=.5)
-
-#do as boxplot
-ggplot(regen_GIS, aes(x=Aspect)) +
-  geom_point(aes(y=PLI_count), color="red", alpha= .5) +
-  geom_point(aes(y=FDI_count), color="green", alpha=.5)
-
-#ggplot(regen_GIS, aes(x=Severity_Patch_Size_1)) +
-#  geom_point(aes(y=PLI_count), color="red", alpha= .5) +
-#  geom_point(aes(y=FDI_count), color="green", alpha=.5)
-
-#ggplot(regen_GIS, aes(x=Age_1)) +
-#  geom_point(aes(y=PLI_count), color="red", alpha= .5) +
- # geom_point(aes(y=FDI_count), color="green", alpha=.5)  
-
-#ggplot(regen_GIS, aes(x=Height_1)) +
- # geom_point(aes(y=PLI_count), color="red", alpha= .5) +
-  #geom_point(aes(y=FDI_count), color="green", alpha=.5)
-
-#ggplot(regen_GIS, aes(x=Crown_Closure_1)) +
- # geom_point(aes(y=PLI_count), color="red", alpha= .5) +
-  #geom_point(aes(y=FDI_count), color="green", alpha=.5)
-
-#ggplot(regen_GIS, aes(x=Disturbance_Date_1)) +
- # geom_point(aes(y=PLI_count), color="red", alpha= .5) +
-  #geom_point(aes(y=FDI_count), color="green", alpha=.5)
-
-#ggplot(regen_GIS, aes(x=Distance_to_Perimeter)) +
- # geom_point(aes(y=PLI_count), color="red", alpha= .5) +
-  #geom_point(aes(y=FDI_count), color="green", alpha=.5)
-
-```
-```{r}
-ggplot(bin_dis_GIS, aes(x=BURN_SEVERITY_RATING_1,y=PLI_count_bin)) +
-  geom_()
-```
-
-
-# deliverables for Anya
-making tables for different categorical variables and seeing how they have been sampled
-
-```{r}
-table(GIS$SOILNAME_1)
-table(regen_GIS$SOILNAME_1)
-
-
-compare_tables <- function(table1, table2, driver_column) {
-  # Convert factor columns to characters
-  table1[[driver_column]] <- as.character(table1[[driver_column]])
-  table2[[driver_column]] <- as.character(table2[[driver_column]])
-  
-  # Use count function to get counts for each table
-  count_table1 <- count(table1, !!as.name(driver_column))
-  count_table2 <- count(table2, !!as.name(driver_column))
-  
-  # Combine counts using full join
-  comparison_df <- full_join(count_table1, count_table2, by = driver_column)
-  
-  # Replace NAs with 0 in the count columns
-  comparison_df[is.na(comparison_df)] <- 0
-  
-  # Return the comparison table
-  return(comparison_df)
-}
-
-# usage:
-driver_column_name <- c("BURN_SEVERITY_RATING_1")  
-result <- compare_tables(GIS, regen_GIS, driver_column_name)
-print(result)
-
-
-BEC_comparison <- compare_tables(GIS, regen_GIS, "BEC_Zone")%>%
-  rename(total_plots = n.x, measured_plots = n.y) %>% 
-  mutate(PercentOfTotal = total_plots/sum(total_plots)*100) %>%
-  mutate(PercentSampled = measured_plots/sum(measured_plots)*100) %>%
-  filter(row_number() <= n()-1)
-ParentSoil_comparison <- compare_tables(GIS, regen_GIS, "PARENT_SOILS")%>%
-  rename(total_plots = n.x, measured_plots = n.y) %>% 
-  mutate(PercentOfTotal = total_plots/sum(total_plots)*100) %>%
-  mutate(PercentSampled = measured_plots/sum(measured_plots)*100) %>%
-  filter(row_number() <= n()-1)
-SoilName_comparison  <- compare_tables(GIS, regen_GIS, "SOILNAME_1")%>%
-  rename(total_plots = n.x, measured_plots = n.y) %>% 
-  mutate(PercentOfTotal = total_plots/sum(total_plots)*100) %>%
-  mutate(PercentSampled = measured_plots/sum(measured_plots)*100) %>%
-  filter(row_number() <= n()-1)
-Texture_comparison <- compare_tables(GIS, regen_GIS, "TEXTURE_1")%>%
-  rename(total_plots = n.x, measured_plots = n.y)%>% 
-  mutate(PercentOfTotal = total_plots/sum(total_plots)*100) %>%
-  mutate(PercentSampled = measured_plots/sum(measured_plots)*100) %>%
-  filter(row_number() <= n()-1)
-Drainage_comparison  <- compare_tables(GIS, regen_GIS, "DRAIN_1")%>%
-  rename(total_plots = n.x, measured_plots = n.y)%>% 
-  mutate(PercentOfTotal = total_plots/sum(total_plots)*100) %>%
-  mutate(PercentSampled = measured_plots/sum(measured_plots)*100) %>%
-  filter(row_number() <= n()-1)
-#two different rows with 0s
-Cofrag_comparison  <- compare_tables(GIS, regen_GIS, "COFRAG_1")%>%
-  rename(total_plots = n.x, measured_plots = n.y)%>% 
-  mutate(PercentOfTotal = total_plots/sum(total_plots)*100) %>%
-  mutate(PercentSampled = measured_plots/sum(measured_plots)*100)
-FireYear_comparison  <- compare_tables(GIS, regen_GIS, "Fire_Year_1")%>%
-  rename(total_plots = n.x, measured_plots = n.y) %>% 
-  mutate(PercentOfTotal = total_plots/sum(total_plots)*100) %>%
-  mutate(PercentSampled = measured_plots/sum(measured_plots)*100) %>%  
-  filter(row_number() <= n()-1)
-FireNum_comparison  <- compare_tables(GIS, regen_GIS, "Fire_Number_1")%>%
-  rename(total_plots = n.x, measured_plots = n.y)%>% 
-  mutate(PercentOfTotal = total_plots/sum(total_plots)*100) %>%
-  mutate(PercentSampled = measured_plots/total_plots*100) %>% 
-  filter(row_number() <= n()-1)
-FireSeverity_comparison  <- compare_tables(GIS, regen_GIS, "BURN_SEVERITY_RATING_1")%>%
-  rename(total_plots = n.x, measured_plots = n.y)%>% 
-  mutate(PercentOfTotal = total_plots/sum(total_plots)*100) %>%
-  mutate(PercentSampled = measured_plots/sum(measured_plots)*100) %>%
-  filter(row_number() <= n()-1)
-
-
-
-
-Overstory_comparison  <- compare_tables(GIS, regen_GIS, "Species_1")%>%
-  rename(total_plots = n.x, measured_plots = n.y)%>% 
-  mutate(PercentOfTotal = total_plots/sum(total_plots)*100) %>%
-  mutate(PercentSampled = measured_plots/sum(measured_plots)*100) %>%
-  filter(row_number() <= n()-1)
-# Combine some of the Species for overstory
-# PLI <- PL
-# FDI <- FD
-# Spruce <- SE, SX
-# ??? <- B, EP, S
-
-
-#
-CrownClosure_comparison  <- compare_tables(GIS, regen_GIS, "Crown_Closure_1")%>%
-  rename(total_plots = n.x, measured_plots = n.y) %>% 
-  mutate(PercentOfTotal = total_plots/sum(total_plots)*100) %>%
-  mutate(PercentSampled = measured_plots/sum(measured_plots)*100) 
-Disturbance_comparison  <- compare_tables(GIS, regen_GIS, "Disturbance_Type_1")%>%
-  rename(total_plots = n.x, measured_plots = n.y)%>% 
-  mutate(PercentOfTotal = total_plots/sum(total_plots)*100) %>%
-  mutate(PercentSampled = measured_plots/sum(measured_plots)*100) %>%
-  filter(row_number() <= n()-1)
-Subzone_comparison  <- compare_tables(GIS, regen_GIS, "Subzone")%>%
-  rename(total_plots = n.x, measured_plots = n.y)%>% 
-  mutate(PercentOfTotal = total_plots/sum(total_plots)*100) %>%
-  mutate(PercentSampled = measured_plots/sum(measured_plots)*100) %>%
-  filter(row_number() <= n()-1)
-
-overstory_BEC <- GIS %>% 
-  group_by(BEC_Zone, Species_1) %>% 
-  summarize(n())
-
-
-
-
-```
-####overstory and BEC
-
-# Continuation of deliverables for Anya
-this looks at occurrence and basic stocking for some of the categorical data
-```{r}
-#deliverables#################################################
-#Anya wants conifer count
-#Fire severity
-regen_FS <- regen_GIS %>% 
-  select(Card:SX_x130,BURN_SEVERITY_RATING_1) %>% 
-  group_by(BURN_SEVERITY_RATING_1) %>% 
-  filter(!is.na(BURN_SEVERITY_RATING_1))
-
-regen_FS$Con_count <- regen_FS$FDI_count + regen_FS$PLI_count + regen_FS$SX_count
-regen_FS$Con_tph <- regen_FS$Con_count*200
-
-options(pillar.sigfig = 6) 
-
-regen_FS %>% 
-  summarise(across(c(31,32), sd))
-
-regen_FS %>% 
-  filter(Con_count > 0) %>%
-  summarise(count = n())
-
-
-regen_FS %>% 
-  summarise(percentage = sum(PLI_count > 5) / n() * 100)
-
-ggplot(regen_FS) +
-  geom_histogram(aes(x = Con_count, fill = BURN_SEVERITY_RATING_1), alpha = 0.7, binwidth = 50) +
-  labs(x = "Conifer Seedlings per Plot", y = "Frequency", title = "Distribution of Conifer Seedlings per Plot") +
-  theme_minimal() +
-  facet_wrap(vars(BURN_SEVERITY_RATING_1))
-
-write.csv(FireSeverity_comparison, "C:/Users/nmac2000/Documents/regen project/Data/FireSeverity.csv")
-
-#BEC zones
-regen_BEC <- regen_GIS %>% 
-  select(Card:SX_x130,BEC_Zone) %>% 
-  group_by(BEC_Zone) %>% 
-  filter(!is.na(BEC_Zone))
-
-regen_BEC$Con_count <- regen_BEC$FDI_count + regen_BEC$PLI_count + regen_BEC$SX_count
-regen_BEC$Con_tph <- regen_BEC$Con_count*200
-
-options(pillar.sigfig = 6) 
-
-regen_BEC %>% 
-  summarise(across(c(31,32), sd))
-
-regen_BEC %>% 
-  filter(Con_count > 0) %>%
-  summarise(count = n())
-
-
-regen_BEC %>% 
-  summarise(percentage = sum(PLI_count > 5) / n() * 100)
-
-ggplot(regen_BEC) +
-  geom_histogram(aes(x = Con_count, fill = BEC_Zone), alpha = 0.7, binwidth = 50) +
-  labs(x = "Conifer Seedlings per Plot", y = "Frequency", title = "Distribution of Conifer Seedlings per Plot") +
-  theme_minimal() +
-  facet_wrap(vars(BEC_Zone))
-
-
-## add subzone
-regen_subzone <- regen_GIS %>% 
-  select(Card:SX_x130,BEC_Zone,Subzone) %>% 
-  group_by(BEC_Zone,Subzone) %>% 
-  filter(!is.na(BEC_Zone))
-
-regen_subzone$Con_count <- regen_BEC$FDI_count + regen_BEC$PLI_count + regen_BEC$SX_count
-regen_subzone$Con_tph <- regen_BEC$Con_count*200
-
-options(pillar.sigfig = 6) 
-
-regen_subzone %>% 
-  summarise(across(c(31,32), sd))
-
-regen_subzone %>% 
-  filter(Con_count > 0) %>%
-  summarise(count = n())
-
-
-regen_subzone %>% 
-  summarise(percentage = sum(PLI_count > 5) / n() * 100)
-
-ggplot(regen_subzone) +
-  geom_histogram(aes(x = Con_count, fill = Subzone), alpha = 0.7, binwidth = 50) +
-  labs(x = "Conifer Seedlings per Plot", y = "Frequency", title = "Distribution of Conifer Seedlings per Plot") +
-  theme_minimal() +
-  facet_wrap(vars(Subzone))
-
-#Overstory
-
-
-regen_Overstory <- regen_GIS %>% 
-  select(Card:SX_x130,Species_1) %>% 
-  group_by(Species_1) %>% 
-  filter(!is.na(Species_1))
-
-regen_Overstory$Species_1 <- sub("\\bSX\\b", "SX", regen_Overstory$Species_1)
-regen_Overstory$Species_1 <- sub("\\bS\\b", "SX", regen_Overstory$Species_1)
-regen_Overstory$Species_1 <- sub("\\bSE\\b", "SX", regen_Overstory$Species_1)
-regen_Overstory$Species_1 <- sub("\\bPL\\b", "PLI", regen_Overstory$Species_1)
-regen_Overstory$Species_1 <- sub("\\bFD\\b", "FDI", regen_Overstory$Species_1)
-regen_Overstory$Species_1 <- sub("\\bPA\\b", "PLI", regen_Overstory$Species_1)
-
-regen_Overstory$Con_count <- regen_Overstory$FDI_count + regen_Overstory$PLI_count + regen_Overstory$SX_count
-regen_Overstory$Con_tph <- regen_Overstory$Con_count*200
-
-options(pillar.sigfig = 6) 
-
-regen_Overstory %>% 
-  summarise(across(c(31,32), sd))
-
-regen_Overstory %>% 
-  filter(Con_count > 0) %>%
-  summarise(count = n())
-
-
-regen_Overstory %>% 
-  summarise(percentage = sum(PLI_count > 5) / n() * 100)
-
-ggplot(regen_Overstory) +
-  geom_histogram(aes(x = Con_count, fill = Species_1), alpha = 0.7, binwidth = 50) +
-  labs(x = "Conifer Seedlings per Plot", y = "Frequency", title = "Distribution of Conifer Seedlings per Plot") +
-  theme_minimal() +
-  facet_wrap(vars(Species_1))
-```
-
-#Which plots have unknown burn severity
-```{r}
-for_table <- regen_GIS %>% 
-  filter(BURN_SEVERITY_RATING_1 == "Unknown") %>% 
-  select(Card, Fire_Year_1, Fire_Year_2, BURN_SEVERITY_RATING_1, BURN_SEVERITY_RATING_2, Fire_Number_1, Fire_Number_2, Longitude, Latitude)
-
-write.csv(for_table, "C:/Users/nmac2000/Documents/regen project/Data/Unknown_Severity_Measured_Plots.csv")
-
-```
-
 # Looking at wedge data (Bianca said this isnt useful)
 ```{r}
 #Wedges###############################
@@ -387,11 +47,11 @@ regen_wedge$PLI_x0 <- ifelse(regen_wedge$Species == "PLI", regen_wedge$x0, 0)
 regen_wedge$PLI_x10 <- ifelse(regen_wedge$Species == "PLI", regen_wedge$x10, 0)
 regen_wedge$PLI_x30 <- ifelse(regen_wedge$Species == "PLI", regen_wedge$x30, 0)
 regen_wedge$PLI_x130 <- ifelse(regen_wedge$Species == "PLI", regen_wedge$x130, 0)
-regen_wedge$NonCon_total <- ifelse(regen_wedge$Species == "NonCon", regen_wedge$total, 0)
-regen_wedge$NonCon_x0 <- ifelse(regen_wedge$Species == "NonCon", regen_wedge$x0, 0)
-regen_wedge$NonCon_x10 <- ifelse(regen_wedge$Species == "NonCon", regen_wedge$x10, 0)
-regen_wedge$NonCon_x30 <- ifelse(regen_wedge$Species == "NonCon", regen_wedge$x30, 0)
-regen_wedge$NonCon_x130 <- ifelse(regen_wedge$Species == "NonCon", regen_wedge$x130, 0)
+regen_wedge$AT_total <- ifelse(regen_wedge$Species == "AT", regen_wedge$total, 0)
+regen_wedge$AT_x0 <- ifelse(regen_wedge$Species == "AT", regen_wedge$x0, 0)
+regen_wedge$AT_x10 <- ifelse(regen_wedge$Species == "AT", regen_wedge$x10, 0)
+regen_wedge$AT_x30 <- ifelse(regen_wedge$Species == "AT", regen_wedge$x30, 0)
+regen_wedge$AT_x130 <- ifelse(regen_wedge$Species == "AT", regen_wedge$x130, 0)
 regen_wedge$SX_total <- ifelse(regen_wedge$Species == "SX", regen_wedge$total, 0)
 regen_wedge$SX_x0 <- ifelse(regen_wedge$Species == "SX", regen_wedge$x0, 0)
 regen_wedge$SX_x10 <- ifelse(regen_wedge$Species == "SX", regen_wedge$x10, 0)
@@ -407,7 +67,7 @@ regen_wedge <- regen_wedge %>%
   select(-has_nr, -num_rows) %>% 
   select(-Plot_Sp)
 
-#regen_wedge <- regen_wedge %>% 
+regen_wedge <- regen_wedge %>% 
   rename("total_x0" = "x0",
          "total_x10" = "x10",
          "total_x30" = "x30",
@@ -438,11 +98,11 @@ regen_wedge1 <- regen_wedge %>%
             PLI_x10 = sum(PLI_x10),
             PLI_x30 = sum(PLI_x30),
             PLI_x130 = sum(PLI_x130),
-            NonCon_count = sum(NonCon_total),
-            NonCon_x0 = sum(NonCon_x0),
-            NonCon_x10 = sum(NonCon_x10),
-            NonCon_x30 = sum(NonCon_x30),
-            NonCon_x130 = sum(NonCon_x130),
+            AT_count = sum(AT_total),
+            AT_x0 = sum(AT_x0),
+            AT_x10 = sum(AT_x10),
+            AT_x30 = sum(AT_x30),
+            AT_x130 = sum(AT_x130),
             SX_count = sum(SX_total),
             SX_x0 = sum(SX_x0),
             SX_x10 = sum(SX_x10),
@@ -483,106 +143,6 @@ options(scipen=0)
 
 
 
-#Some graphs with binary
-```{r}
-#Making graphs
-##aspect and total count (no real change IMO)
-aspect_graph <- bin_GIS %>%
-  group_by(Azimuth, total_count_bin) %>%
-  summarise(count = n()) 
-
-aspect_graph <- aspect_graph %>%
-  group_by(Azimuth) %>%
-  mutate(percentage = count / sum(count) * 100)
-
-aspect_graph$total_count_bin <- as.factor(aspect_graph$total_count_bin)  
-
-ggplot(filter(aspect_graph, !is.na(Azimuth)), aes(x = Azimuth, y = percentage, fill = total_count_bin)) +
-  geom_col(position = "dodge") +
-  scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
-                    name = "Total Count Bin",
-                    labels = c("No regen", "Regen")) +
-  labs(x = "Aspect Category", y = "Percentage", 
-       title = "Percentage of Observations by Aspect Category and Total Count Bin") +
-  theme_minimal() 
- 
-ggplot(filter(aspect_graph, !is.na(Azimuth)), aes(x = Azimuth, y = count, fill = total_count_bin)) +
-  geom_col(position="dodge") +  # Adjust dodge width as needed # Adjust colors as needed
-  scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
-                    name = "Total Count Bin",
-                    labels = c("No regen", "Regen")) +
-  labs(x = "Aspect Category", y = "Count", 
-       title = "Count of Observations by Aspect Category and Total Count Bin") +
-  theme_minimal() 
-
-#PLI abd aspect
-aspect_graph <- bin_GIS %>%
-  group_by(Azimuth, PLI_count_bin) %>%
-  summarise(count = n()) 
-
-
-aspect_graph <- aspect_graph %>%
-  group_by(Azimuth) %>%
-  mutate(percentage = count / sum(count) * 100)
-
-aspect_graph$PLI_count_bin <- as.factor(aspect_graph$PLI_count_bin)  
-
-ggplot(filter(aspect_graph, !is.na(Azimuth)), aes(x = Azimuth, y = percentage, fill = PLI_count_bin)) +
-  geom_col(position = "dodge") +
-  scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
-                    name = "PLI Count Bin",
-                    labels = c("No regen", "Regen")) +
-  labs(x = "Aspect Category", y = "Percentage", 
-       title = "Percentage of Observations by Aspect Category and PLI Count Bin") +
-  theme_minimal() 
-
-#FDI and aspect
-aspect_graph <- bin_GIS %>%
-  group_by(Azimuth, FDI_count_bin) %>%
-  summarise(count = n()) 
-
-
-aspect_graph <- aspect_graph %>%
-  group_by(Azimuth) %>%
-  mutate(percentage = count / sum(count) * 100)
-
-aspect_graph$FDI_count_bin <- as.factor(aspect_graph$FDI_count_bin)  
-
-ggplot(filter(aspect_graph, !is.na(Azimuth)), aes(x = Azimuth, y = percentage, fill = FDI_count_bin)) +
-  geom_col(position = "dodge") +
-  scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
-                    name = "FDI Count Bin",
-                    labels = c("No regen", "Regen")) +
-  labs(x = "Aspect Category", y = "Percentage", 
-       title = "Percentage of Observations by Aspect Category and FDI Count Bin") +
-  theme_minimal() 
-
-#NonCon and aspect
-aspect_graph <- bin_GIS %>%
-  group_by(Azimuth, NonCon_count_bin) %>%
-  summarise(count = n()) 
-
-
-aspect_graph <- aspect_graph %>%
-  group_by(Azimuth) %>%
-  mutate(percentage = count / sum(count) * 100)
-
-aspect_graph$NonCon_count_bin <- as.factor(aspect_graph$NonCon_count_bin)  
-
-ggplot(filter(aspect_graph, !is.na(Azimuth)), aes(x = Azimuth, y = percentage, fill = NonCon_count_bin)) +
-  geom_col(position = "dodge") +
-  scale_fill_manual(values = c("#E41A1C", "#4DAF4A"), 
-                    name = "NonCon Count Bin",
-                    labels = c("No regen", "Regen")) +
-  labs(x = "Aspect Category", y = "Percentage", 
-       title = "Percentage of Observations by Aspect Category and NonCon Count Bin") +
-  theme_minimal() 
-
-
-
-#next lets try getting them all on the same plot
-```
-
 # Occurrence as binary plot
 
 ```{r}
@@ -604,11 +164,11 @@ regen_for_table <- regen_binary %>%
             PLI_x10_occurrence = sum(PLI_x10_bin),
             PLI_x30_occurrence = sum(PLI_x30_bin),
             PLI_x130_occurrence = sum(PLI_x130_bin),
-            NonCon_count_occurrence = sum(NonCon_count_bin),
-            NonCon_x0_occurrence = sum(NonCon_x0_bin),
-            NonCon_x10_occurrence = sum(NonCon_x10_bin),
-            NonCon_x30_occurrence = sum(NonCon_x30_bin),
-            NonCon_x130_occurrence = sum(NonCon_x130_bin),
+            AT_count_occurrence = sum(AT_count_bin),
+            AT_x0_occurrence = sum(AT_x0_bin),
+            AT_x10_occurrence = sum(AT_x10_bin),
+            AT_x30_occurrence = sum(AT_x30_bin),
+            AT_x130_occurrence = sum(AT_x130_bin),
             SX_count_occurrence = sum(SX_count_bin),
             SX_x0_occurrence = sum(SX_x0_bin),
             SX_x10_occurrence = sum(SX_x10_bin),
@@ -616,6 +176,9 @@ regen_for_table <- regen_binary %>%
             SX_x130_occurrence = sum(SX_x130_bin)
             )
 
+```
+
+```{r}
 regen_table <- gather(regen_for_table, "AgeClass", "Count",1:25)
 regen_table$Species <- c("No Regen","No Regen","No Regen","No Regen","No Regen","FDI","FDI",
                          "FDI","FDI","FDI","PLI","PLI","PLI","PLI","PLI","Non Conifer",
@@ -650,225 +213,10 @@ ggplot(regen_table, aes(x = factor(AgeClass, levels = class_order), y = Count)) 
 
 
 I want to make a graph that has an explanatory categorical variable on the x axis and counts of plots on the y axis. Each category will have 2 bars, one for 0s one for 1s
-```{r}
-##Parent Soils
-bin_GIS_plot <- bin_GIS %>%
-  group_by(PARENT_SOILS, total_count_bin) %>%
-  summarise(count = n()) %>%
-  mutate(proportion = count / sum(count))
-
-# Plot the proportions
-ggplot(bin_GIS_plot, aes(x = PARENT_SOILS, y = proportion, fill = factor(total_count_bin))) +
-  geom_bar(stat = "identity", position = "stack") +
-  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
-       fill = "Regeneration Presence") +
-  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
-                    labels = c("0" = "No regeneration",
-                               "1" = "Regeneration")) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-##Azimuth
-bin_GIS_plot <- bin_GIS %>%
-  group_by(Azimuth, total_count_bin) %>%
-  summarise(count = n()) %>%
-  mutate(proportion = count / sum(count))
-
-# Plot the proportions
-ggplot(bin_GIS_plot, aes(x = Azimuth, y = proportion, fill = factor(total_count_bin))) +
-  geom_bar(stat = "identity", position = "stack") +
-  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
-       fill = "Regeneration Presence") +
-  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
-                    labels = c("0" = "No regeneration",
-                               "1" = "Regeneration")) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-##Texture
-bin_GIS_plot <- bin_GIS %>%
-  group_by(TEXTURE_1, total_count_bin) %>%
-  summarise(count = n()) %>%
-  mutate(proportion = count / sum(count))
-
-# Plot the proportions
-ggplot(bin_GIS_plot, aes(x = TEXTURE_1, y = proportion, fill = factor(total_count_bin))) +
-  geom_bar(stat = "identity", position = "stack") +
-  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
-       fill = "Regeneration Presence") +
-  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
-                    labels = c("0" = "No regeneration",
-                               "1" = "Regeneration")) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-##DRAIN_1
-bin_GIS_plot <- bin_GIS %>%
-  group_by(DRAIN_1, total_count_bin) %>%
-  summarise(count = n()) %>%
-  mutate(proportion = count / sum(count))
-
-# Plot the proportions
-ggplot(bin_GIS_plot, aes(x = DRAIN_1, y = proportion, fill = factor(total_count_bin))) +
-  geom_bar(stat = "identity", position = "stack") +
-  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
-       fill = "Regeneration Presence") +
-  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
-                    labels = c("0" = "No regeneration",
-                               "1" = "Regeneration")) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-##BEC
-bin_GIS_plot <- bin_GIS %>%
-  group_by(BEC_Zone, total_count_bin) %>%
-  summarise(count = n()) %>%
-  mutate(proportion = count / sum(count))
-
-# Plot the proportions
-ggplot(bin_GIS_plot, aes(x = BEC_Zone, y = proportion, fill = factor(total_count_bin))) +
-  geom_bar(stat = "identity", position = "stack") +
-  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
-       fill = "Regeneration Presence") +
-  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
-                    labels = c("0" = "No regeneration",
-                               "1" = "Regeneration")) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-##Coarse Fragment
-bin_GIS_plot <- bin_GIS %>%
-  group_by(PERCENT_1, total_count_bin) %>%
-  summarise(count = n()) %>%
-  mutate(proportion = count / sum(count))
-
-# Plot the proportions
-ggplot(bin_GIS_plot, aes(x = PERCENT_1, y = proportion, fill = factor(total_count_bin))) +
-  geom_bar(stat = "identity", position = "stack") +
-  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
-       fill = "Regeneration Presence") +
-  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
-                    labels = c("0" = "No regeneration",
-                               "1" = "Regeneration")) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
-##Coarse Fragment
-bin_GIS_plot <- bin_GIS %>%
-  group_by(PERCENT_1, total_count_bin) %>%
-  summarise(count = n()) %>%
-  mutate(proportion = count / sum(count))
-
-# Plot the proportions
-ggplot(bin_GIS_plot, aes(x = PERCENT_1, y = proportion, fill = factor(total_count_bin))) +
-  geom_bar(stat = "identity", position = "stack") +
-  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
-       fill = "Regeneration Presence") +
-  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
-                    labels = c("0" = "No regeneration",
-                               "1" = "Regeneration")) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
-##Fire Severity
-bin_GIS_plot <- bin_GIS %>%
-  group_by(BURN_SEVERITY_RATING_1, total_count_bin) %>%
-  summarise(count = n()) %>%
-  mutate(proportion = count / sum(count))
 
-# Plot the proportions
-ggplot(bin_GIS_plot, aes(x = BURN_SEVERITY_RATING_1, y = proportion, fill = factor(total_count_bin))) +
-  geom_bar(stat = "identity", position = "stack") +
-  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
-       fill = "Regeneration Presence") +
-  scale_fill_manual(values = c("0" = "salmon", "1" = "darkslategray4"),
-                    labels = c("0" = "No regeneration",
-                               "1" = "Regeneration")) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-
-##Disturbance
-bin_GIS_plot <- bin_GIS %>%
-  group_by(Disturbance_Type_1, total_count_bin) %>%
-  summarise(count = n()) %>%
-  mutate(proportion = count / sum(count))
-
-# Plot the proportions
-ggplot(bin_GIS_plot, aes(x = Disturbance_Type_1, y = proportion, fill = factor(total_count_bin))) +
-  geom_bar(stat = "identity", position = "stack") +
-  labs(x = "Explanatory Categorical Variable", y = "Proportion of Plots",
-       fill = "Regeneration Presence") +
-  scale_fill_manual(values = c("0" = "darkseagreen", "1" = "darkslategray4"),
-                    labels = c("0" = "No regeneration",
-                               "1" = "Regeneration")) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
-```{r}
-forcoords <- regen_GIS %>% 
-  select(Card, Fire_Year_1, Fire_Number_1)
-actual_coords <- rename(actual_coords, Card = Plot.ID)
-forSasha <- full_join(forcoords, actual_coords, by="Card")
-write.csv(forSasha,  "C:/Users/nmac2000/Documents/regen project/Data/ForSasha.csv")
-```
-
-```{r}
-
-
-```
-
-```{r}
-for_export <- regen_binary %>% 
-  select(Card, FDI_count_bin, PLI_count_bin, Spruce_count_bin) %>% 
-  rename("Plot ID" = "Card")
-for_export <- full_join(Plot_coordinates_actual, for_export, by="Plot ID")
-for_file <- regen_GIS %>% 
-  select(Card, Species_1, Elevation,Fire_Year_1,Fire_Year_2) 
-
-for_file <- full_join(for_file, site, by ="Card")
-
-for_export <- full_join(for_export, for_file, by = "Plot ID")
-write.csv(for_export,  "/Users/natalie/Documents/Regen/Regen/Data/for_export.csv")
-write.csv(for_file,  "/Users/natalie/Documents/Regen/Regen/Data/plot_info.csv")
-regen_GIS %>%
-  filter(Card == 1425)
-```
-
-```{r}
-table(bin_dis_GIS$BEC_Zone, bin_dis_GIS$BEC_Subzone)
-table(bin_dis_GIS$BEC_Subzone, bin_dis_GIS$BEC_Variant)
-table(bin_dis_GIS$BEC_Zone, bin_dis_GIS$SX_count_bin)
-unique(bin_dis_GIS$DISTURBANCE_TYPE_1)
-table(bin_dis_GIS1$FIRE_NUMBER_1, bin_dis_GIS1$BURN_SEVERITY_RATING_1)
-table(bin_dis_GIS1$DISTURBANCE_TYPE_1)
-blank_disturbance <- bin_dis_GIS1 %>% 
-  filter(DISTURBANCE_TYPE_1 == "") %>% 
-  select(SampleSite_ID, DISTURBANCE_TYPE_1, FIRE_YEAR_1)
-#write.csv(blank_disturbance, "C:/Users/nmac2000/Documents/regen project/Data/blank_disturbance.csv", row.names = F)
-bin_dis_GIS1 %>% 
-  filter(DISTURBANCE_TYPE_1 == "") %>% 
-  filter(FIRE_YEAR_1 == 2010) %>% 
-  select(SampleSite_ID, DISTURBANCE_TYPE_1, FIRE_YEAR_1)
-
-```
-```{r}
-age.na <- bin_dis_GIS1 %>% 
-  filter(is.na(PROJ_AGE_1_1))
-#, !is.na(years_since), !is.na(CROWN_CLOSURE_1),
-         !is.na(PROJ_AGE_1_1), !is.na(PROJ_HEIGHT_1_1), !is.na(DISTURBANCE_TYPE_1),
-         !is.na(DISTANCE_TO_PERIMETER), !is.na(BURN_SEVERITY_RATING_1),
-         !is.na(PLI.f), !is.na(FDI.f), !is.na(MEAN))
-ggplot(age.na, aes(x= PLI_count_bin)) +
-  geom_bar()
-
-burn.na <- bin_dis_GIS1 %>% 
-  filter(is.na(BURN_SEVERITY_RATING_1))
-ggplot(burn.na, aes(x= PLI_count_bin)) +
-  geom_bar()
-
-```
 
 
