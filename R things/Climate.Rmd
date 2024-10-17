@@ -50,9 +50,9 @@ lat_lon_coords <- round(st_coordinates(lat_lon_sf), digits = 10)
 lat_lon_data <- cbind(actual_coords, lat_lon_coords)
 
 lat_lon_data <- lat_lon_data %>% 
-  rename(#lat = "Y",
-         #long = "X",
-         Card = "Plot.ID")
+  rename(lat = "Y",
+         long = "X",
+         SampleSite_ID = "Plot.ID")
 #write.csv(lat_lon_data, "C:/Users/nmac2000/Documents/regen project/Data/UTM_Lat_Lon.csv")
 lat_lon_data <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/UTM_Lat_Lon.csv")
 ```
@@ -61,12 +61,12 @@ lat_lon_data <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/UTM_Lat
 #Now need to break up by fire year
 ```{r}
 forClim1 <- regen_GIS %>% 
-  dplyr::select(Card, Elevation, FIRE_YEAR_1)
+  dplyr::select(SampleSite_ID, Elevation, FIRE_YEAR_1)
 
-forClim1<- full_join(forClim1, lat_lon_data, by="Card")
+forClim1<- full_join(forClim1, lat_lon_data, by="SampleSite_ID")
 
 forClim1 <- forClim1 %>% 
-  rename(PlotID = `Card`) %>% 
+  rename(PlotID = `SampleSite_ID`) %>% 
   dplyr::select(PlotID, FIRE_YEAR_1, lat, long, Elevation) %>% 
   rename(ID1 = "PlotID",
          ID2 = "FIRE_YEAR_1",
@@ -265,6 +265,135 @@ clim2017c.2022 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/mai
 #write.csv(clim2017c.normal, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/normalc.csv")
 clim2017c.normal <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/main/Data/ClimateBC/2017/normalc.csv")
 ```
+# Filter out plots
+```{r}
+clim2009.2010 <- clim2009.2010 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2009.2011 <- clim2009.2011 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2009.2012 <- clim2009.2012 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2009.2013 <- clim2009.2013 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2009.2014 <- clim2009.2014 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2009.normal <- clim2009.normal %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2010.2011 <- clim2010.2011 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2010.2012 <- clim2010.2012 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2010.2013 <- clim2010.2013 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2010.2014 <- clim2010.2014 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2010.2015 <- clim2010.2015 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2010.normal <- clim2010.normal %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2015.2016 <- clim2015.2016 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2015.2017 <- clim2015.2017 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2015.2018 <- clim2015.2018 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2015.2019 <- clim2015.2019 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2015.2020 <- clim2015.2020 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2015.normal <- clim2015.normal %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2016.2017 <- clim2016.2017 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2016.2018 <- clim2016.2018 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2016.2019 <- clim2016.2019 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2016.2020 <- clim2016.2020 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2016.2021 <- clim2016.2021 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2016.normal <- clim2016.normal %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2017.2018 <- rbind(clim2017a.2018,clim2017b.2018,clim2017c.2018)
+clim2017.2018 <- clim2017.2018 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2017.2019 <- rbind(clim2017a.2019,clim2017b.2019,clim2017c.2019)
+clim2017.2019 <- clim2017.2019 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2017.2020 <- rbind(clim2017a.2020,clim2017b.2020,clim2017c.2020)
+clim2017.2020 <- clim2017.2020 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2017.2021 <- rbind(clim2017a.2021,clim2017b.2021,clim2017c.2021)
+clim2017.2021 <- clim2017.2021 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2017.2022 <- rbind(clim2017a.2022,clim2017b.2022,clim2017c.2022)
+clim2017.2022 <- clim2017.2022 %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+
+clim2017.normal <- rbind(clim2017a.normal,clim2017b.normal,clim2017c.normal)
+clim2017.normal <- clim2017.normal %>% 
+  filter(ID1 %in% bin_dis_GIS1$SampleSite_ID) %>% 
+  distinct(ID1, .keep_all = T)
+```
+
 #need to now make compiled data frame for each year and find mins, maxs, and avgs
 variables of interest:
   -MAT mean annual temperature
@@ -304,28 +433,28 @@ select(MAT, MWMT, MCMT, NFFD, PAS, Eref, CMD, AHM, SHM, Tave_sp, Tave_sm, Tmax_s
 #Combine different years
 ```{r}
 #2017 had 3 different df because it was so large
-clim2017.2018 <- rbind(clim2017a.2018,clim2017b.2018,clim2017c.2018)
+
 clim2017.2018$Year <- 1
 clim2017.2018 <- subset(clim2017.2018, select = -c(X))
 
 #clim2017a.2019 <- subset(clim2017a.2019, select = -c(X.1))
-clim2017.2019 <- rbind(clim2017a.2019,clim2017b.2019,clim2017c.2019)
+
 clim2017.2019$Year <- 2
 clim2017.2019 <- subset(clim2017.2019, select = -c(X))
 
-clim2017.2020 <- rbind(clim2017a.2020,clim2017b.2020,clim2017c.2020)
+
 clim2017.2020$Year <- 3
 clim2017.2020 <- subset(clim2017.2020, select = -c(X))
 
-clim2017.2021 <- rbind(clim2017a.2021,clim2017b.2021,clim2017c.2021)
+
 clim2017.2021$Year <- 4
 clim2017.2021 <- subset(clim2017.2021, select = -c(X))
 
-clim2017.2022 <- rbind(clim2017a.2022,clim2017b.2022,clim2017c.2022)
+
 clim2017.2022$Year <- 5
 clim2017.2022 <- subset(clim2017.2022, select = -c(X))
 
-clim2017.normal <- rbind(clim2017a.normal,clim2017b.normal,clim2017c.normal)
+
 clim2017.normal$Year <- 0
 clim2017.normal <- select(clim2017.normal, -X)
 
@@ -360,7 +489,7 @@ clim2010.2015$Year <-5
 clim2010.normal$Year <- 0
 clim2010 <- rbind(clim2010.2011,clim2010.2012,clim2010.2013,clim2010.2014,clim2010.2015)
 clim2010 <- subset(clim2010, select = -c(X))
-#clim2010.normal <- select(clim2010.normal, -X)
+clim2010.normal <- select(clim2010.normal, -X)
 clim2010 <- rbind(clim2010, clim2010.normal)
 
 #2015
@@ -372,7 +501,7 @@ clim2015.2020$Year <-5
 clim2015.normal$Year <- 0
 clim2015 <- rbind(clim2015.2016,clim2015.2017,clim2015.2018,clim2015.2019,clim2015.2020)
 clim2015 <- subset(clim2015, select = -c(X))
-#clim2015.normal <- select(clim2015.normal, -X)
+clim2015.normal <- select(clim2015.normal, -X)
 clim2015 <- rbind(clim2015, clim2015.normal)
 
 #2016
@@ -579,24 +708,25 @@ PAS <- clim.all %>%
 data_frames <- list(MAT, MWMT, MAP, PAS, AHM, SHM, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, Tmin_sp,
          Tmin_sm, NFFD_sp, PAS_sp, PAS_wt, PPT_sm)
 zscores <- Reduce(function(x, y) merge(x, y, by = "ID1"), data_frames)
+bin_dis_GIS <- bin_dis_GIS1 %>% 
+  select(SampleSite_ID, PLI_count_bin, FDI_count_bin)
+zscores <- rename(zscores, SampleSite_ID = "ID1")
+zscores.regen <- left_join(zscores, bin_dis_GIS, by="SampleSite_ID")
 
 zscore.sums <- zscores %>%
-  group_by(ID1) %>% 
-  filter(!ID1 %in% c(1111, 13, 1460, 1461, 1467, 193)) %>% 
+  group_by(ID1) %>%
   summarize(hot.dry.sum = sum(across(starts_with("hot.dry"))),
             cool.wet.sum = sum(across(starts_with("cool.wet"))))
 
-zscore.sums <- rename(zscore.sums, SampleSite_ID = "ID1")
 zscore.sums$SampleSite_ID <- as.numeric(zscore.sums$SampleSite_ID)
-zscores.regen <- left_join(zscore.sums, bin_dis_GIS, by= "SampleSite_ID") 
-zscores.regen <- select(zscores.regen, SampleSite_ID, hot.dry.sum, cool.wet.sum, PLI_count_bin, FDI_count_bin)
+zscores.regen <- left_join(zscore.sums, bin_dis_GIS1, by= "SampleSite_ID") 
+# zscores.regen <- select(zscores.regen, SampleSite_ID, hot.dry.sum, cool.wet.sum, PLI_count_bin, FDI_count_bin)
 
 ```
 
 #little bit of modeling
 ```{r}
-zscores.regen$PLI.f <- as.factor(zscores.regen$PLI_count_bin)
-zscores.regen$FDI.f <- as.factor(zscores.regen$FDI_count_bin)
+
 
 climate.PLIa <- glm(PLI.f ~ hot.dry.sum ,
     family=binomial(link = "logit"), data=zscores.regen)

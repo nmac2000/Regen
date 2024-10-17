@@ -1,0 +1,110 @@
+---
+title: "Models2"
+author: "Nat"
+date: "2024-08-07"
+output: html_document
+---
+
+```{r}
+#zscore.sums <- read.csv()
+#zscores.regen <-read.csv()
+names(zscores)
+```
+
+
+```{r}
+pairs(~ hot.dry.anomalies.MAT + cool.wet.anomalies.MAT + hot.dry.anomalies.MWMT + 
+        cool.wet.anomalies.MWMT + cool.wet.anomalies.MAP + hot.dry.anomalies.MAP + 
+        cool.wet.anomalies.PAS + hot.dry.anomalies.PAS + hot.dry.anomalies.AHM + 
+        cool.wet.anomalies.AHM + hot.dry.anomalies.SHM + cool.wet.anomalies.SHM + 
+        hot.dry.anomalies.Tave_sp + cool.wet.anomalies.Tave_sp + hot.dry.anomalies.Tave_sm + 
+        cool.wet.anomalies.Tave_sm + hot.dry.anomalies.Tmax_sp + cool.wet.anomalies.Tmax_sp + 
+        hot.dry.anomalies.Tmax_sm + cool.wet.anomalies.Tmax_sm + hot.dry.anomalies.Tmin_sp + 
+        cool.wet.anomalies.Tmin_sp + hot.dry.anomalies.Tmin_sm + cool.wet.anomalies.Tmin_sm + 
+        pos.anomalies.NFFD_sp + neg.anomalies.NFFD_sp + cool.wet.anomalies.PAS_sp + 
+        hot.dry.anomalies.PAS_sp + cool.wet.anomalies.PAS_wt + hot.dry.anomalies.PAS_wt + 
+        cool.wet.anomalies.PPT_sm + hot.dry.anomalies.PPT_sm, 
+      data = zscores, main = "Scatterplot Matrix for Climate Data")
+
+pairs(~ hot.dry.anomalies.MAT + hot.dry.anomalies.MWMT + hot.dry.anomalies.MAP + 
+        hot.dry.anomalies.PAS + hot.dry.anomalies.AHM + hot.dry.anomalies.SHM + 
+        hot.dry.anomalies.Tave_sp + hot.dry.anomalies.Tave_sm + hot.dry.anomalies.Tmax_sp + 
+        hot.dry.anomalies.Tmax_sm + hot.dry.anomalies.Tmin_sp + hot.dry.anomalies.Tmin_sm + 
+        hot.dry.anomalies.PAS_sp + hot.dry.anomalies.PAS_wt + hot.dry.anomalies.PPT_sm + 
+        neg.anomalies.NFFD_sp,
+      data = zscores, main = "Scatterplot Matrix for Hot/Dry and Negative Anomalies")
+
+pairs(~ cool.wet.anomalies.MAT + cool.wet.anomalies.MWMT + cool.wet.anomalies.MAP + 
+        cool.wet.anomalies.PAS + cool.wet.anomalies.AHM + cool.wet.anomalies.SHM + 
+        cool.wet.anomalies.Tave_sp + cool.wet.anomalies.Tave_sm + cool.wet.anomalies.Tmax_sp + 
+        cool.wet.anomalies.Tmax_sm + cool.wet.anomalies.Tmin_sp + cool.wet.anomalies.Tmin_sm + 
+        cool.wet.anomalies.PAS_sp + cool.wet.anomalies.PAS_wt + cool.wet.anomalies.PPT_sm + 
+        pos.anomalies.NFFD_sp,
+      data = zscores, main = "Scatterplot Matrix for Cool/Wet and Positive Anomalies")
+
+
+zscores.regen$PLI.f <- as.factor(zscores.regen$PLI_count_bin)
+zscores.regen$FDI.f <- as.factor(zscores.regen$FDI_count_bin)
+```
+# start modeling
+
+```{r}
+#logistic.null <- glm(FDI.f ~ 1 ,
+#    family=binomial(link = "logit"), data=bin_dis_GIS1)
+#summary(logistic.null)
+
+climate.PLIa <- glm(PLI.f ~ hot.dry.anomalies.MAT,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIa)
+
+climate.PLIb <- glm(PLI.f ~ hot.dry.anomalies.MAT,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIb)
+
+climate.PLIc <- glm(PLI.f ~ hot.dry.anomalies.MAT,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIc)
+
+climate.PLId <- glm(PLI.f ~ hot.dry.anomalies.MAT,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLId)
+
+climate.PLIe <- glm(PLI.f ~ hot.dry.anomalies.MAT,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIe)
+
+climate.PLIf <- glm(PLI.f ~ hot.dry.anomalies.MAT,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIf)
+
+climate.PLIg <- glm(PLI.f ~ hot.dry.anomalies.MAT,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIg)
+
+climate.PLIh <- glm(PLI.f ~ hot.dry.anomalies.MAT,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIh)
+
+climate.PLIi <- glm(PLI.f ~ hot.dry.anomalies.MAT,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIi)
+
+climate.PLIj <- glm(PLI.f ~ hot.dry.anomalies.MAT,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIj)
+
+climate.PLIk <- glm(PLI.f ~ hot.dry.anomalies.MAT,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIk)
+
+climate.PLIl <- glm(PLI.f ~ hot.dry.anomalies.MAT,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIl)
+
+climate.PLIm <- glm(PLI.f ~ hot.dry.anomalies.MAT,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLIm)
+
+
+```
+
