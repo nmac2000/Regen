@@ -13,6 +13,8 @@ bin_dis_GIS1$BEC_Subzone <- factor(bin_dis_GIS1$BEC_Subzone,
                                                  levels = c("dk", "xm", "dc", "mk", "xc"))
 bin_dis_GIS1$BEC_Zone <- factor(bin_dis_GIS1$BEC_Zone,
                                                   levels = c("IDF", "SBPS"))
+bin_dis_GIS1$PARENT_SOILS <- factor(bin_dis_GIS1$PARENT_SOILS,
+                                    levels = c("TILL", "GLACIOLACUSTRINE", "GLACIOFLUVIAL"))
 
 
 ```
@@ -34,25 +36,15 @@ site.PLI.a <- glm(PLI.f ~ years_since ,
 summary(site.PLI.a)
 lrtest(site.PLI.a, site.PLI.null)
 
-site.PLI.b <- glm(PLI.f ~ Aspect ,
+site.PLI.b <- glm(PLI.f ~ Slope + Slope*sin(Aspect*(pi/180)) + Slope*cos(Aspect*(pi/180)) ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.b)
 lrtest(site.PLI.b, site.PLI.null)
-
-site.PLI.c <- glm(PLI.f ~ Beers_aspect ,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(site.PLI.c)
-lrtest(site.PLI.c, site.PLI.null)
 
 site.PLI.d <- glm(PLI.f ~ Elevation ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.d)
 lrtest(site.PLI.d, site.PLI.null)
-
-site.PLI.e <- glm(PLI.f ~ Slope ,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(site.PLI.e)
-lrtest(site.PLI.e, site.PLI.null)
 
 site.PLI.f <- glm(PLI.f ~ Solar_Radiation ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
@@ -73,12 +65,6 @@ site.PLI.i <- glm(PLI.f ~ BEC_Subzone ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.i)
 lrtest(site.PLI.i, site.PLI.null)
-
-#site.PLI.j <- glm(PLI.f ~ BEC_Variant ,
-#    family=binomial(link = "logit"), data=bin_dis_GIS1)
-#summary(site.PLI.j)
-#lrtest(site.PLI.j, site.PLI.null)
-#figure out NAs
 
 site.PLI.k <- glm(PLI.f ~ PARENT_SOILS ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
@@ -104,35 +90,35 @@ site.PLI.2c <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS,
 summary(site.PLI.2c)
 lrtest(site.PLI.2c, site.PLI.2a)
 
-site.PLI.2d <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Elevation,
+site.PLI.2d <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Slope + Slope*sin(Aspect*(pi/180)) + Slope*cos(Aspect*(pi/180)) ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2d)
 lrtest(site.PLI.2d, site.PLI.2c)
 
-site.PLI.2e <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Slope,
+site.PLI.2e <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Slope + Slope*sin(Aspect*(pi/180)) + Slope*cos(Aspect*(pi/180)) + Elevation,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2e)
-lrtest(site.PLI.2e, site.PLI.2c)
+lrtest(site.PLI.2e, site.PLI.2d)
 
-site.PLI.2f <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Slope + Aspect,
+site.PLI.2f <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Solar_Radiation,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2f)
 lrtest(site.PLI.2f, site.PLI.2e)
 
-site.PLI.2g <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Slope + Solar_Radiation,
+site.PLI.2g <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Elevation+ Solar_Radiation,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2g)
-lrtest(site.PLI.2g, site.PLI.2e)
+lrtest(site.PLI.2g, site.PLI.2f)
 
-site.PLI.2h <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS  + Slope + TWI,
+site.PLI.2h <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS  + TWI +Elevation,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2h)
-lrtest(site.PLI.2h, site.PLI.2e)
+lrtest(site.PLI.2h, site.PLI.2g)
 
-site.PLI.2i <- glm(PLI.f ~ years_since + BEC_Subzone + Slope + Beers_aspect,
+site.PLI.2i <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS  + TWI ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2i)
-lrtest(site.PLI.2i, site.PLI.2e)
+lrtest(site.PLI.2i, site.PLI.2h)
 ```
 # FORGOT THAT I NEED TO REMOVE MS SITES FUCK
 # AND THEN REMOVE SOME OF THESE SOIL GROUPS I GUESS

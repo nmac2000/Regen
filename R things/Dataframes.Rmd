@@ -220,6 +220,8 @@ GIS_i$SPECIES_CD_6_1 <- sub("\\bPL\\b", "PLI", GIS_i$SPECIES_CD_6_1)
 GIS_i$SPECIES_CD_6_1 <- sub("\\bFD\\b", "FDI", GIS_i$SPECIES_CD_6_1)
 GIS_i$SPECIES_CD_6_1 <- sub("\\bPA\\b", "PLI", GIS_i$SPECIES_CD_6_1)
 
+# make species percent and use it instead of species for models
+
 
 #Aspect
 
@@ -229,6 +231,8 @@ GIS_i$SPECIES_CD_6_1 <- sub("\\bPA\\b", "PLI", GIS_i$SPECIES_CD_6_1)
 
 
 GIS_i$Beers_aspect <- sin(GIS_i$Aspect*(pi/180) + 45) + 1
+
+
 
 
 #Convert Aspect
@@ -244,6 +248,7 @@ assign_direction <- function(angle) {
 GIS_i$Azimuth <- sapply(GIS_i$Aspect, assign_direction)
 
 write.csv(GIS_i, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/GIS_fixed.csv")
+
 
 ```
 
@@ -326,7 +331,7 @@ regen_GIS <- regen_GIS %>%
 regen_GIS %>% 
   filter(is.na(Distance))
 write.csv(regen_GIS,  "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_GIS.csv")
-regen_GIS <- read.csv("C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_GIS.csv")
+regen_GIS <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/regen_GIS.csv")
 ```
 
 
@@ -407,7 +412,33 @@ bin_dis_GIS1 <- bin_dis_GIS1 %>%
   mutate(PARENT_SOILS = ifelse(PARENT_SOILS == "LACUSTRINE ", "GLACIOLACUSTRINE ", PARENT_SOILS)) %>% 
   mutate(PARENT_SOILS = trimws(PARENT_SOILS))
 
+
+
+
+bin_dis_GIS1$PLI_percent <- 0  
+bin_dis_GIS1$PLI_percent <- ifelse(bin_dis_GIS1$SPECIES_CD_1_1 == "PLI", 
+                                   bin_dis_GIS1$SPECIES_PCT_1_1, bin_dis_GIS1$PLI_percent)
+bin_dis_GIS1$PLI_percent <- ifelse(bin_dis_GIS1$SPECIES_CD_2_1 == "PLI", 
+                                   bin_dis_GIS1$SPECIES_PCT_2_1, bin_dis_GIS1$PLI_percent)
+bin_dis_GIS1$PLI_percent <- ifelse(bin_dis_GIS1$SPECIES_CD_3_1 == "PLI", 
+                                   bin_dis_GIS1$SPECIES_PCT_3_1, bin_dis_GIS1$PLI_percent)
+bin_dis_GIS1$PLI_percent <- ifelse(bin_dis_GIS1$SPECIES_CD_4_1 == "PLI", 
+                                   bin_dis_GIS1$SPECIES_PCT_4_1, bin_dis_GIS1$PLI_percent)
+
+
+bin_dis_GIS1$FDI_percent <- 0  
+bin_dis_GIS1$FDI_percent <- ifelse(bin_dis_GIS1$SPECIES_CD_1_1 == "FDI",
+                                   bin_dis_GIS1$SPECIES_PCT_1_1, bin_dis_GIS1$FDI_percent)
+bin_dis_GIS1$FDI_percent <- ifelse(bin_dis_GIS1$SPECIES_CD_2_1 == "FDI", 
+                                   bin_dis_GIS1$SPECIES_PCT_2_1, bin_dis_GIS1$FDI_percent)
+bin_dis_GIS1$FDI_percent <- ifelse(bin_dis_GIS1$SPECIES_CD_3_1 == "FDI", 
+                                   bin_dis_GIS1$SPECIES_PCT_3_1, bin_dis_GIS1$FDI_percent)
+bin_dis_GIS1$FDI_percent <- ifelse(bin_dis_GIS1$SPECIES_CD_4_1 == "FDI", 
+                                   bin_dis_GIS1$SPECIES_PCT_4_1, bin_dis_GIS1$FDI_percent)
+
+
 write.csv(bin_dis_GIS1, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/bin_dis_GIS1.csv")
+bin_dis_GIS1 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/bin_dis_GIS1.csv")
 ```
 
 

@@ -12,45 +12,9 @@ bin_dis_GIS1 <- bin_dis_GIS %>%
 
 ```
 
-structural
-```{r}
-names(bin_dis_GIS1)  # print out the column (i.e., variable) names
-dim(bin_dis_GIS1)    # number of rows and columns
-head(bin_dis_GIS1)  # print out the first few lines of data
-
-#need to put this somewhere else later on
-bin_dis_GIS1$DISTURBANCE_TYPE_1<- sub( "IBM  ", "IBM", bin_dis_GIS1$DISTURBANCE_TYPE_1)
-
-# ensure y variable is a factor for dead versus alive
-
-bin_dis_GIS1$FDI.f <- as.factor(bin_dis_GIS1$FDI_count_bin)
-# y=1 for dead trees, y=0 for live trees
-class(bin_dis_GIS1$FDI.f)
-bin_dis_GIS1$Distance <- as.numeric(bin_dis_GIS1$Distance)
-bin_dis_GIS1$CROWN_CLOSURE_1 <- as.numeric(bin_dis_GIS1$CROWN_CLOSURE_1)
-bin_dis_GIS1$PROJ_AGE_1_1 <- as.numeric(bin_dis_GIS1$PROJ_AGE_1_1)
-bin_dis_GIS1$PROJ_HEIGHT_1_1 <- as.numeric(bin_dis_GIS1$PROJ_HEIGHT_1_1)
-bin_dis_GIS1$DISTANCE_TO_PERIMETER <- as.numeric(bin_dis_GIS1$DISTANCE_TO_PERIMETER)
-bin_dis_GIS1$years_since <- as.numeric(2023-bin_dis_GIS1$FIRE_YEAR_1)
-bin_dis_GIS1$DISTURBANCE_TYPE_1 <- as.factor(bin_dis_GIS1$DISTURBANCE_TYPE_1)
-bin_dis_GIS1$BURN_SEVERITY_RATING_1 <- factor(bin_dis_GIS1$BURN_SEVERITY_RATING_1, 
-                                                 levels = c("Unburned", "Low", "Medium", "High", "Unknown"))
-bin_dis_GIS1$SPECIES_CD_1_1 <- factor(bin_dis_GIS1$SPECIES_CD_1_1, levels = c("PLI", "FDI", "AT", "SX"))
-
-bin_dis_GIS1 <- bin_dis_GIS1 %>% 
-  filter(!is.na(Distance), !is.na(years_since), !is.na(CROWN_CLOSURE_1),
-         !is.na(PROJ_AGE_1_1), !is.na(PROJ_HEIGHT_1_1), !is.na(DISTURBANCE_TYPE_1),
-         !is.na(DISTANCE_TO_PERIMETER), !is.na(BURN_SEVERITY_RATING_1),
-         !is.na(PLI.f), !is.na(FDI.f), !is.na(MEAN))
-```
 
 Step 1
 ```{r}
-structure.FDI.full <- glm(FDI.f ~ Distance + years_since + CROWN_CLOSURE_1 + PROJ_AGE_1_1 + 
-                        PROJ_HEIGHT_1_1 + DISTURBANCE_TYPE_1 + DISTANCE_TO_PERIMETER + 
-                        BURN_SEVERITY_RATING_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.full)
 
 logistic.null <- glm(FDI.f ~ 1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
@@ -79,289 +43,93 @@ summary(structure.FDIe) #significant on own
 structure.FDIf <- glm(FDI.f ~ DISTURBANCE_TYPE_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDIf) #significant on own 
-lrtest(structure.FDIf, logistic.null)
-
 
 structure.FDIg <- glm(FDI.f ~ DISTANCE_TO_PERIMETER ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDIg) #significant on own
 
-structure.FDIh <- glm(FDI.f ~ BARC.x ,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDIh) #significant on own
-lrtest(structure.FDIh, logistic.null)
-
 structure.FDIi <- glm(FDI.f ~ MEAN ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDIi)
 
-structure.FDIj <- glm(FDI.f ~ SPECIES_CD_1_1 ,
+structure.FDIj <- glm(FDI.f ~ FDI_percent ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDIj)
-lrtest(structure.FDIj, logistic.null)
 
 structure.FDIk <- glm(FDI.f ~ PATCH_SIZE_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDIk)
 
-structure.FDIl <- glm(FDI.f ~ SPECIES_PCT_1_1 ,
+structure.FDIl <- glm(FDI.f ~ BARC.x ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDIl)
+lrtest(structure.FDIl, logistic.null)
 
-structure.FDIm <- glm(FDI.f ~ SPECIES_CD_2_1 ,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDIm)
-lrtest(structure.FDIm, logistic.null)
+lrtest(structure.FDIj, logistic.null)
 
-structure.FDIn <- glm(FDI.f ~ SPECIES_CD_3_1 ,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDIn)
-lrtest(structure.FDIn, logistic.null)
-```
-Step 2
-```{r}
-structure.FDI.2a <- glm(FDI.f ~ years_since + SPECIES_CD_1_1 ,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.2a)
-lrtest(structure.FDI.2a, structure.FDIb)
-
-structure.FDI.2b <- glm(FDI.f ~ years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.2b)
-lrtest(structure.FDI.2b, structure.FDI.2a) #restrictions not justified
-
-structure.FDI.2c <- glm(FDI.f ~ years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 + PROJ_HEIGHT_1_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.2c)
-lrtest(structure.FDI.2c, structure.FDI.2b) #restrictions justified, PROJ_HEIGHT removed
-
-structure.FDI.2d <- glm(FDI.f ~ years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 + Distance,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.2d)
-lrtest(structure.FDI.2d, structure.FDI.2b)
-
-structure.FDI.2e <- glm(FDI.f ~ years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 + Distance +
-                          PROJ_AGE_1_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.2e)
-lrtest(structure.FDI.2e, structure.FDI.2d) 
-
-structure.FDI.2f <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + BURN_SEVERITY_RATING_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.2f)
-lrtest(structure.FDI.2f, structure.FDI.2e) #restrictions justified
-
-structure.FDI.2g <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + SPECIES_PCT_1_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.2g)
-lrtest(structure.FDI.2g, structure.FDI.2e) #restrictions justified
-
-structure.FDI.2h <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + DISTANCE_TO_PERIMETER,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.2h)
-lrtest(structure.FDI.2h, structure.FDI.2e)
-
-structure.FDI.2i <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + SPECIES_CD_3_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.2i)
-lrtest(structure.FDI.2i, structure.FDI.2e) # restrictions justified
-
-structure.FDI.2j <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + DISTURBANCE_TYPE_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.2j)
-lrtest(structure.FDI.2j, structure.FDI.2e) #restrictions justified
-
-structure.FDI.2k <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + MEAN,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.2k)
-lrtest(structure.FDI.2k, structure.FDI.2e)
-
-structure.FDI.2l <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + PATCH_SIZE_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.2l)
-lrtest(structure.FDI.2l, structure.FDI.2e)
-
-structure.FDI.2m <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + PATCH_SIZE_1 + CROWN_CLOSURE_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.2m)
-lrtest(structure.FDI.2m, structure.FDI.2l)
 ```
 
+
+# STep 2
 ```{r}
 structure.FDI.3 <- glm(FDI.f ~ years_since + BARC.x ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3)
 lrtest(structure.FDI.3, structure.FDIb)
 
-structure.FDI.3a <- glm(FDI.f ~ years_since + BARC.x + SPECIES_CD_1_1 ,
+structure.FDI.3a <- glm(FDI.f ~ years_since + BARC.x + FDI_percent,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3a)
 lrtest(structure.FDI.3a, structure.FDI.3)
 
-structure.FDI.3b <- glm(FDI.f ~ years_since + BARC.x + SPECIES_CD_1_1 + SPECIES_CD_2_1,
+structure.FDI.3b <- glm(FDI.f ~ years_since + FDI_percent + PROJ_HEIGHT_1_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3b)
-lrtest(structure.FDI.3b, structure.FDI.3a) #restrictions not justified
+lrtest(structure.FDI.3b, structure.FDI.3a)
 
-structure.FDI.3c <- glm(FDI.f ~ years_since + BARC.x + SPECIES_CD_1_1 + SPECIES_CD_2_1 + PROJ_HEIGHT_1_1,
+structure.FDI.3c <- glm(FDI.f ~ years_since + BARC.x + FDI_percent + Distance,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3c)
-lrtest(structure.FDI.3c, structure.FDI.3b) #restrictions justified, PROJ_HEIGHT removed
+lrtest(structure.FDI.3c, structure.FDI.3a) #restrictions justified, PROJ_HEIGHT removed
 
-structure.FDI.3d <- glm(FDI.f ~ years_since + BARC.x +SPECIES_CD_1_1 + SPECIES_CD_2_1 + Distance,
+structure.FDI.3d <- glm(FDI.f ~ years_since + BARC.x +FDI_percent + Distance + PROJ_AGE_1_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3d)
-lrtest(structure.FDI.3d, structure.FDI.3b)
+lrtest(structure.FDI.3d, structure.FDI.3c)
 
-structure.FDI.3e <- glm(FDI.f ~ years_since + BARC.x +SPECIES_CD_1_1 + SPECIES_CD_2_1 + Distance +
-                          PROJ_AGE_1_1,
+structure.FDI.3e <- glm(FDI.f ~ years_since + BARC.x +FDI_percent + Distance +
+                          DISTANCE_TO_PERIMETER,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3e)
-lrtest(structure.FDI.3e, structure.FDI.3d) 
+lrtest(structure.FDI.3e, structure.FDI.3c) 
 
-structure.FDI.3f <- glm(FDI.f ~  Distance + BARC.x + years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + BURN_SEVERITY_RATING_1,
+structure.FDI.3f <- glm(FDI.f ~  Distance + BARC.x + years_since + FDI_percent +
+                          DISTURBANCE_TYPE_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3f)
-lrtest(structure.FDI.3f, structure.FDI.3e) #restrictions justified
+lrtest(structure.FDI.3f, structure.FDI.3c) #restrictions justified
 
-structure.FDI.3g <- glm(FDI.f ~  Distance +years_since + BARC.x + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + SPECIES_PCT_1_1,
+structure.FDI.3g <- glm(FDI.f ~  Distance +years_since + BARC.x + FDI_percent +
+                          PATCH_SIZE_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3g)
-lrtest(structure.FDI.3g, structure.FDI.3e) #restrictions justified
+lrtest(structure.FDI.3g, structure.FDI.3c) #restrictions justified
 
-structure.FDI.3h <- glm(FDI.f ~  Distance +years_since + BARC.x +SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + DISTANCE_TO_PERIMETER,
+structure.FDI.3h <- glm(FDI.f ~  Distance +years_since + BARC.x +FDI_percent +
+                          PATCH_SIZE_1 + CROWN_CLOSURE_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3h)
-lrtest(structure.FDI.3h, structure.FDI.3e)
+lrtest(structure.FDI.3h, structure.FDI.3g)
 
-structure.FDI.3i <- glm(FDI.f ~  Distance +years_since +BARC.x + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + SPECIES_CD_3_1,
+structure.FDI.3i <- glm(FDI.f ~   Distance +years_since + BARC.x +FDI_percent +
+                          PATCH_SIZE_1 + PROJ_AGE_1_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3i)
-lrtest(structure.FDI.3i, structure.FDI.3e) # restrictions justified
-
-structure.FDI.3j <- glm(FDI.f ~  Distance +years_since + BARC.x + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + DISTURBANCE_TYPE_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.3j)
-lrtest(structure.FDI.3j, structure.FDI.3e) #restrictions justified
-
-structure.FDI.3k <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + BARC.x + PATCH_SIZE_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.3k)
-lrtest(structure.FDI.3k, structure.FDI.3e)
-
-structure.FDI.3m <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + BARC.x + PATCH_SIZE_1 + CROWN_CLOSURE_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.3m)
-lrtest(structure.FDI.3m, structure.FDI.3k)
+lrtest(structure.FDI.3i, structure.FDI.3g)
 
 code
 ```
 
-```{r}
-structure.FDI.4 <- glm(FDI.f ~ years_since + BARC.y ,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4)
-lrtest(structure.FDI.4, glm(FDI.f ~ years_since   ,
-    family=binomial(link = "logit"), data=bin_dis_GIS1))
-
-structure.FDI.4a <- glm(FDI.f ~ years_since + BARC.y + SPECIES_CD_1_1 ,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4a)
-lrtest(structure.FDI.4a, structure.FDI.4)
-
-structure.FDI.4b <- glm(FDI.f ~ years_since + BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4b)
-lrtest(structure.FDI.4b, structure.FDI.4a) #restrictions not justified
-
-structure.FDI.4c <- glm(FDI.f ~ years_since + BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1 + PROJ_HEIGHT_1_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4c)
-lrtest(structure.FDI.4c, structure.FDI.4b) 
-
-structure.FDI.4c1 <- glm(FDI.f ~ years_since + BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1 + PROJ_AGE_1_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4c1)
-lrtest(structure.FDI.4c1, structure.FDI.4b) 
-
-structure.FDI.4c2 <- glm(FDI.f ~ years_since + BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1 + PROJ_AGE_1_1 +PROJ_HEIGHT_1_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4c2)
-lrtest(structure.FDI.4c2, structure.FDI.4c) 
-lrtest(structure.FDI.4c2, structure.FDI.4c1)
-
-structure.FDI.4d <- glm(FDI.f ~ years_since + BARC.y +SPECIES_CD_1_1 + SPECIES_CD_2_1 + Distance + PROJ_AGE_1_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4d)
-lrtest(structure.FDI.4d, structure.FDI.4b)
-
-structure.FDI.4e <- glm(FDI.f ~ years_since + BARC.y +SPECIES_CD_1_1 + SPECIES_CD_2_1 + Distance +
-                          PROJ_AGE_1_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4e)
-lrtest(structure.FDI.4e, structure.FDI.4d) 
-
-structure.FDI.4f <- glm(FDI.f ~  Distance + MEAN + years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + BARC.y,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4f)
-lrtest(structure.FDI.4f, structure.FDI.4e) #restrictions justified
-
-structure.FDI.4g <- glm(FDI.f ~  Distance +years_since + BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + SPECIES_PCT_1_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4g)
-lrtest(structure.FDI.4g, structure.FDI.4e) #restrictions justified
-
-structure.FDI.4h <- glm(FDI.f ~  Distance +years_since + BARC.y +SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + DISTANCE_TO_PERIMETER,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4h)
-lrtest(structure.FDI.4h, structure.FDI.4e)
-
-structure.FDI.4i <- glm(FDI.f ~  Distance +years_since +BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + SPECIES_CD_3_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4i)
-lrtest(structure.FDI.4i, structure.FDI.4e) # restrictions justified
-
-structure.FDI.4j <- glm(FDI.f ~  Distance +years_since + BARC.y + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + DISTURBANCE_TYPE_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4j)
-lrtest(structure.FDI.4j, structure.FDI.4e) #restrictions justified
-
-structure.FDI.4k <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + BARC.y + PATCH_SIZE_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4k)
-lrtest(structure.FDI.4k, structure.FDI.4e)
-
-structure.FDI.4l <- glm(FDI.f ~  Distance +years_since + SPECIES_CD_1_1 + SPECIES_CD_2_1 +
-                          PROJ_AGE_1_1 + BARC.y+ PATCH_SIZE_1 + CROWN_CLOSURE_1,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDI.4l)
-lrtest(structure.FDI.4l, structure.FDI.4k)
-
-lrtest(structure.FDI.4k, structure.FDI.2l)
-
-test()
-```
 
 ```{r}
 bin_dis_GIS1$linpred.GLM.FDI.2e <- predict(structure.FDI.2e) # Estimated logit using the linear part
@@ -382,7 +150,7 @@ par(mfrow=c(1,1),mai=c(1,1,1,1),cex=1)
 # GLM1
 cutoff <- 0.3 # you can play around with different cutoff values
 n <- dim(bin_dis_GIS1)[1]
-#bin_dis_GIS1$PLI_count_bin <- as.numeric(levels(bin_dis_GIS1$PLI_count_bin))[bin_dis_GIS1$PLI_count_bin]
+#bin_dis_GIS1$FDI_count_bin <- as.numeric(levels(bin_dis_GIS1$FDI_count_bin))[bin_dis_GIS1$FDI_count_bin]
 obs <- bin_dis_GIS1$FDI_count_bin
 pred <- ifelse(bin_dis_GIS1$yhat.GLM.FDI.2e >= cutoff, 1,0)
 
