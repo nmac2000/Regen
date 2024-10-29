@@ -12,3 +12,4 @@ bin_dis_GIS1 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/
 regen_GIS <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/regen_GIS.csv")
 regen_binary <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/regen_binary.csv")
 
+

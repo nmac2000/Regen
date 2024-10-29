@@ -50,9 +50,9 @@ lat_lon_coords <- round(st_coordinates(lat_lon_sf), digits = 10)
 lat_lon_data <- cbind(actual_coords, lat_lon_coords)
 
 lat_lon_data <- lat_lon_data %>% 
-  rename(lat = "Y",
-         long = "X",
-         SampleSite_ID = "Plot.ID")
+  rename(#lat = "Y",
+         #long = "X",
+         SampleSite_ID = "Card")
 #write.csv(lat_lon_data, "C:/Users/nmac2000/Documents/regen project/Data/UTM_Lat_Lon.csv")
 lat_lon_data <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/UTM_Lat_Lon.csv")
 ```
@@ -521,9 +521,9 @@ clim2016 <- rbind(clim2016, clim2016.normal)
 #All
 clim.all <- rbind(clim2009, clim2010, clim2015, clim2016, clim2017)
 clim.all <- clim.all %>% 
-  select(ID1, ID2, Year, MAT, MWMT, MAP, NFFD, PAS, AHM, SHM, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, Tmin_sp,
+  select(ID1, ID2, Year, MAT, MWMT, MCMT, MAP, NFFD, PAS, AHM, SHM, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, Tmin_sp,
          Tmin_sm, NFFD_sp, PAS_sp, PAS_wt, PPT_sm)
-write.csv(clim.all, "/Users/natalie/Documents/Regen/Regen/Dataframes/clim_all.csv")
+write.csv(clim.all, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/clim_all.csv")
 #read.csv(#find on github)
 ```
 
