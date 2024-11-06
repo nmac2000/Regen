@@ -15,7 +15,9 @@ bin_dis_GIS1$BEC_Zone <- factor(bin_dis_GIS1$BEC_Zone,
                                                   levels = c("IDF", "SBPS"))
 bin_dis_GIS1$PARENT_SOILS <- factor(bin_dis_GIS1$PARENT_SOILS,
                                     levels = c("TILL", "GLACIOLACUSTRINE", "GLACIOFLUVIAL"))
-
+bin_dis_GIS1 %>% 
+  group_by(PARENT_SOILS) %>% 
+  summarize(n = n())
 
 ```
 
@@ -80,10 +82,11 @@ summary(site.PLI.2a)
 lrtest(site.PLI.2a, site.PLI.a)
 anova(site.PLI.a, site.PLI.2a)
 
-site.PLI.2b <- glm(PLI.f ~ years_since + BEC_Subzone + BEC_Zone,
+site.PLI.2b <- glm(PLI.f ~ years_since + BEC_Subzone + PARENT_SOILS + Slope + Slope*sin(Aspect*(pi/180)) + Slope*cos(Aspect*(pi/180)) ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2b)
-lrtest(site.PLI.2b, site.PLI.2a)
+lrtest(site.PLI.2b, glm(PLI.f ~ years_since + BEC_Subzone,
+    family=binomial(link = "logit"), data=bin_dis_GIS1))
 
 site.PLI.2c <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
@@ -94,6 +97,8 @@ site.PLI.2d <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Slope + Slope
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2d)
 lrtest(site.PLI.2d, site.PLI.2c)
+lrtest(site.PLI.2d, glm(PLI.f ~ years_since + BEC_Subzone,
+    family=binomial(link = "logit"), data=bin_dis_GIS1))
 
 site.PLI.2e <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Slope + Slope*sin(Aspect*(pi/180)) + Slope*cos(Aspect*(pi/180)) + Elevation,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
@@ -103,7 +108,7 @@ lrtest(site.PLI.2e, site.PLI.2d)
 site.PLI.2f <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Solar_Radiation,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2f)
-lrtest(site.PLI.2f, site.PLI.2e)
+lrtest(site.PLI.2f, site.PLI.2c)
 
 site.PLI.2g <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Elevation+ Solar_Radiation,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
@@ -113,13 +118,13 @@ lrtest(site.PLI.2g, site.PLI.2f)
 site.PLI.2h <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS  + TWI +Elevation,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2h)
-lrtest(site.PLI.2h, site.PLI.2g)
+lrtest(site.PLI.2h, site.PLI.2i)
 
 site.PLI.2i <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS  + TWI ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2i)
-lrtest(site.PLI.2i, site.PLI.2h)
+lrtest(site.PLI.2i, site.PLI.2c)
 ```
-# FORGOT THAT I NEED TO REMOVE MS SITES FUCK
-# AND THEN REMOVE SOME OF THESE SOIL GROUPS I GUESS
-# BUT THEN WHAT SHOULD I DO ABOUT BEC ZONES???????
+
+# okay so maybe now I look at interactions for slope/aspect/etc.?
+

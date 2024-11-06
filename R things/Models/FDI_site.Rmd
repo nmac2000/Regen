@@ -98,7 +98,7 @@ lrtest(site.FDI.2e, site.FDI.2d)
 site.FDI.2f <- glm(FDI.f ~ years_since + BEC_Zone + PARENT_SOILS + Solar_Radiation,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.FDI.2f)
-lrtest(site.FDI.2f, site.FDI.2e)
+lrtest(site.FDI.2f, site.FDI.2c)
 
 site.FDI.2g <- glm(FDI.f ~ years_since + BEC_Zone + PARENT_SOILS + Elevation+ Solar_Radiation,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
@@ -113,6 +113,6 @@ lrtest(site.FDI.2h, site.FDI.2g)
 site.FDI.2i <- glm(FDI.f ~ years_since + BEC_Zone + PARENT_SOILS  + TWI ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.FDI.2i)
-lrtest(site.FDI.2i, site.FDI.2h)
+lrtest(site.FDI.2i, site.FDI.2c)
 ```
 

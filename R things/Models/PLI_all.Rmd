@@ -1,0 +1,85 @@
+---
+title: "PLI_climate"
+author: "Nat"
+date: "2024-09-12"
+output: html_document
+---
+
+```{r}
+climate.PLI.null <- glm(PLI.f ~ 1 ,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLI.null)
+
+climate.PLI.base <- glm(PLI.f ~ years_since, 
+    family=binomial(link="logit"), data=zscores.regen)
+summary(climate.PLI.base)
+
+climate.PLI.a <- glm(PLI.f ~ years_since + hot.dry.sum ,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLI.a)
+lrtest(climate.PLI.a, climate.PLI.base)
+
+climate.PLI.b <- glm(PLI.f ~ years_since + cool.wet.sum ,
+    family=binomial(link = "logit"), data=zscores.regen)
+summary(climate.PLI.b)
+lrtest(climate.PLI.b, climate.PLI.base)
+```
+
+
+```{r}
+PLI.a <- glm(PLI.f ~ years_since,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(PLI.a)
+lrtest(PLI.a, PLI.null)
+
+PLI.b <- glm(PLI.f ~ years_since + as.factor(BARC.x),
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(PLI.b)
+
+PLI.c <- glm(PLI.f ~ years_since + PLI_percent,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(PLI.c)
+
+PLI.d <- glm(PLI.f ~ years_since + BEC_Zone,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(PLI.d)
+
+PLI.e <- glm(PLI.f ~ years_since + PARENT_SOILS,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(PLI.e)
+
+PLI.f <- glm(PLI.f ~ years_since +  Slope + Slope*sin(Aspect*(pi/180)) + Slope*cos(Aspect*(pi/180)),
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(PLI.f)
+
+PLI.g <- glm(PLI.f ~ years_since + hot.dry.sum,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(PLI.g)
+```
+```{r}
+PLI.1 <- glm(PLI.f ~ years_since + PLI_percent + hot.dry.sum,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(PLI.1)
+
+PLI.2 <- glm(PLI.f ~ years_since + PLI_percent + hot.dry.sum + BEC_Zone,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(PLI.2)
+lrtest(PLI.2, PLI.1)
+
+PLI.3 <- glm(PLI.f ~ years_since + PLI_percent + hot.dry.sum + PARENT_SOILS,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(PLI.3)
+lrtest(PLI.3, PLI.1)
+
+PLI.4 <- glm(PLI.f ~ years_since + PLI_percent + hot.dry.sum + PARENT_SOILS + Slope + Slope*sin(Aspect*(pi/180)) + Slope*cos(Aspect*(pi/180)),
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(PLI.4)
+lrtest(PLI.4, PLI.1)
+
+PLI.5 <- glm(PLI.f ~ years_since + as.factor(BARC.x) + PLI_percent + hot.dry.sum,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(PLI.5)
+lrtest(PLI.1, PLI.5)
+```
+
+

@@ -524,7 +524,7 @@ clim.all <- clim.all %>%
   select(ID1, ID2, Year, MAT, MWMT, MCMT, MAP, NFFD, PAS, AHM, SHM, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, Tmin_sp,
          Tmin_sm, NFFD_sp, PAS_sp, PAS_wt, PPT_sm)
 write.csv(clim.all, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/clim_all.csv")
-#read.csv(#find on github)
+clim.all <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/clim_all.csv")
 ```
 
 
@@ -702,7 +702,7 @@ zscores <- rename(zscores, SampleSite_ID = "ID1")
 zscores.regen <- left_join(zscores, bin_dis_GIS, by="SampleSite_ID")
 
 zscore.sums <- zscores %>%
-  group_by(ID1) %>%
+  group_by(SampleSite_ID) %>%
   summarize(hot.dry.sum = sum(across(starts_with("hot.dry"))),
             cool.wet.sum = sum(across(starts_with("cool.wet"))))
 
