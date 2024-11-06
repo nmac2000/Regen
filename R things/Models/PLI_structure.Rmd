@@ -187,9 +187,9 @@ summary(structure.PLI.2a)
 
 
 ```{r}
-bin_dis_GIS1$linpred.GLM2a <- predict(structure.PLI.2b) # Estimated logit using the linear part
-bin_dis_GIS1$yhat.GLM2a <- fitted(structure.PLI.2b) # Estimated probability using inverse logityhat values
-bin_dis_GIS1$resid.GLM2a <- resid(structure.PLI.2b) # the deviances 
+bin_dis_GIS1$linpred.GLM2a <- predict(site.FDI.2f ) # Estimated logit using the linear part
+bin_dis_GIS1$yhat.GLM2a <- fitted(site.FDI.2f ) # Estimated probability using inverse logityhat values
+bin_dis_GIS1$resid.GLM2a <- resid(site.FDI.2f ) # the deviances 
 
 # Graph of predicted probabilities ranges for dead versus alive
 # Would like the dead=0 (it is alive) trees to have all low predicted prob(dead) 
@@ -203,7 +203,7 @@ par(mfrow=c(1,1),mai=c(1,1,1,1),cex=1)
 
 ```{r}
 # GLM1
-cutoff <- 0.5 # you can play around with different cutoff values
+cutoff <- 0.05 # you can play around with different cutoff values
 n <- dim(bin_dis_GIS1)[1]
 #bin_dis_GIS1$PLI_count_bin <- as.numeric(levels(bin_dis_GIS1$PLI_count_bin))[bin_dis_GIS1$PLI_count_bin]
 obs <- bin_dis_GIS1$PLI_count_bin

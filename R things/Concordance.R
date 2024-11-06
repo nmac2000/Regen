@@ -56,4 +56,6 @@ Concordance = function(GLM.binomial) {
 ## TO HERE to add in the function to get the counts of correct/incorrect
 
 Concordance(site.PLI.2d)
-Concordance(site.PLI.2b)
+Concordance(site.FDI.2f )
+Concordance(structure.PLI.3a)
+Concordance(structure.FDI.3c)

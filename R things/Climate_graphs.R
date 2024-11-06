@@ -76,5 +76,20 @@ boxplot(MAT ~ interaction(Year, FDI_count_bin), data=messy,
         xlab="PLI Presence and Year after Fire", ylab="MAT", main="MAT All - FDI")
 
 
+bin_dis_GIS1 %>% 
+  group_by(FIRE_NUMBER_1 ,FDI_count_bin) %>% 
+  summarize(n = n())
+
+table(bin_dis_GIS1$FIRE_NUMBER_1)
+
+ggplot(filter(bin_dis_GIS1, FDI_count <= 1000), aes(y=FDI_percent, x=FDI_count) )+
+ #geom_boxplot() +
+  geom_point( position = "jitter")
+
+
+
+
+
+
 
   
