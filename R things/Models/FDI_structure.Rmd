@@ -56,7 +56,7 @@ structure.FDIj <- glm(FDI.f ~ FDI_percent ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDIj)
 
-structure.FDIk <- glm(FDI.f ~ PATCH_SIZE_1 ,
+structure.FDIk <- glm(FDI.f ~ PATCHSIZE ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDIk)
 
@@ -110,19 +110,19 @@ summary(structure.FDI.3f)
 lrtest(structure.FDI.3f, structure.FDI.3c) #restrictions justified
 
 structure.FDI.3g <- glm(FDI.f ~  Distance +years_since + BARC.x + FDI_percent +
-                          PATCH_SIZE_1,
+                          PATCHSIZE,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3g)
 lrtest(structure.FDI.3g, structure.FDI.3c) #restrictions justified
 
 structure.FDI.3h <- glm(FDI.f ~  Distance +years_since + BARC.x +FDI_percent +
-                          PATCH_SIZE_1 + CROWN_CLOSURE_1,
+                          PATCHSIZE + CROWN_CLOSURE_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3h)
 lrtest(structure.FDI.3h, structure.FDI.3g)
 
 structure.FDI.3i <- glm(FDI.f ~   Distance +years_since + BARC.x +FDI_percent +
-                          PATCH_SIZE_1 + PROJ_AGE_1_1,
+                          PATCHSIZE + PROJ_AGE_1_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3i)
 lrtest(structure.FDI.3i, structure.FDI.3g)

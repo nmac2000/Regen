@@ -21,7 +21,7 @@ distance <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/distance
 distance <- read.csv(distance)
 fire_severity <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/FireSeverity.csv"
 fire_severity <- read.csv(fire_severity)
-
+patchsize <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Data/PatchSize.csv")
 ```
 
 # Format plot data
@@ -437,9 +437,14 @@ bin_dis_GIS1$FDI_percent <- ifelse(bin_dis_GIS1$SPECIES_CD_4_1 == "FDI",
                                    bin_dis_GIS1$SPECIES_PCT_4_1, bin_dis_GIS1$FDI_percent)
 bin_dis_GIS1 <- left_join(bin_dis_GIS1, zscore.sums, by="SampleSite_ID")
 
+bin_dis_GIS1 <- left_join(bin_dis_GIS1, patchsize, by="SampleSite_ID")
 
 write.csv(bin_dis_GIS1, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/bin_dis_GIS2.csv")
 bin_dis_GIS1 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/bin_dis_GIS1.csv")
+```
+```{r}
+bin_dis_GIS1 %>% 
+  filter(is.na(PATCHSIZE))
 ```
 
 

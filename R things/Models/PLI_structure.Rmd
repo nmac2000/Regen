@@ -11,10 +11,10 @@ structural
 
 ```{r}
 pairs(~ Distance  +CROWN_CLOSURE_1 +PROJ_AGE_1_1 +PROJ_HEIGHT_1_1 +DISTANCE_TO_PERIMETER +
-        PATCH_SIZE_1 + MEAN, 
+        PATCHSIZE + MEAN, 
       data=bin_dis_GIS1, main="Scatterplot Matrix for Structure data")
 
-pairs(~ PATCH_SIZE_1 + MEAN + BARC.x, 
+pairs(~ PATCHSIZE + MEAN + Distance, 
       data=bin_dis_GIS1, main="Scatterplot Matrix for Structure data")
 ```
 
@@ -66,7 +66,7 @@ structure.PLIj <- glm(PLI.f ~ PLI_percent ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLIj)
 
-structure.PLIk <- glm(PLI.f ~ PATCH_SIZE_1 ,
+structure.PLIk <- glm(PLI.f ~ PATCHSIZE ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLIk)
 
@@ -102,7 +102,7 @@ structure.PLI.2c <- glm(PLI.f ~ years_since  + MEAN  + PLI_percent+ DISTANCE_TO_
 summary(structure.PLI.2c)
 lrtest(structure.PLI.2c, structure.PLI.2a) 
 
-structure.PLI.2d <- glm(PLI.f ~ years_since  + MEAN  + PLI_percent+ PATCH_SIZE_1,
+structure.PLI.2d <- glm(PLI.f ~ years_since  + MEAN  + PLI_percent+ PATCHSIZE,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.2d)
 lrtest(structure.PLI.2d, structure.PLI.2a) #restrictions justified, remove PROJ_HEIGHT_1_1
@@ -145,7 +145,7 @@ structure.PLI.3c <- glm(PLI.f ~ years_since  + BARC.x  + PLI_percent+ DISTANCE_T
 summary(structure.PLI.3c)
 lrtest(structure.PLI.3c, structure.PLI.3a) 
 
-structure.PLI.3d <- glm(PLI.f ~ years_since  + BARC.x  + PLI_percent+ PATCH_SIZE_1,
+structure.PLI.3d <- glm(PLI.f ~ years_since  + BARC.x  + PLI_percent+ PATCHSIZE,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.3d)
 lrtest(structure.PLI.3d, structure.PLI.3a) #restrictions justified, remove PROJ_HEIGHT_1_1
