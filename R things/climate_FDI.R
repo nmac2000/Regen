@@ -38,4 +38,8 @@ pairs(~ cool.wet.anomalies.MAT + cool.wet.anomalies.MWMT + cool.wet.anomalies.MA
 ggplot(bin_dis_GIS1, aes(x=PATCHSIZE)) +
   geom_histogram()
 
+bin_dis_GIS1 %>% 
+  filter(PATCHSIZE > 2e+08) %>% 
+  select(PATCHSIZE, FIRE_NUMBER_1, SampleSite_ID)
+
   
