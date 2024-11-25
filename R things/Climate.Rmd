@@ -523,8 +523,8 @@ clim.all <- rbind(clim2009, clim2010, clim2015, clim2016, clim2017)
 clim.all <- clim.all %>% 
   select(ID1, ID2, Year, MAT, MWMT, MCMT, MAP, NFFD, PAS, AHM, SHM, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, Tmin_sp,
          Tmin_sm, NFFD_sp, PAS_sp, PAS_wt, PPT_sm, CMI_sm, MCMT)
-#write.csv(clim.all, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/clim_all.csv")
-clim.all <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/clim_all.csv")
+write.csv(clim.all, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/clim_all.csv")
+#clim.all <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/clim_all.csv")
 ```
 
 
@@ -717,7 +717,8 @@ data_frames <- list(MAT, MWMT, MAP, PAS, AHM, SHM, Tave_sp, Tave_sm, Tmax_sp, Tm
          Tmin_sm, NFFD_sp, PAS_sp, PAS_wt, PPT_sm, CMI_sm, MCMT)
 zscores <- Reduce(function(x, y) merge(x, y, by = "ID1"), data_frames)
 bin_dis_GIS <- bin_dis_GIS1 %>% 
-  select(SampleSite_ID, PLI_count_bin, FDI_count_bin)
+  select(SampleSite_ID, PLI_count_bin, FDI_count_bin, FIRE_YEAR_1) %>% 
+  rename(ID2 = "FIRE_YEAR_1")
 zscores <- rename(zscores, SampleSite_ID = "ID1")
 zscores.regen <- left_join(zscores, bin_dis_GIS, by="SampleSite_ID")
 
