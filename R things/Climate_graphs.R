@@ -9,7 +9,10 @@ library(tidyverse)
 library(gridExtra)
 
 #clim.all <- rename(clim.all, SampleSite_ID = ID1)
-messy <- left_join(zscores, bin_dis_GIS, by = "SampleSite_ID")
+
+
+
+messy <- left_join(mmm, bin_dis_GIS1, by = "SampleSite_ID")
 messy$PLI_count_bin <- as.factor(messy$PLI_count_bin)
 messy$FDI_count_bin <- as.factor(messy$FDI_count_bin)
 messy$ID2 <- as.factor(messy$ID2)
@@ -31,90 +34,97 @@ messy16 <- messy %>%
 messy17 <- messy %>% 
   filter(ID2 == 2017)
 
+ggplot(filter(messy, type == "HD"), aes(x=Longitude, y= Latitude)) +
+  geom_point(aes(color=FDI_percent, size = PAS, alpha = PAS))
 
-plot1a <- ggplot(messy, aes(x=PLI_count_bin, y=cool.wet.anomalies.CMI_sm)) +
+bin_dis_GIS1 %>% 
+  filter(FDI_percent == 0) %>% 
+  group_by(FDI_percent) %>% 
+  summarize(total = n())
+
+plot1a <- ggplot(messy, aes(x=PLI_count_bin, y=SHM)) +   
+  facet_wrap(vars(type)) +
   geom_boxplot() +
   geom_jitter(width =.25, height=.15) +
-  coord_cartesian(ylim = c(0,5)) +
   theme_classic() +
-  labs(x="PLI Occurrence", y = "Number of Anomalous Years",
-       title = "CMI_sm All - PLI", subtitle = "Cool and Wet Anomalies")
+  labs(x="PLI Occurrence", y = "Moisture Index",
+       title = "SHM All - PLI")
 
-plot2a <- ggplot(messy, aes(x=FDI_count_bin, y=cool.wet.anomalies.CMI_sm)) +
+plot2a <- ggplot(messy, aes(x=FDI_count_bin, y=SHM)) +
+  facet_wrap(vars(type)) +
   geom_boxplot() +
   geom_jitter(width =.25, height=.15) +
-  coord_cartesian(ylim = c(0,5)) +
   theme_classic() +
-  labs(x="FDI Occurrence", y = "Number of Anomalous Years",
-       title = "CMI_sm All - FDI", subtitle = "Cool and Wet Anomalies")
+  labs(x="FDI Occurrence", y = "Moisture Index",
+       title = "SHM All - FDI")
 
 
-plot1b <- ggplot(messy9, aes(x=PLI_count_bin, y=cool.wet.anomalies.CMI_sm)) +
+plot1b <- ggplot(messy9, aes(x=PLI_count_bin, y=SHM)) +
+  facet_wrap(vars(type)) +
   geom_boxplot() +
   geom_jitter(width =.25, height=.15) +
-  coord_cartesian(ylim = c(0,5)) +
   theme_classic() +
-  labs(x="PLI Occurrence", y = "Number of Anomalous Years",
-       title = "CMI_sm 2009 - PLI", subtitle = "Cool and Wet Anomalies")
+  labs(x="PLI Occurrence", y = "Moisture Index",
+       title = "SHM 2009 - PLI")
 
-plot2b <- ggplot(messy10, aes(x=PLI_count_bin, y=cool.wet.anomalies.CMI_sm)) +
+plot2b <- ggplot(messy10, aes(x=PLI_count_bin, y=SHM)) +
+  facet_wrap(vars(type)) +
   geom_boxplot() +
   geom_jitter(width =.25, height=.15) +
-  coord_cartesian(ylim = c(0,5)) +
   theme_classic() +
-  labs(x="PLI Occurrence", y = "Number of Anomalous Years",
-       title = "CMI_sm 2010 - PLI", subtitle = "Cool and Wet Anomalies")
+  labs(x="PLI Occurrence", y = "Moisture Index",
+       title = "SHM 2010 - PLI")
 
-plot3b <- ggplot(messy15, aes(x=PLI_count_bin, y=cool.wet.anomalies.CMI_sm)) +
+plot3b <- ggplot(messy15, aes(x=PLI_count_bin, y=SHM)) +
+  facet_wrap(vars(type)) +
   geom_boxplot() +
   geom_jitter(width =.25, height=.15) +
-  coord_cartesian(ylim = c(0,5)) +
   theme_classic() +
-  labs(x="PLI Occurrence", y = "Number of Anomalous Years",
-       title = "CMI_sm 2015 - PLI", subtitle = "Cool and Wet Anomalies")
+  labs(x="PLI Occurrence", y = "Moisture Index",
+       title = "SHM 2015 - PLI")
 
-plot4b <- ggplot(messy17, aes(x=PLI_count_bin, y=cool.wet.anomalies.CMI_sm)) +
+plot4b <- ggplot(messy17, aes(x=PLI_count_bin, y=SHM)) +
+  facet_wrap(vars(type)) +
   geom_boxplot() +
   geom_jitter(width =.25, height=.15) +
-  coord_cartesian(ylim = c(0,5)) +
   theme_classic() +
-  labs(x="PLI Occurrence", y = "Number of Anomalous Years",
-       title = "CMI_sm 2017 - PLI", subtitle = "Cool and Wet Anomalies")
+  labs(x="PLI Occurrence", y = "Moisture Index",
+       title = "SHM 2017 - PLI")
 
 
 
 
-plot1c <- ggplot(messy9, aes(x=FDI_count_bin, y=cool.wet.anomalies.CMI_sm)) +
+plot1c <- ggplot(messy9, aes(x=FDI_count_bin, y=SHM)) +
+  facet_wrap(vars(type)) +
   geom_boxplot() +
   geom_jitter(width =.25, height=.15) +
-  coord_cartesian(ylim = c(0,5)) +
   theme_classic() +
-  labs(x="FDI Occurrence", y = "Number of Anomalous Years",
-       title = "CMI_sm 2009 - FDI", subtitle = "Cool and Wet Anomalies")
+  labs(x="FDI Occurrence", y = "Moisture Index",
+       title = "SHM 2009 - FDI")
 
-plot2c <- ggplot(messy10, aes(x=FDI_count_bin, y=cool.wet.anomalies.CMI_sm)) +
+plot2c <- ggplot(messy10, aes(x=FDI_count_bin, y=SHM)) +
+  facet_wrap(vars(type)) +
   geom_boxplot() +
   geom_jitter(width =.25, height=.15) +
-  coord_cartesian(ylim = c(0,5)) +
   theme_classic() +
-  labs(x="FDI Occurrence", y = "Number of Anomalous Years",
-       title = "CMI_sm 2010 - FDI", subtitle = "Cool and Wet Anomalies")
+  labs(x="FDI Occurrence", y = "Moisture Index",
+       title = "SHM 2010 - FDI")
 
-plot3c <- ggplot(messy15, aes(x=FDI_count_bin, y=cool.wet.anomalies.CMI_sm)) +
+plot3c <- ggplot(messy15, aes(x=FDI_count_bin, y=SHM)) +
+  facet_wrap(vars(type)) +
   geom_boxplot() +
   geom_jitter(width =.25, height=.15) +
-  coord_cartesian(ylim = c(0,5)) +
   theme_classic() +
-  labs(x="FDI Occurrence", y = "Number of Anomalous Years",
-       title = "CMI_sm 2015 - FDI", subtitle = "Cool and Wet Anomalies")
+  labs(x="FDI Occurrence", y = "Moisture Index",
+       title = "SHM 2015 - FDI")
 
-plot4c <- ggplot(messy17, aes(x=FDI_count_bin, y=cool.wet.anomalies.CMI_sm)) +
+plot4c <- ggplot(messy17, aes(x=FDI_count_bin, y=SHM)) +
+  facet_wrap(vars(type)) +
   geom_boxplot() +
   geom_jitter(width =.25, height=.15) +
-  coord_cartesian(ylim = c(0,5)) +
   theme_classic() +
-  labs(x="FDI Occurrence", y = "Number of Anomalous Years",
-       title = "CMI_sm 2017 - FDI", subtitle = "Cool and Wet Anomalies")
+  labs(x="FDI Occurrence", y = "Moisture Index",
+       title = "SHM 2017 - FDI")
 
 grid.arrange(plot1c, plot2c, plot3c, plot4c, ncol = 2)
 grid.arrange(plot1b, plot2b, plot3b, plot4b, ncol = 2)
@@ -134,7 +144,7 @@ grid.arrange(plot1a,plot2a, ncol=2)
 
 # 
 # 
-# boxplot(cool.wet.anomalies.CMI_sm ~ interaction(PLI_count_bin), data=messy17,
+# boxplot(cool.wet.anomalies.SHM ~ interaction(PLI_count_bin), data=messy17,
 #         col=colors, 
 #         xlab="PLI Presence and Year after Fire", ylab="MAT", main="MAT 2009 - PLI")
 # 

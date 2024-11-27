@@ -1,0 +1,164 @@
+---
+title: "Models2"
+author: "Nat"
+date: "2024-08-07"
+output: html_document
+---
+
+```{r}
+climate$PLI.f <- as.factor(climate$PLI_count_bin)
+climate$FDI.f <- as.factor(climate$FDI_count_bin)
+```
+# start modeling
+
+```{r}
+# Hot and Dry
+climate.FDI.null <- glm(FDI.f ~ 1,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.null)
+
+climate.FDI.a <- glm(FDI.f ~ MCMT,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.a)
+lrtest(climate.FDI.a, climate.FDI.null)
+
+climate.FDI.b <- glm(FDI.f ~ MWMT,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.b)
+lrtest(climate.FDI.b, climate.FDI.null)
+
+climate.FDI.c <- glm(FDI.f ~ Tmax_sm,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.c)
+lrtest(climate.FDI.c, climate.FDI.null)
+
+climate.FDI.d <- glm(FDI.f ~ MAP,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.d)
+lrtest(climate.FDI.d, climate.FDI.null)
+
+climate.FDI.e <- glm(FDI.f ~ PAS,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.e)
+lrtest(climate.FDI.e, climate.FDI.null)
+
+climate.FDI.f <- glm(FDI.f ~ PPT_sm,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.f)
+lrtest(climate.FDI.f, climate.FDI.null)
+
+climate.FDI.g <- glm(FDI.f ~ CMI_sm,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.g)
+lrtest(climate.FDI.g, climate.FDI.null)
+
+climate.FDI.h <- glm(FDI.f ~ AHM,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.h)
+lrtest(climate.FDI.h, climate.FDI.null)
+
+climate.FDI.i <- glm(FDI.f ~ SHM,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.i)
+lrtest(climate.FDI.i, climate.FDI.null)
+```
+
+```{r}
+# Cool and Wet Anomalies
+climate.FDI.null <- glm(FDI.f ~ 1,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.null)
+
+climate.FDI.1a <- glm(FDI.f ~ cool.wet.anomalies.MCMT,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.1a)
+lrtest(climate.FDI.1a, climate.FDI.null)
+
+climate.FDI.1b <- glm(FDI.f ~ cool.wet.anomalies.MWMT,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.1b)
+lrtest(climate.FDI.1b, climate.FDI.null)
+
+climate.FDI.1c <- glm(FDI.f ~ cool.wet.anomalies.Tmax_sm,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.1c)
+lrtest(climate.FDI.1c, climate.FDI.null)
+
+climate.FDI.1d <- glm(FDI.f ~ cool.wet.anomalies.MAP,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.1d)
+lrtest(climate.FDI.1d, climate.FDI.null)
+
+climate.FDI.1e <- glm(FDI.f ~ cool.wet.anomalies.PAS,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.1e)
+lrtest(climate.FDI.1e, climate.FDI.null)
+
+climate.FDI.1f <- glm(FDI.f ~ cool.wet.anomalies.PPT_sm,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.1f)
+lrtest(climate.FDI.1f, climate.FDI.null)
+
+climate.FDI.1g <- glm(FDI.f ~ cool.wet.anomalies.CMI_sm,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.1g)
+lrtest(climate.FDI.1g, climate.FDI.null)
+
+climate.FDI.1h <- glm(FDI.f ~ cool.wet.anomalies.AHM,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.1h)
+lrtest(climate.FDI.1h, climate.FDI.null)
+
+climate.FDI.1i <- glm(FDI.f ~ cool.wet.anomalies.SHM,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.1i)
+lrtest(climate.FDI.1i, climate.FDI.null)
+
+
+```
+```{r}
+climate.FDI.2a <- glm(FDI.f ~ years_since + MCMT,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.2a)
+lrtest(climate.FDI.2a, climate.FDI.a)
+
+climate.FDI.2b <- glm(FDI.f ~ years_since + MCMT + MWMT,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.2b)
+lrtest(climate.FDI.2a, climate.FDI.2b)
+
+climate.FDI.2c <- glm(FDI.f ~ years_since + MCMT + cool.wet.anomalies.MCMT ,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.2c)
+lrtest(climate.FDI.2c, climate.FDI.2b)
+
+climate.FDI.2d <- glm(FDI.f ~ years_since + MCMT + PAS,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.2d)
+lrtest(climate.FDI.2d, climate.FDI.2a)
+
+
+climate.FDI.2e <- glm(FDI.f ~ years_since + MCMT + PAS + CMI_sm,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.2e)
+lrtest(climate.FDI.2d, climate.FDI.2e)
+
+climate.FDI.2f <- glm(FDI.f ~ years_since + MCMT + PAS + CMI_sm + PPT_sm,
+                       family = binomial(link="logit"), data=climate)
+summary(climate.FDI.2f)
+lrtest(climate.FDI.2f, climate.FDI.2e)
+
+```
+
+
+```{r}
+climate.FDI.3 <- glm(FDI.f ~ NFFD_sp,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.3)
+
+climate.FDI.3a <- glm(FDI.f ~ years_since + MCMT + PAS + NFFD_sp,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.FDI.3a)
+```
+
+

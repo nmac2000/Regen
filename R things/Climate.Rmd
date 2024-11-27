@@ -522,9 +522,10 @@ clim2016 <- rbind(clim2016, clim2016.normal)
 clim.all <- rbind(clim2009, clim2010, clim2015, clim2016, clim2017)
 clim.all <- clim.all %>% 
   select(ID1, ID2, Year, MAT, MWMT, MCMT, MAP, NFFD, PAS, AHM, SHM, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, Tmin_sp,
-         Tmin_sm, NFFD_sp, PAS_sp, PAS_wt, PPT_sm, CMI_sm, MCMT)
-write.csv(clim.all, "C:/Users/nmac2000/Documents/regen project/Regen/Data/ClimateBC/2017/clim_all.csv")
-#clim.all <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/clim_all.csv")
+         Tmin_sm, NFFD_sp, PAS_sp, PAS_wt, PPT_sm, CMI_sm, MCMT) %>% 
+  rename(SampleSite_ID = "ID1")
+#write.csv(clim.all, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/clim_all.csv")
+clim.all <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/clim_all.csv") %>% select(-X)
 ```
 
 
@@ -535,9 +536,9 @@ PAS_wt.sd <- sd(filter(clim.all, Year == 0)$PAS_wt)
 PAS_wt.mean <- mean(filter(clim.all, Year == 0)$PAS_wt)
 PAS_wt <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, PAS_wt) %>% 
+  select(SampleSite_ID, ID2, Year, PAS_wt) %>% 
   mutate(zscore = (PAS_wt-PAS_wt.mean)/PAS_wt.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(cool.wet.anomalies.PAS_wt = sum(zscore > 2),
             hot.dry.anomalies.PAS_wt = sum (zscore < -2))
 
@@ -545,9 +546,9 @@ PPT_sm.sd <- sd(filter(clim.all, Year == 0)$PPT_sm)
 PPT_sm.mean <- mean(filter(clim.all, Year == 0)$PPT_sm)
 PPT_sm <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, PPT_sm) %>% 
+  select(SampleSite_ID, ID2, Year, PPT_sm) %>% 
   mutate(zscore = (PPT_sm-PPT_sm.mean)/PPT_sm.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(cool.wet.anomalies.PPT_sm = sum(zscore > 2),
             hot.dry.anomalies.PPT_sm = sum (zscore < -2))
 
@@ -555,9 +556,9 @@ PAS_sp.sd <- sd(filter(clim.all, Year == 0)$PAS_sp)
 PAS_sp.mean <- mean(filter(clim.all, Year == 0)$PAS_sp)
 PAS_sp <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, PAS_sp) %>% 
+  select(SampleSite_ID, ID2, Year, PAS_sp) %>% 
   mutate(zscore = (PAS_sp-PAS_sp.mean)/PAS_sp.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(cool.wet.anomalies.PAS_sp = sum(zscore > 2),
             hot.dry.anomalies.PAS_sp = sum (zscore < -2))
 
@@ -565,9 +566,9 @@ NFFD_sp.sd <- sd(filter(clim.all, Year == 0)$NFFD_sp)
 NFFD_sp.mean <- mean(filter(clim.all, Year == 0)$NFFD_sp)
 NFFD_sp <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, NFFD_sp) %>% 
+  select(SampleSite_ID, ID2, Year, NFFD_sp) %>% 
   mutate(zscore = (NFFD_sp-NFFD_sp.mean)/NFFD_sp.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(pos.anomalies.NFFD_sp = sum(zscore > 2),
             neg.anomalies.NFFD_sp = sum (zscore < -2))
 
@@ -575,9 +576,9 @@ Tmin_sp.sd <- sd(filter(clim.all, Year == 0)$Tmin_sp)
 Tmin_sp.mean <- mean(filter(clim.all, Year == 0)$Tmin_sp)
 Tmin_sp <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, Tmin_sp) %>% 
+  select(SampleSite_ID, ID2, Year, Tmin_sp) %>% 
   mutate(zscore = (Tmin_sp-Tmin_sp.mean)/Tmin_sp.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(hot.dry.anomalies.Tmin_sp = sum(zscore > 2),
             cool.wet.anomalies.Tmin_sp = sum (zscore < -2))
 
@@ -585,9 +586,9 @@ Tmin_sm.sd <- sd(filter(clim.all, Year == 0)$Tmin_sm)
 Tmin_sm.mean <- mean(filter(clim.all, Year == 0)$Tmin_sm)
 Tmin_sm <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, Tmin_sm) %>% 
+  select(SampleSite_ID, ID2, Year, Tmin_sm) %>% 
   mutate(zscore = (Tmin_sm-Tmin_sm.mean)/Tmin_sm.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(hot.dry.anomalies.Tmin_sm = sum(zscore > 2),
             cool.wet.anomalies.Tmin_sm = sum (zscore < -2))
 
@@ -595,9 +596,9 @@ Tmax_sp.sd <- sd(filter(clim.all, Year == 0)$Tmax_sp)
 Tmax_sp.mean <- mean(filter(clim.all, Year == 0)$Tmax_sp)
 Tmax_sp <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, Tmax_sp) %>% 
+  select(SampleSite_ID, ID2, Year, Tmax_sp) %>% 
   mutate(zscore = (Tmax_sp-Tmax_sp.mean)/Tmax_sp.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(hot.dry.anomalies.Tmax_sp = sum(zscore > 2),
             cool.wet.anomalies.Tmax_sp = sum (zscore < -2))
 
@@ -605,9 +606,9 @@ Tmax_sm.sd <- sd(filter(clim.all, Year == 0)$Tmax_sm)
 Tmax_sm.mean <- mean(filter(clim.all, Year == 0)$Tmax_sm)
 Tmax_sm <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, Tmax_sm) %>% 
+  select(SampleSite_ID, ID2, Year, Tmax_sm) %>% 
   mutate(zscore = (Tmax_sm-Tmax_sm.mean)/Tmax_sm.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(hot.dry.anomalies.Tmax_sm = sum(zscore > 2),
             cool.wet.anomalies.Tmax_sm = sum (zscore < -2))
 
@@ -615,9 +616,9 @@ Tave_sm.sd <- sd(filter(clim.all, Year == 0)$Tave_sm)
 Tave_sm.mean <- mean(filter(clim.all, Year == 0)$Tave_sm)
 Tave_sm <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, Tave_sm) %>% 
+  select(SampleSite_ID, ID2, Year, Tave_sm) %>% 
   mutate(zscore = (Tave_sm-Tave_sm.mean)/Tave_sm.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(hot.dry.anomalies.Tave_sm = sum(zscore > 2),
             cool.wet.anomalies.Tave_sm = sum (zscore < -2))
 
@@ -625,9 +626,9 @@ Tave_sp.sd <- sd(filter(clim.all, Year == 0)$Tave_sp)
 Tave_sp.mean <- mean(filter(clim.all, Year == 0)$Tave_sp)
 Tave_sp <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, Tave_sp) %>% 
+  select(SampleSite_ID, ID2, Year, Tave_sp) %>% 
   mutate(zscore = (Tave_sp-Tave_sp.mean)/Tave_sp.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(hot.dry.anomalies.Tave_sp = sum(zscore > 2),
             cool.wet.anomalies.Tave_sp = sum (zscore < -2))
 
@@ -635,9 +636,9 @@ SHM.sd <- sd(filter(clim.all, Year == 0)$SHM)
 SHM.mean <- mean(filter(clim.all, Year == 0)$SHM)
 SHM <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, SHM) %>% 
+  select(SampleSite_ID, ID2, Year, SHM) %>% 
   mutate(zscore = (SHM-SHM.mean)/SHM.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(hot.dry.anomalies.SHM = sum(zscore > 2),
             cool.wet.anomalies.SHM = sum (zscore < -2))
 
@@ -645,9 +646,9 @@ AHM.sd <- sd(filter(clim.all, Year == 0)$AHM)
 AHM.mean <- mean(filter(clim.all, Year == 0)$AHM)
 AHM <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, AHM) %>% 
+  select(SampleSite_ID, ID2, Year, AHM) %>% 
   mutate(zscore = (AHM-AHM.mean)/AHM.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(hot.dry.anomalies.AHM = sum(zscore > 2),
             cool.wet.anomalies.AHM = sum (zscore < -2))
 
@@ -655,9 +656,9 @@ MAT.sd <- sd(filter(clim.all, Year == 0)$MAT)
 MAT.mean <- mean(filter(clim.all, Year == 0)$MAT)
 MAT <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, MAT) %>% 
+  select(SampleSite_ID, ID2, Year, MAT) %>% 
   mutate(zscore = (MAT-MAT.mean)/MAT.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(hot.dry.anomalies.MAT = sum(zscore > 2),
             cool.wet.anomalies.MAT = sum (zscore < -2))
 
@@ -666,9 +667,9 @@ MAP.sd <- sd(filter(clim.all, Year == 0)$MAP)
 MAP.mean <- mean(filter(clim.all, Year == 0)$MAP)
 MAP <- clim.all %>% 
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, MAP) %>% 
+  select(SampleSite_ID, ID2, Year, MAP) %>% 
   mutate(zscore = (MAP-MAP.mean)/MAP.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(cool.wet.anomalies.MAP = sum(zscore > 2),
             hot.dry.anomalies.MAP = sum (zscore < -2))
 
@@ -676,9 +677,9 @@ MWMT.sd <- sd(filter(clim.all, Year == 0)$MWMT)
 MWMT.mean <- mean(filter(clim.all, Year == 0)$MWMT)
 MWMT <- clim.all %>%  
   filter(Year != 0) %>% 
-  select(ID1, ID2, Year, MWMT) %>% 
+  select(SampleSite_ID, ID2, Year, MWMT) %>% 
   mutate(zscore = (MWMT-MWMT.mean)/MWMT.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(hot.dry.anomalies.MWMT = sum(zscore > 2),
             cool.wet.anomalies.MWMT = sum (zscore < -2))
 
@@ -686,9 +687,9 @@ PAS.sd <- sd(filter(clim.all, Year == 0)$PAS)
 PAS.mean <- mean(filter(clim.all, Year == 0)$PAS)
 PAS <- clim.all %>%  
   filter(Year != 0) %>%
-  select(ID1, ID2, Year, PAS) %>% 
+  select(SampleSite_ID, ID2, Year, PAS) %>% 
   mutate(zscore = (PAS-PAS.mean)/PAS.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(cool.wet.anomalies.PAS = sum(zscore > 2),
             hot.dry.anomalies.PAS = sum (zscore < -2))
 
@@ -696,9 +697,9 @@ MCMT.sd <- sd(filter(clim.all, Year == 0)$MCMT)
 MCMT.mean <- mean(filter(clim.all, Year == 0)$MCMT)
 MCMT <- clim.all %>%  
   filter(Year != 0) %>%
-  select(ID1, ID2, Year, MCMT) %>% 
+  select(SampleSite_ID, ID2, Year, MCMT) %>% 
   mutate(zscore = (MCMT-MCMT.mean)/MCMT.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(cool.wet.anomalies.MCMT = sum(zscore > 2),
             hot.dry.anomalies.MCMT = sum (zscore < -2))
 
@@ -706,20 +707,20 @@ CMI_sm.sd <- sd(filter(clim.all, Year == 0)$CMI_sm)
 CMI_sm.mean <- mean(filter(clim.all, Year == 0)$CMI_sm)
 CMI_sm <- clim.all %>%  
   filter(Year != 0) %>%
-  select(ID1, ID2, Year, CMI_sm) %>% 
+  select(SampleSite_ID, ID2, Year, CMI_sm) %>% 
   mutate(zscore = (CMI_sm-CMI_sm.mean)/CMI_sm.sd) %>% 
-  group_by(ID1) %>% 
+  group_by(SampleSite_ID) %>% 
   summarize(cool.wet.anomalies.CMI_sm = sum(zscore > 2),
             hot.dry.anomalies.CMI_sm = sum (zscore < -2))
 
 
 data_frames <- list(MAT, MWMT, MAP, PAS, AHM, SHM, Tave_sp, Tave_sm, Tmax_sp, Tmax_sm, Tmin_sp,
          Tmin_sm, NFFD_sp, PAS_sp, PAS_wt, PPT_sm, CMI_sm, MCMT)
-zscores <- Reduce(function(x, y) merge(x, y, by = "ID1"), data_frames)
+zscores <- Reduce(function(x, y) merge(x, y, by = "SampleSite_ID"), data_frames)
 bin_dis_GIS <- bin_dis_GIS1 %>% 
   select(SampleSite_ID, PLI_count_bin, FDI_count_bin, FIRE_YEAR_1) %>% 
   rename(ID2 = "FIRE_YEAR_1")
-zscores <- rename(zscores, SampleSite_ID = "ID1")
+#zscores <- rename(zscores, SampleSite_ID = "ID1")
 zscores.regen <- left_join(zscores, bin_dis_GIS, by="SampleSite_ID")
 
 zscore.sums <- zscores %>%
@@ -732,6 +733,45 @@ zscores.regen <- left_join(zscore.sums, bin_dis_GIS1, by= "SampleSite_ID")
 # zscores.regen <- select(zscores.regen, SampleSite_ID, hot.dry.sum, cool.wet.sum, PLI_count_bin, FDI_count_bin)
 
 ```
+# Max and Mean and Min
+```{r}
+mmm <- clim.all %>% 
+  group_by(SampleSite_ID, ID2) %>% 
+  filter(Year != 0) %>% 
+  summarize(across(MAT:CMI_sm, list(max=max, min=min, mean=mean)))
+
+mmm_sf <- clim.all %>% 
+  group_by(SampleSite_ID, ID2) %>% 
+  filter(Year != 0) %>% 
+  summarize(NFFD_sp = min(NFFD_sp))
+
+mmm_hd <- mmm %>% 
+  select(SampleSite_ID, ID2, MAT_max, MWMT_max, MCMT_max, MAP_min, PAS_min, AHM_max, SHM_max, Tmax_sm_max, PPT_sm_min, CMI_sm_min)
+
+mmm_cw <- mmm %>% 
+  select(SampleSite_ID, ID2, MAT_min, MWMT_min, MCMT_min, MAP_max, PAS_max, AHM_min, SHM_min, Tmax_sm_min, PPT_sm_max, CMI_sm_max)
+
+mmm_cw$type <- "CW"
+mmm_hd$type <- "HD"
+
+mmm_cw <- mmm_cw %>% 
+  rename_with(~ str_remove(., "_max|_min"))
+mmm_hd <- mmm_hd %>% 
+  rename_with(~ str_remove(., "_max|_min"))
+
+mmm <- rbind(mmm_cw,mmm_hd)
+
+```
+# Climate Dataframe For Modelling
+```{r}
+climate <- zscores %>% 
+  select( SampleSite_ID, contains("cool.wet"))
+climate <- left_join(climate, mmm_hd, by = "SampleSite_ID")
+climate <- left_join(climate, mmm_sf, by = "SampleSite_ID")
+climate <- left_join(climate, bin_dis_GIS1, by = "SampleSite_ID")
+
+```
+
 
 
 

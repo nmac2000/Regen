@@ -6,134 +6,148 @@ output: html_document
 ---
 
 ```{r}
-pairs(~ hot.dry.anomalies.MAT + cool.wet.anomalies.MAT + hot.dry.anomalies.MWMT + 
-        cool.wet.anomalies.MWMT + cool.wet.anomalies.MAP + hot.dry.anomalies.MAP + 
-        cool.wet.anomalies.PAS + hot.dry.anomalies.PAS + hot.dry.anomalies.AHM + 
-        cool.wet.anomalies.AHM + hot.dry.anomalies.SHM + cool.wet.anomalies.SHM + 
-        hot.dry.anomalies.Tave_sp + cool.wet.anomalies.Tave_sp + hot.dry.anomalies.Tave_sm + 
-        cool.wet.anomalies.Tave_sm + hot.dry.anomalies.Tmax_sp + cool.wet.anomalies.Tmax_sp + 
-        hot.dry.anomalies.Tmax_sm + cool.wet.anomalies.Tmax_sm + hot.dry.anomalies.Tmin_sp + 
-        cool.wet.anomalies.Tmin_sp + hot.dry.anomalies.Tmin_sm + cool.wet.anomalies.Tmin_sm + 
-        pos.anomalies.NFFD_sp + neg.anomalies.NFFD_sp + cool.wet.anomalies.PAS_sp + 
-        hot.dry.anomalies.PAS_sp + cool.wet.anomalies.PAS_wt + hot.dry.anomalies.PAS_wt + 
-        cool.wet.anomalies.PPT_sm + hot.dry.anomalies.PPT_sm, 
-      data = zscores, main = "Scatterplot Matrix for Climate Data")
-
-pairs(~ hot.dry.anomalies.MAT + hot.dry.anomalies.MWMT + hot.dry.anomalies.MAP + 
-        hot.dry.anomalies.PAS + hot.dry.anomalies.AHM + hot.dry.anomalies.SHM + 
-        hot.dry.anomalies.Tmax_sm + hot.dry.anomalies.PPT_sm + hot.dry.anomalies.MCMT +
-        hot.dry.anomalies.CMI_sm,
-      data = zscores, main = "Scatterplot Matrix for Hot/Dry and Negative Anomalies")
-
-pairs(~ cool.wet.anomalies.MAT + cool.wet.anomalies.MWMT + cool.wet.anomalies.MAP + 
-        cool.wet.anomalies.PAS + cool.wet.anomalies.AHM + cool.wet.anomalies.SHM + 
-        cool.wet.anomalies.Tave_sp + cool.wet.anomalies.Tave_sm + cool.wet.anomalies.Tmax_sp + 
-        cool.wet.anomalies.Tmax_sm + cool.wet.anomalies.Tmin_sp + cool.wet.anomalies.Tmin_sm + 
-        cool.wet.anomalies.PAS_sp + cool.wet.anomalies.PAS_wt + cool.wet.anomalies.PPT_sm + 
-        pos.anomalies.NFFD_sp,
-      data = zscores, main = "Scatterplot Matrix for Cool/Wet and Positive Anomalies")
-
-
-zscores_regen$PLI.f <- as.factor(zscores_regen$PLI_count_bin)
-zscores_regen$FDI.f <- as.factor(zscores_regen$FDI_count_bin)
+climate$PLI.f <- as.factor(climate$PLI_count_bin)
+climate$FDI.f <- as.factor(climate$FDI_count_bin)
 ```
 # start modeling
 
 ```{r}
-#logistic.null <- glm(FDI.f ~ 1 ,
-#    family=binomial(link = "logit"), data=bin_dis_GIS1)
-#summary(logistic.null)
+# Hot and Dry
+climate.PLI.null <- glm(PLI.f ~ 1,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.null)
 
-climate.PLIa <- glm(PLI.f ~ hot.dry.anomalies.MAT,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIa)
+climate.PLI.a <- glm(PLI.f ~ MCMT,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.a)
+lrtest(climate.PLI.a, climate.PLI.null)
 
-climate.PLIb <- glm(PLI.f ~ hot.dry.anomalies.MCMT,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIb)
+climate.PLI.b <- glm(PLI.f ~ MWMT,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.b)
+lrtest(climate.PLI.b, climate.PLI.null)
 
-climate.PLIc <- glm(PLI.f ~ hot.dry.anomalies.MWMT,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIc)
+climate.PLI.c <- glm(PLI.f ~ Tmax_sm,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.c)
+lrtest(climate.PLI.c, climate.PLI.null)
 
-climate.PLId <- glm(PLI.f ~ hot.dry.anomalies.MAP,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLId)
+climate.PLI.d <- glm(PLI.f ~ MAP,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.d)
+lrtest(climate.PLI.d, climate.PLI.null)
 
-climate.PLIe <- glm(PLI.f ~ hot.dry.anomalies.PAS,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIe)
+climate.PLI.e <- glm(PLI.f ~ PAS,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.e)
+lrtest(climate.PLI.e, climate.PLI.null)
 
-climate.PLIf <- glm(PLI.f ~ hot.dry.anomalies.AHM,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIf)
+climate.PLI.f <- glm(PLI.f ~ PPT_sm,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.f)
+lrtest(climate.PLI.f, climate.PLI.null)
 
-climate.PLIg <- glm(PLI.f ~ hot.dry.anomalies.SHM,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIg)
+climate.PLI.g <- glm(PLI.f ~ CMI_sm,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.g)
+lrtest(climate.PLI.g, climate.PLI.null)
 
-climate.PLIh <- glm(PLI.f ~ hot.dry.anomalies.Tmax_sm,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIh)
+climate.PLI.h <- glm(PLI.f ~ AHM,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.h)
+lrtest(climate.PLI.h, climate.PLI.null)
 
-climate.PLIi <- glm(PLI.f ~ hot.dry.anomalies.PPT_sm,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIi)
+climate.PLI.i <- glm(PLI.f ~ SHM,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.i)
+lrtest(climate.PLI.i, climate.PLI.null)
 
-climate.PLIj <- glm(PLI.f ~ hot.dry.anomalies.CMI_sm,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIj)
+```
 
+```{r}
+# Cool and Wet Anomalies
+climate.PLI.null <- glm(PLI.f ~ 1,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.null)
 
+climate.PLI.1a <- glm(PLI.f ~ cool.wet.anomalies.MCMT,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.1a)
+lrtest(climate.PLI.1a, climate.PLI.null)
+
+climate.PLI.1b <- glm(PLI.f ~ cool.wet.anomalies.MWMT,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.1b)
+lrtest(climate.PLI.1b, climate.PLI.null)
+
+climate.PLI.1c <- glm(PLI.f ~ cool.wet.anomalies.Tmax_sm,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.1c)
+lrtest(climate.PLI.1c, climate.PLI.null)
+
+climate.PLI.1d <- glm(PLI.f ~ cool.wet.anomalies.MAP,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.1d)
+lrtest(climate.PLI.1d, climate.PLI.null)
+
+climate.PLI.1e <- glm(PLI.f ~ cool.wet.anomalies.PAS,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.1e)
+lrtest(climate.PLI.1e, climate.PLI.null)
+
+climate.PLI.1f <- glm(PLI.f ~ cool.wet.anomalies.PPT_sm,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.1f)
+lrtest(climate.PLI.1f, climate.PLI.null)
+
+climate.PLI.1g <- glm(PLI.f ~ cool.wet.anomalies.CMI_sm,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.1g)
+lrtest(climate.PLI.1g, climate.PLI.null)
+
+climate.PLI.1h <- glm(PLI.f ~ cool.wet.anomalies.AHM,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.1h)
+lrtest(climate.PLI.1h, climate.PLI.null)
+
+climate.PLI.1i <- glm(PLI.f ~ cool.wet.anomalies.SHM,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.1i)
+lrtest(climate.PLI.1i, climate.PLI.null)
 
 
 ```
 ```{r}
-#logistic.null <- glm(FDI.f ~ 1 ,
-#    family=binomial(link = "logit"), data=bin_dis_GIS1)
-#summary(logistic.null)
+climate.PLI.2a <- glm(PLI.f ~ years_since + MWMT,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.2a)
+lrtest(climate.PLI.b, climate.PLI.2a)
 
-climate.PLIa <- glm(PLI.f ~ cool.wet.anomalies.MAT,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIa)
+climate.PLI.2b <- glm(PLI.f ~ years_since  + MWMT + NFFD,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.2b)
+lrtest(climate.PLI.2b, climate.PLI.2a)
 
-climate.PLIb <- glm(PLI.f ~ cool.wet.anomalies.MCMT,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIb)
+climate.PLI.2c <- glm(PLI.f ~ years_since  +  NFFD,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.2c)
+lrtest(climate.PLI.2b, climate.PLI.2c)
 
-climate.PLIc <- glm(PLI.f ~ cool.wet.anomalies.MWMT,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIc)
-
-climate.PLId <- glm(PLI.f ~ cool.wet.anomalies.MAP,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLId)
-
-climate.PLIe <- glm(PLI.f ~ cool.wet.anomalies.PAS,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIe)
-
-climate.PLIf <- glm(PLI.f ~ cool.wet.anomalies.AHM,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIf)
-
-climate.PLIg <- glm(PLI.f ~ cool.wet.anomalies.SHM,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIg)
-
-climate.PLIh <- glm(PLI.f ~ cool.wet.anomalies.Tmax_sm,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIh)
-
-climate.PLIi <- glm(PLI.f ~ cool.wet.anomalies.PPT_sm,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIi)
-
-climate.PLIj <- glm(PLI.f ~ cool.wet.anomalies.CMI_sm,
-    family=binomial(link = "logit"), data=zscores_regen)
-summary(climate.PLIj)
-
-
+climate.PLI.2d <- glm(PLI.f ~ years_since + NFFD + cool.wet.anomalies.MCMT ,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.2d)
+lrtest(climate.PLI.2c, climate.PLI.2d)
 
 
 ```
+```{r}
+climate.PLI.3 <- glm(PLI.f ~  NFFD,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.3)
+
+climate.PLI.3a <- glm(PLI.f ~ years_since  + NFFD,
+                        family = binomial(link="logit"), data=climate)
+summary(climate.PLI.3a)
+```
+
+
