@@ -764,11 +764,11 @@ mmm <- rbind(mmm_cw,mmm_hd)
 ```
 # Climate Dataframe For Modelling
 ```{r}
-climate <- zscores %>% 
+climate1 <- zscores %>% 
   select( SampleSite_ID, contains("cool.wet"))
-climate <- left_join(climate, mmm_hd, by = "SampleSite_ID")
-climate <- left_join(climate, mmm_sf, by = "SampleSite_ID")
-climate <- left_join(climate, bin_dis_GIS1, by = "SampleSite_ID")
+climate1 <- left_join(climate1, mmm_hd, by = "SampleSite_ID")
+climate1 <- left_join(climate1, mmm_sf, by = "SampleSite_ID")
+climate <- left_join(climate1, bin_dis_GIS1, by = "SampleSite_ID")
 
 ```
 

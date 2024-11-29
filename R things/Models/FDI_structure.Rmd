@@ -87,7 +87,7 @@ structure.FDI.3b <- glm(FDI.f ~ years_since + FDI_percent + PROJ_HEIGHT_1_1,
 summary(structure.FDI.3b)
 lrtest(structure.FDI.3b, structure.FDI.3a)
 
-structure.FDI.3c <- glm(FDI.f ~ years_since + BARC.x + FDI_percent + Distance,
+structure.FDI.3c <- glm(FDI.f ~ years_since + FDI_percent + Distance,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3c)
 lrtest(structure.FDI.3c, structure.FDI.3a) #restrictions justified, PROJ_HEIGHT removed
@@ -109,8 +109,7 @@ structure.FDI.3f <- glm(FDI.f ~  Distance + BARC.x + years_since + FDI_percent +
 summary(structure.FDI.3f)
 lrtest(structure.FDI.3f, structure.FDI.3c) #restrictions justified
 
-structure.FDI.3g <- glm(FDI.f ~  Distance +years_since + BARC.x + FDI_percent +
-                          PATCHSIZE,
+structure.FDI.3g <- glm(FDI.f ~  Distance +years_since + BARC.x + FDI_percent,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3g)
 lrtest(structure.FDI.3g, structure.FDI.3c) #restrictions justified
@@ -122,61 +121,10 @@ summary(structure.FDI.3h)
 lrtest(structure.FDI.3h, structure.FDI.3g)
 
 structure.FDI.3i <- glm(FDI.f ~   Distance +years_since + BARC.x +FDI_percent +
-                          PATCHSIZE + PROJ_AGE_1_1,
+                          PATCHSIZE ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3i)
 lrtest(structure.FDI.3i, structure.FDI.3g)
 
 code
 ```
-
-
-```{r}
-bin_dis_GIS1$linpred.GLM.FDI.2e <- predict(structure.FDI.2e) # Estimated logit using the linear part
-bin_dis_GIS1$yhat.GLM.FDI.2e <- fitted(structure.FDI.2e) # Estimated probability using inverse logityhat values
-bin_dis_GIS1$resid.GLM.FDI.2e <- resid(structure.FDI.2e) # the deviances 
-
-# Graph of predicted probabilities ranges for dead versus alive
-# Would like the dead=0 (it is alive) trees to have all low predicted prob(dead) 
-# and the dead=1 (it is dead) trees to all have high predicted prob (dead). 
-par(mfrow=c(1,1),mai=c(1,1,0.6,0.6),cex=0.8)
-plot(bin_dis_GIS1$FDI.f,bin_dis_GIS1$yhat.GLM.FDI.2e,pch=8,
-  main="Model 1: Predicted Prob for Seedling Occurrence (FDI)",
-  ylab="Predicted Prob(occurrence)", xlab="Seedling (=1) or No seedling(=0) as Recorded")
-par(mfrow=c(1,1),mai=c(1,1,1,1),cex=1)
-```
-
-```{r}
-# GLM1
-cutoff <- 0.3 # you can play around with different cutoff values
-n <- dim(bin_dis_GIS1)[1]
-#bin_dis_GIS1$FDI_count_bin <- as.numeric(levels(bin_dis_GIS1$FDI_count_bin))[bin_dis_GIS1$FDI_count_bin]
-obs <- bin_dis_GIS1$FDI_count_bin
-pred <- ifelse(bin_dis_GIS1$yhat.GLM.FDI.2e >= cutoff, 1,0)
-
-bin_dis_GIS1$GLM.FDI.2e <- ifelse( obs == 1 & (obs - pred) == 0, 1, 0) ; a <- sum(bin_dis_GIS1$GLM.FDI.2e) # a: true positives
-bin_dis_GIS1$GLM2c <- ifelse( obs == 1 & (obs - pred) == 1, 1, 0) ; c <- sum(bin_dis_GIS1$GLM2c) # c: false negative
-bin_dis_GIS1$GLM2b <- ifelse( obs == 0 & (obs - pred) == -1, 1, 0) ; b <- sum(bin_dis_GIS1$GLM2b) # b: false positives
-bin_dis_GIS1$GLM2d <- ifelse( obs == 0 & (obs - pred) == 0, 1, 0) ; d <- sum(bin_dis_GIS1$GLM2d) # d: true negatives
-
-# general confusion matrix layout
-matrix(c("a","c" , "b","d"), nrow=2, ncol=2)
-CM.GLM2 <- matrix(c(a,c , b,d), nrow=2, ncol=2)
-CM.GLM2
-
-
-
-# overall accuracy = (a+d)/n
-GLM2.oa <- (a+d)/n
-GLM2.sensitivity <- a/(a+c)
-GLM2.specificity <- d/(b+d)
-kappa.bit <- (a+b)*(a+c)+(c+d)*(d+b)
-GLM2.kappa <- (  ((a+d)/n)  - (kappa.bit/n^2) ) / (1- (kappa.bit/n^2) )
-GLM2.TSS <- GLM2.sensitivity + GLM2.specificity -1
-
-GLM2.predacc <- c(GLM2.oa, GLM2.sensitivity, GLM2.specificity, GLM2.kappa,GLM2.TSS)
-
-GLM2.auc <-pROC::auc(bin_dis_GIS1$FDI_count_bin,bin_dis_GIS1$yhat.GLM.FDI.2e)
-plot(pROC::roc(bin_dis_GIS1$FDI_count_bin,bin_dis_GIS1$yhat.GLM.FDI.2e),auc.polygon=T)
-```
-

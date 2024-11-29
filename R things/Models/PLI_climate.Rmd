@@ -123,17 +123,17 @@ climate.PLI.2a <- glm(PLI.f ~ years_since + MWMT,
 summary(climate.PLI.2a)
 lrtest(climate.PLI.b, climate.PLI.2a)
 
-climate.PLI.2b <- glm(PLI.f ~ years_since  + MWMT + NFFD,
+climate.PLI.2b <- glm(PLI.f ~ years_since  + MWMT + NFFD_sp,
                         family = binomial(link="logit"), data=climate)
 summary(climate.PLI.2b)
 lrtest(climate.PLI.2b, climate.PLI.2a)
 
-climate.PLI.2c <- glm(PLI.f ~ years_since  +  NFFD,
+climate.PLI.2c <- glm(PLI.f ~ years_since  +  NFFD_sp,
                         family = binomial(link="logit"), data=climate)
 summary(climate.PLI.2c)
 lrtest(climate.PLI.2b, climate.PLI.2c)
 
-climate.PLI.2d <- glm(PLI.f ~ years_since + NFFD + cool.wet.anomalies.MCMT ,
+climate.PLI.2d <- glm(PLI.f ~ years_since + NFFD_sp + cool.wet.anomalies.MCMT ,
                         family = binomial(link="logit"), data=climate)
 summary(climate.PLI.2d)
 lrtest(climate.PLI.2c, climate.PLI.2d)
@@ -141,13 +141,17 @@ lrtest(climate.PLI.2c, climate.PLI.2d)
 
 ```
 ```{r}
-climate.PLI.3 <- glm(PLI.f ~  NFFD,
+climate.PLI.3 <- glm(PLI.f ~  NFFD_sp,
                         family = binomial(link="logit"), data=climate)
 summary(climate.PLI.3)
 
-climate.PLI.3a <- glm(PLI.f ~ years_since  + NFFD,
+climate.PLI.3a <- glm(PLI.f ~ years_since  + NFFD_sp,
                         family = binomial(link="logit"), data=climate)
 summary(climate.PLI.3a)
+
+pairs(~ PAS + MAP + PPT_sm + NFFD_sp, data=climate)
+pairs(~ MCMT + MWMT + Tmax_sm +  NFFD_sp, data=climate)
+pairs(~ AHM + SHM + CMI_sm + NFFD_sp, data=climate)
 ```
 
 

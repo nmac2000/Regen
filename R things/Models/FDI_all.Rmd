@@ -1,0 +1,94 @@
+---
+title: "FDI All"
+author: "Nat"
+date: "2024-11-27"
+output: html_document
+---
+
+```{r}
+FDI.null <- glm(FDI.f ~ 1,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.null)
+
+FDI.a <- glm(FDI.f ~ years_since,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.a)
+lrtest(FDI.a, FDI.null)
+
+FDI.b <- glm(FDI.f ~ BARC.x,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.b)
+lrtest(FDI.b, FDI.null)
+
+FDI.c <- glm(FDI.f ~ FDI_percent,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.c)
+
+FDI.d <- glm(FDI.f ~ BEC_Zone,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.d)
+lrtest(FDI.d, FDI.null)
+
+FDI.e <- glm(FDI.f ~ PARENT_SOILS,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.e)
+lrtest(FDI.e, FDI.null)
+
+FDI.f <- glm(FDI.f ~  Solar_Radiation,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.f)
+
+FDI.f1 <- glm(FDI.f ~  Distance,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.f1)
+
+FDI.g <- glm(FDI.f ~ MCMT,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.g)
+
+FDI.h <- glm(FDI.f ~ PAS,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.h)
+
+FDI.i <- glm(FDI.f ~ CMI_sm,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.i)
+```
+
+```{r}
+FDI.1 <- glm(FDI.f ~ years_since + FDI_percent,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.1)
+lrtest(FDI.a, FDI.1)
+
+FDI.2 <- glm(FDI.f ~ years_since + FDI_percent + BEC_Zone,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.2)
+lrtest(FDI.2, FDI.1)
+
+FDI.3 <- glm(FDI.f ~ years_since + FDI_percent + BEC_Zone + MCMT,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.3)
+lrtest(FDI.2, FDI.3)
+
+FDI.4 <- glm(FDI.f ~ years_since + FDI_percent + MCMT,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.4)
+lrtest(FDI.4, FDI.3)
+
+FDI.5 <- glm(FDI.f ~ years_since + FDI_percent + MCMT + PARENT_SOILS,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.5)
+lrtest(FDI.4, FDI.5)
+
+FDI.6 <- glm(FDI.f ~ years_since + FDI_percent + MCMT + PARENT_SOILS + Distance,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.6)
+lrtest(FDI.6, FDI.5)
+
+FDI.7 <- glm(FDI.f ~ years_since + FDI_percent + MCMT + PARENT_SOILS + Distance + BARC.x,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(FDI.7)
+lrtest(FDI.6, FDI.7)
+```
+
