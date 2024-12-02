@@ -447,12 +447,13 @@ bin_dis_GIS1 <- bin_dis_GIS1 %>%
 
 
 
-write.csv(bin_dis_GIS1, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/bin_dis_GIS2.csv")
-#bin_dis_GIS1 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/bin_dis_GIS1.csv")
+#write.csv(bin_dis_GIS1, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/bin_dis_GIS3.csv")
+bin_dis_GIS1 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/bin_dis_GIS3.csv")
+
 ```
 ```{r}
-bin_dis_GIS1 %>% 
-  filter(is.na(PATCHSIZE))
+bin_dis_GIS1 <- bin_dis_GIS1 %>% 
+  select(-X, -X.1, -X.2)
 ```
 
 
