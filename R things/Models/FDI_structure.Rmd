@@ -120,8 +120,7 @@ structure.FDI.3h <- glm(FDI.f ~  Distance +years_since + BARC.x +FDI_percent +
 summary(structure.FDI.3h)
 lrtest(structure.FDI.3h, structure.FDI.3g)
 
-structure.FDI.3i <- glm(FDI.f ~   Distance +years_since + BARC.x +FDI_percent +
-                          PATCHSIZE ,
+structure.FDI.3i <- glm(FDI.f ~   Distance +years_since + BARC.x +FDI_percent ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3i)
 lrtest(structure.FDI.3i, structure.FDI.3g)
