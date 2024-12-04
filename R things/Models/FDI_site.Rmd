@@ -121,3 +121,15 @@ summary(site.FDI.2i)
 lrtest(site.FDI.2i, site.FDI.2c)
 ```
 
+```{r}
+
+site.FDI.2f <- glm(FDI.f ~ years_since + BEC_Zone + PARENT_SOILS + Solar_Radiation,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.2f)
+
+site.FDI.2g <- glm(FDI.f ~ years_since + BEC_Zone + PARENT_SOILS + Solar_Radiation +BEC_Zone*PARENT_SOILS,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.2g)
+lrtest(site.FDI.2f, site.FDI.2g)
+```
+

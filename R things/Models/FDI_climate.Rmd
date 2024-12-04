@@ -274,3 +274,10 @@ lrtest(climate.FDI.IDF.1i, climate.FDI.IDF.null)
 
 
 ```
+```{r}
+climate.FDI.IDF.2a <- glm(FDI.f ~ years_since + MCMT,
+                        family = binomial(link="logit"), data=climate.IDF)
+summary(climate.FDI.IDF.2a)
+lrtest(climate.FDI.IDF.a, climate.FDI.IDF.2a)
+```
+
