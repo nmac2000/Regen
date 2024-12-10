@@ -38,40 +38,55 @@ site.PLI.a <- glm(PLI.f ~ years_since ,
 summary(site.PLI.a)
 lrtest(site.PLI.a, site.PLI.null)
 
-site.PLI.b <- glm(PLI.f ~ Slope + Slope*sin(Aspect*(pi/180)) + Slope*cos(Aspect*(pi/180)) ,
+site.PLI.b <- glm(PLI.f ~ Slope  ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.b)
 lrtest(site.PLI.b, site.PLI.null)
 
-site.PLI.d <- glm(PLI.f ~ Elevation ,
+site.PLI.c <- glm(PLI.f ~ Elevation ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.d)
 lrtest(site.PLI.d, site.PLI.null)
 
-site.PLI.f <- glm(PLI.f ~ Solar_Radiation ,
+site.PLI.d <- glm(PLI.f ~ Solar_Radiation ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.f)
 lrtest(site.PLI.f, site.PLI.null)
 
-site.PLI.g <- glm(PLI.f ~ TWI ,
+site.PLI.e <- glm(PLI.f ~ TWI ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.g)
 lrtest(site.PLI.g, site.PLI.null)
 
-site.PLI.h <- glm(PLI.f ~ BEC_Zone ,
+site.PLI.f <- glm(PLI.f ~ BEC_Zone ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.h)
 lrtest(site.PLI.h, site.PLI.null)
 
-site.PLI.i <- glm(PLI.f ~ BEC_Subzone ,
+site.PLI.g <- glm(PLI.f ~ BEC_Subzone ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.i)
 lrtest(site.PLI.i, site.PLI.null)
 
-site.PLI.k <- glm(PLI.f ~ PARENT_SOILS ,
+site.PLI.h <- glm(PLI.f ~ PARENT_SOILS ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.k)
 lrtest(site.PLI.k, site.PLI.null)
+
+site.PLI.i <- glm(PLI.f ~ Latitude,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.PLI.l)
+lrtest(site.PLI.l, site.PLI.null)
+
+site.PLI.j <- glm(PLI.f ~ Longitude,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.PLI.m)
+lrtest(site.PLI.m, site.PLI.null)
+
+site.PLI.k <- glm(PLI.f ~ Slope + I(Slope*sin(Aspect*(pi/180))) + I(Slope*cos(Aspect*(pi/180))) ,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.PLI.b)
+lrtest(site.PLI.b, site.PLI.null)
 
 ```
 
@@ -144,6 +159,30 @@ site.PLI.2k <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS  + Slope + BEC_
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2k)
 lrtest(site.PLI.2k, site.PLI.2j)
+```
+```{r}
+site.PLI.4a <- glm(PLI.f ~ years_since + BEC_Zone + Latitude,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.PLI.4a)
+lrtest(site.PLI.4a, site.PLI.a)
+anova(site.PLI.a, site.PLI.4a)
+
+site.PLI.4b <- glm(PLI.f ~ years_since + BEC_Subzone + Latitude,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.PLI.4b)
+lrtest(site.PLI.4b, site.PLI.a)
+anova(site.PLI.4a, site.PLI.4b)
+
+site.PLI.4c <- glm(PLI.f ~ years_since +  BEC_Subzone,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.PLI.4c)
+lrtest(site.PLI.4b, site.PLI.4c)
+
+bin_dis_GIS1$yhat.PLI.Zone <- fitted(site.PLI.4a)
+bin_dis_GIS1$yhat.PLI.Subzone <- fitted(site.PLI.4c)
+pROC::auc(bin_dis_GIS1$PLI.f, bin_dis_GIS1$yhat.PLI.Zone)
+pROC::auc(bin_dis_GIS1$PLI.f, bin_dis_GIS1$yhat.PLI.Subzone)
+
 ```
 
 

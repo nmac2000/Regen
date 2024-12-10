@@ -196,5 +196,7 @@ summary(structure.PLI.5b)
 lrtest(structure.PLI.5a, structure.PLI.5b)
 
 bin_dis_GIS1$BARC.x <- as.factor(bin_dis_GIS1$BARC.x)
+
+table(bin_dis_GIS1$PARENT_SOILS, bin_dis_GIS1$TEXTURE_1)
 ```
 

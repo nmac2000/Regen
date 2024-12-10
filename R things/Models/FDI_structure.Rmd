@@ -9,6 +9,7 @@ output: html_document
 #need to figure out data frames for everything and clean up code
 bin_dis_GIS1 <- bin_dis_GIS %>%
   distinct(SampleSite_ID, .keep_all = T)
+bin_dis_GIS1$BARC.x <- as.factor(bin_dis_GIS1$BARC.x)
 
 ```
 
@@ -22,31 +23,31 @@ summary(logistic.null)
 
 structure.FDIa <- glm(FDI.f ~ Distance ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDIa) #not significant on own
+summary(structure.FDIa) 
 
 structure.FDIb <- glm(FDI.f ~ years_since ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDIb) #significant on own
+summary(structure.FDIb)
 
 structure.FDIc <- glm(FDI.f ~ CROWN_CLOSURE_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDIc) #not significant on own
+summary(structure.FDIc) 
 
 structure.FDId <- glm(FDI.f ~ PROJ_AGE_1_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDId) #significant on own
+summary(structure.FDId) 
 
 structure.FDIe <- glm(FDI.f ~ PROJ_HEIGHT_1_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDIe) #significant on own
+summary(structure.FDIe) 
 
 structure.FDIf <- glm(FDI.f ~ DISTURBANCE_TYPE_1 ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDIf) #significant on own 
+summary(structure.FDIf) 
 
 structure.FDIg <- glm(FDI.f ~ DISTANCE_TO_PERIMETER ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(structure.FDIg) #significant on own
+summary(structure.FDIg) 
 
 structure.FDIi <- glm(FDI.f ~ MEAN ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
@@ -87,10 +88,10 @@ structure.FDI.3b <- glm(FDI.f ~ years_since + FDI_percent + PROJ_HEIGHT_1_1,
 summary(structure.FDI.3b)
 lrtest(structure.FDI.3b, structure.FDI.3a)
 
-structure.FDI.3c <- glm(FDI.f ~ years_since + FDI_percent + Distance,
+structure.FDI.3c <- glm(FDI.f ~ years_since + BARC.x + FDI_percent + Distance,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3c)
-lrtest(structure.FDI.3c, structure.FDI.3a) #restrictions justified, PROJ_HEIGHT removed
+lrtest(structure.FDI.3c, structure.FDI.3a)
 
 structure.FDI.3d <- glm(FDI.f ~ years_since + BARC.x +FDI_percent + Distance + PROJ_AGE_1_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
@@ -115,12 +116,12 @@ summary(structure.FDI.3g)
 lrtest(structure.FDI.3g, structure.FDI.3c) #restrictions justified
 
 structure.FDI.3h <- glm(FDI.f ~  Distance +years_since + BARC.x +FDI_percent +
-                          PATCHSIZE + CROWN_CLOSURE_1,
+                          PATCHSIZE,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3h)
 lrtest(structure.FDI.3h, structure.FDI.3g)
 
-structure.FDI.3i <- glm(FDI.f ~   Distance +years_since + BARC.x +FDI_percent ,
+structure.FDI.3i <- glm(FDI.f ~   Distance +years_since + BARC.x +FDI_percent  + CROWN_CLOSURE_1,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3i)
 lrtest(structure.FDI.3i, structure.FDI.3g)
@@ -134,7 +135,7 @@ structure.FDI.3i <- glm(FDI.f ~   Distance +years_since + BARC.x +FDI_percent ,
 summary(structure.FDI.3i)
 
 
-structure.FDI.3j <- glm(FDI.f ~   Distance +years_since + BARC.x +FDI_percent +BARC.x*years_since,
+structure.FDI.3j <- glm(FDI.f ~   Distance +years_since + BARC.x +FDI_percent +FDI_percent*years_since,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.FDI.3j)
 lrtest(structure.FDI.3i, structure.FDI.3j)

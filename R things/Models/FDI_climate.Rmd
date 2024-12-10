@@ -220,6 +220,57 @@ climate.FDI.IDF.i <- glm(FDI.f ~ SHM,
 summary(climate.FDI.IDF.i)
 lrtest(climate.FDI.IDF.i, climate.FDI.IDF.null)
 ```
+```{r}
+# Cool and wet
+climate.FDI.IDF.null <- glm(FDI.f ~ 1,
+                        family = binomial(link="logit"), data=climate.IDF)
+summary(climate.FDI.IDF.null)
+
+climate.FDI.IDF.a <- glm(FDI.f ~ MCMT_min,
+                        family = binomial(link="logit"), data=climate.IDF)
+summary(climate.FDI.IDF.a)
+lrtest(climate.FDI.IDF.a, climate.FDI.IDF.null)
+
+climate.FDI.IDF.b <- glm(FDI.f ~ MWMT_min,
+                        family = binomial(link="logit"), data=climate.IDF)
+summary(climate.FDI.IDF.b)
+lrtest(climate.FDI.IDF.b, climate.FDI.IDF.null)
+
+climate.FDI.IDF.c <- glm(FDI.f ~ Tmax_sm_min,
+                        family = binomial(link="logit"), data=climate.IDF)
+summary(climate.FDI.IDF.c)
+lrtest(climate.FDI.IDF.c, climate.FDI.IDF.null)
+
+climate.FDI.IDF.d <- glm(FDI.f ~ MAP_max,
+                        family = binomial(link="logit"), data=climate.IDF)
+summary(climate.FDI.IDF.d)
+lrtest(climate.FDI.IDF.d, climate.FDI.IDF.null)
+
+climate.FDI.IDF.e <- glm(FDI.f ~ PAS_max,
+                        family = binomial(link="logit"), data=climate.IDF)
+summary(climate.FDI.IDF.e)
+lrtest(climate.FDI.IDF.e, climate.FDI.IDF.null)
+
+climate.FDI.IDF.f <- glm(FDI.f ~ PPT_sm_max,
+                        family = binomial(link="logit"), data=climate.IDF)
+summary(climate.FDI.IDF.f)
+lrtest(climate.FDI.IDF.f, climate.FDI.IDF.null)
+
+climate.FDI.IDF.g <- glm(FDI.f ~ CMI_sm_max,
+                        family = binomial(link="logit"), data=climate.IDF)
+summary(climate.FDI.IDF.g)
+lrtest(climate.FDI.IDF.g, climate.FDI.IDF.null)
+
+climate.FDI.IDF.h <- glm(FDI.f ~ AHM_min,
+                        family = binomial(link="logit"), data=climate.IDF)
+summary(climate.FDI.IDF.h)
+lrtest(climate.FDI.IDF.h, climate.FDI.IDF.null)
+
+climate.FDI.IDF.i <- glm(FDI.f ~ SHM_min,
+                        family = binomial(link="logit"), data=climate.IDF)
+summary(climate.FDI.IDF.i)
+lrtest(climate.FDI.IDF.i, climate.FDI.IDF.null)
+```
 
 ```{r}
 # Cool and Wet Anomalies
@@ -275,7 +326,7 @@ lrtest(climate.FDI.IDF.1i, climate.FDI.IDF.null)
 
 ```
 ```{r}
-climate.FDI.IDF.2a <- glm(FDI.f ~ years_since + MCMT,
+climate.FDI.IDF.2a <- glm(FDI.f ~ years_since ,
                         family = binomial(link="logit"), data=climate.IDF)
 summary(climate.FDI.IDF.2a)
 lrtest(climate.FDI.IDF.a, climate.FDI.IDF.2a)

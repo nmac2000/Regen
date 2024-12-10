@@ -760,6 +760,9 @@ mmm_hd <- mmm_hd %>%
   rename_with(~ str_remove(., "_max|_min"))
 
 mmm <- rbind(mmm_cw,mmm_hd)
+mmm1 <- full_join(mmm_cw, mmm_hd, by = "SampleSite_ID")
+climate <- left_join(mmm1, bin_dis_GIS1, by="SampleSite_ID"
+)
 
 ```
 # Climate Dataframe For Modelling

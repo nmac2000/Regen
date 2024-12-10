@@ -40,10 +40,24 @@ pROC::auc(bin_dis_GIS1$FDI.f, bin_dis_GIS1$yhat.FDI.structure)
 #Site
 
 bin_dis_GIS1$yhat.PLI.site <- fitted(site.PLI.2j)
-bin_dis_GIS1$yhat.FDI.site <- fitted(site.FDI.2f)
+bin_dis_GIS1$yhat.FDI.site <- fitted(site.FDI.3f)
+
+site.FDI.3f <- glm(FDI.f ~ BEC_Zone + PARENT_SOILS + Solar_Radiation + years_since ,
+                   family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.3f)
+
+bin_dis_GIS1$yhat.FDI.site.lat <- fitted(site.FDI.3f)
+
+site.FDI.2g <- glm(FDI.f ~ years_since + BEC_Zone + PARENT_SOILS + Solar_Radiation + BEC_Zone*years_since,
+                   family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.2g)
+
+bin_dis_GIS1$yhat.FDI.site.interaction <- fitted(site.FDI.2g)
 
 pROC::auc(bin_dis_GIS1$PLI.f, bin_dis_GIS1$yhat.PLI.site)
 pROC::auc(bin_dis_GIS1$FDI.f, bin_dis_GIS1$yhat.FDI.site)
+pROC::auc(bin_dis_GIS1$FDI.f, bin_dis_GIS1$yhat.FDI.site.lat)
+pROC::auc(bin_dis_GIS1$FDI.f, bin_dis_GIS1$yhat.FDI.site.interaction)
 
 
 #Climate

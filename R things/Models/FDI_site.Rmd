@@ -123,13 +123,42 @@ lrtest(site.FDI.2i, site.FDI.2c)
 
 ```{r}
 
-site.FDI.2f <- glm(FDI.f ~ years_since + BEC_Zone + PARENT_SOILS + Solar_Radiation,
+site.FDI.2f <- glm(FDI.f ~ BEC_Zone + PARENT_SOILS + Solar_Radiation + years_since,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.FDI.2f)
 
-site.FDI.2g <- glm(FDI.f ~ years_since + BEC_Zone + PARENT_SOILS + Solar_Radiation +BEC_Zone*PARENT_SOILS,
+site.FDI.3f <- glm(FDI.f ~  years_since +  BEC_Zone + PARENT_SOILS + Solar_Radiation,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.3f)
+
+
+site.FDI.2g <- glm(FDI.f ~ years_since + BEC_Zone + PARENT_SOILS + Solar_Radiation + years_since*BEC_Zone,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.FDI.2g)
-lrtest(site.FDI.2f, site.FDI.2g)
+lrtest(site.FDI.3f, site.FDI.2g)
+```
+```{r}
+site.FDI.4a <- glm(FDI.f ~ years_since + BEC_Zone + Latitude,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.4a)
+lrtest(site.FDI.4a, site.FDI.a)
+anova(site.FDI.a, site.FDI.4a)
+
+site.FDI.4b <- glm(FDI.f ~ years_since + BEC_Subzone + Latitude,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.4b)
+lrtest(site.FDI.4b, site.FDI.a)
+anova(site.FDI.4a, site.FDI.4b)
+
+site.FDI.4c <- glm(FDI.f ~ years_since +  BEC_Subzone,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
+summary(site.FDI.4c)
+lrtest(site.FDI.4b, site.FDI.4c)
+
+bin_dis_GIS1$yhat.FDI.Zone <- fitted(site.FDI.4a)
+bin_dis_GIS1$yhat.FDI.Subzone <- fitted(site.FDI.4c)
+pROC::auc(bin_dis_GIS1$FDI.f, bin_dis_GIS1$yhat.FDI.Zone)
+pROC::auc(bin_dis_GIS1$FDI.f, bin_dis_GIS1$yhat.FDI.Subzone)
+
 ```
 
