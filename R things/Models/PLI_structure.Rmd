@@ -190,7 +190,7 @@ structure.PLI.5a <- glm(PLI.f ~ years_since  + BARC.x  +PLI_percent,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.5a)
 
-structure.PLI.5b <- glm(PLI.f ~ years_since  + BARC.x  +PLI_percent +BARC.x*PLI_percent,
+structure.PLI.5b <- glm(PLI.f ~ years_since  + BARC.x  +PLI_percent +years_since*PLI_percent,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.5b)
 lrtest(structure.PLI.5a, structure.PLI.5b)

@@ -61,12 +61,12 @@ FDI.1 <- glm(FDI.f ~ years_since + FDI_percent,
 summary(FDI.1)
 lrtest(FDI.a, FDI.1)
 
-FDI.2 <- glm(FDI.f ~ years_since + FDI_percent + BEC_Zone,
+FDI.2 <- glm(FDI.f ~ years_since + FDI_percent + BEC_Subzone,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(FDI.2)
 lrtest(FDI.2, FDI.1)
 
-FDI.3 <- glm(FDI.f ~ years_since + FDI_percent + BEC_Zone + MCMT,
+FDI.3 <- glm(FDI.f ~ years_since + FDI_percent + BEC_Subzone + MCMT,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(FDI.3)
 lrtest(FDI.2, FDI.3)
@@ -90,5 +90,15 @@ FDI.7 <- glm(FDI.f ~ years_since + FDI_percent + MCMT + PARENT_SOILS + Distance 
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(FDI.7)
 lrtest(FDI.6, FDI.7)
+```
+
+```{r}
+ggplot(bin_dis_GIS1, aes(x=BEC_Subzone, y=MCMT)) +
+  geom_boxplot() +
+  geom_jitter(width =.25, height=.15) +
+  theme_classic()
+
+table(bin_dis_GIS1$BEC_Subzone, bin_dis_GIS1$BEC_Variant)
+
 ```
 

@@ -138,7 +138,7 @@ climate.PLI.2d <- glm(PLI.f ~ years_since + NFFD_sp + cool.wet.anomalies.MCMT ,
 summary(climate.PLI.2d)
 lrtest(climate.PLI.2c, climate.PLI.2d)
 
-climate.PLI.2e <- glm(PLI.f ~ years_since + NFFD_sp + cool.wet.anomalies.MCMT + cool.wet.anomalies.MCMT*years_since,
+climate.PLI.2e <- glm(PLI.f ~ years_since + NFFD_sp + cool.wet.anomalies.MCMT + NFFD_sp*years_since,
                         family = binomial(link="logit"), data=climate)
 summary(climate.PLI.2e)
 lrtest(climate.PLI.2e, climate.PLI.2d)
