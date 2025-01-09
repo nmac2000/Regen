@@ -442,7 +442,7 @@ bin_dis_GIS1 <- left_join(bin_dis_GIS1, patchsize, by="SampleSite_ID")
 bin_dis_GIS1 <- bin_dis_GIS1 %>% 
     distinct(SampleSite_ID, .keep_all = T) %>% 
   filter(!SampleSite_ID %in% not_measured$SampleSite_ID) %>% 
-  filter(!SampleSite_ID %in% c(456, 496, 1108, 1422, 1514, 1643)) %>% 
+  filter(!SampleSite_ID %in% c(456, 496, 1108, 1422, 1514, 1643, 1511)) %>% 
   filter(!is.na(UNIQUE_ID))
 
 

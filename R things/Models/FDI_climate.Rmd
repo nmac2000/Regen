@@ -138,7 +138,7 @@ summary(climate.FDI.2d)
 lrtest(climate.FDI.2d, climate.FDI.2a)
 
 
-climate.FDI.2e <- glm(FDI.f ~ years_since + MCMT + PAS + CMI_sm + PAS*MCMT,
+climate.FDI.2e <- glm(FDI.f ~ years_since + MCMT + PAS + CMI_sm + years_since*MCMT,
                         family = binomial(link="logit"), data=climate)
 summary(climate.FDI.2e)
 lrtest(climate.FDI.2f, climate.FDI.2e)

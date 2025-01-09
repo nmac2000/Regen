@@ -102,23 +102,12 @@ PLI.6 <- glm(PLI.f ~ years_since + PLI_percent + BEC_Subzone + PARENT_SOILS + BA
 summary(PLI.6)
 lrtest(PLI.6, PLI.5)
 
-PLI.7 <- glm(PLI.f ~ years_since + PLI_percent + BEC_Subzone + PARENT_SOILS + BARC.x + Slope,
+PLI.7 <- glm(PLI.f ~ years_since + PLI_percent + BEC_Subzone + PARENT_SOILS + BARC.x + PARENT_SOILS*BARC.x,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(PLI.7)
 lrtest(PLI.6, PLI.7)
 ```
-# To Slope or not to slope
-```{r}
-PLI.6a <- glm(PLI.f ~ years_since + PLI_percent + NFFD_sp + PARENT_SOILS + Slope,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(PLI.6a)
-lrtest(PLI.6a, PLI.5)
 
-PLI.7a <- glm(PLI.f ~ years_since + PLI_percent + NFFD_sp + PARENT_SOILS + Slope + BARC.x,
-    family=binomial(link = "logit"), data=bin_dis_GIS1)
-summary(PLI.7a)
-lrtest(PLI.6a, PLI.7a)
-```
 
 
 
