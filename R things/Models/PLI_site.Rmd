@@ -205,6 +205,8 @@ summary(site.PLI.2j)
 lrtest(site.PLI.2i, site.PLI.2j)
 
 mean(bin_dis_GIS1$Slope)
+
+table(bin_dis_GIS1$FIRE_NUMBER_1)
 ```
 
 # okay so maybe now I look at interactions for slope/aspect/etc.?

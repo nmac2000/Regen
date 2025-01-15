@@ -42,3 +42,12 @@ bin_dis_GIS1$yhat.FDI <- fitted(FDI.6)
 pROC::auc(bin_dis_GIS1$PLI.f, bin_dis_GIS1$yhat.PLI)
 pROC::auc(bin_dis_GIS1$FDI.f, bin_dis_GIS1$yhat.FDI)
 
+#Hanceville
+hanceville$yhat.PLI <- fitted(Hanceville.1e)
+hanceville$yhat.PLI.0 <- fitted(Hanceville.1f)
+bin_dis_GIS1$yhat.FDI <- fitted(FDI.6)
+
+pROC::auc(hanceville$PLI.f, hanceville$yhat.PLI)
+pROC::auc(hanceville$PLI.f, hanceville$yhat.PLI.0)
+pROC::auc(bin_dis_GIS1$FDI.f, bin_dis_GIS1$yhat.FDI)
+
