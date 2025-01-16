@@ -20,50 +20,58 @@ bin_dis_GIS1 %>%
 
 library(ggeffects)
 
-ggeffects::ggpredict(structure.FDI.3j, terms=c("FDI_percent")) %>%  
-  ggplot(mapping = aes (x=x, y=predicted, color= group)) +
-  geom_smooth() +
-  geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
-  labs(title = "Predicted Probability of FDI Occurrence",
-       x = "", y = "Predicted Probability") +
-  theme_classic()
-
-ggeffects::ggpredict(structure.PLI.5a, terms=c("BARC.x")) %>%  
-  ggplot(mapping = aes (x=x, y=predicted)) +
-  geom_smooth() +
-  geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
-  labs(title = "Predicted Probability of PLI Occurrence",
-       x = "", y = "Predicted Probability") +
-  theme_classic()
 
 
-predict_response(FDI.7, terms=c("Distance", "BARC.x")) %>% 
-     mutate(group = ordered(as_factor(group))) %>% 
-     ggplot(mapping = aes (x=x, y=predicted, color= group)) +
-     geom_smooth() +
-    labs(title = "Predicted Probability of FDI Occurrence",
-                   x = "Distance to Live Tree", y = "Predicted Probability") +
-     theme_classic
-
-predict_response(structure.FDI.3j, c("Distance")) %>% 
-  ggplot(mapping = aes (x=x, y=predicted, color= group, fill = group)) +
-  geom_smooth(se = F) +
-  geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
-  labs(title = "Predicted Probability of FDI Occurrence",
-       x = "Distance to Live Tree", y = "Predicted Probability") +
-  theme_classic()
 
 
-structure: 
-  species % (FDI and PLI)
-plot(predict_response(structure.PLI.5a, "PLI_percent"))
-predict_response(structure.FDI.3j, c("FDI_percent"))
-  distance (FDI)
-predict_response(structure.FDI.3j, c("Distance"))
+
+#structure: 
+#  species % (FDI and PLI)
+
+ggpredict(structure.PLI.5a, terms = c("PLI_percent", "BARC.x")) %>%
+  plot()
+
+ggpredict(structure.FDI.3j, terms = c("FDI_percent", "BARC.x")) %>% 
+  plot()
+
+
+
+#distance (FDI)
+ggpredict(structure.FDI.3j, "Distance") %>% 
+  plot()
   
-site:
-  BEC subzone (FDI and PLI)
-predict_response(site.PLI.2j, "BEC_Subzone")
-predict_response(site.FDI.3k, "BEC_Subzone")  
+#site:
+#  BEC subzone (FDI and PLI)
+predict_response(site.PLI.2i, "BEC_Subzone") %>% 
+  plot()
+predict_response(site.FDI.3k, "BEC_Subzone") %>% 
+  plot()
 
+#FDI
+ggpredict(FDI.7, c("MCMT")) %>% 
+  plot()
 
+ggpredict(FDI.7, c("years_since")) %>% 
+  plot()
+
+ggpredict(FDI.7, c("FDI_percent")) %>% 
+  plot()
+
+ggpredict(FDI.7, c("Distance")) %>% 
+  plot()
+
+ggpredict(FDI.7, c("PARENT_SOILS")) %>% 
+  plot()
+
+#PLI
+ggpredict(PLI.6, "years_since") %>% 
+  plot()
+
+ggpredict(PLI.6, "BARC.x") %>% 
+  plot()
+
+ggpredict(PLI.6, "BEC_Subzone") %>% 
+  plot()
+
+ggpredict(PLI.6, "PLI_percent") %>% 
+  plot()

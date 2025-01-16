@@ -186,7 +186,7 @@ summary(structure.PLI.2a)
 
 ```
 ```{r}
-structure.PLI.5a <- glm(PLI.f ~ years_since  + BARC.x  +PLI_percent,
+structure.PLI.5a <- glm(PLI.f ~ years_since  + as.factor(BARC.x)  +PLI_percent,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(structure.PLI.5a)
 structure.PLI.4a <- glm(PLI.f ~ years_since    +PLI_percent,

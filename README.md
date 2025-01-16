@@ -6,6 +6,7 @@
 library(tidyverse)
 library(lmtest)
 library(stats)
+library(ggeffects)
 
 # Dataframe
 bin_dis_GIS1 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/bin_dis_GIS1.csv")
