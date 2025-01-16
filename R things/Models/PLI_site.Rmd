@@ -199,7 +199,7 @@ site.PLI.2i <- glm(PLI.f ~ years_since + BEC_Subzone + PARENT_SOILS   + TWI ,
 summary(site.PLI.2i)
 lrtest(site.PLI.2i, site.PLI.2c)
 
-site.PLI.2j <- glm(PLI.f ~ years_since + BEC_Subzone + PARENT_SOILS  + Slope ,
+site.PLI.2j <- glm(PLI.f ~ years_since + BEC_Subzone  + Slope ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2j)
 lrtest(site.PLI.2i, site.PLI.2j)

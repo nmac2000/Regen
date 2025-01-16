@@ -18,12 +18,16 @@ filter(bin_dis_GIS1, years_since >= 10) %>%
 
 ggplot(bin_dis_GIS_bec,aes(x=BEC_Subzone, y=MCMT)) +
   geom_boxplot(outlier.color=NA)+
-  geom_jitter(width =.25, aes(shape=as.factor(FDI_count_bin), colour=as.factor(FDI_count_bin)), size=2.2) +
-  scale_color_manual(values=c("#999999", "#E69F00")) +
+  geom_jitter(width =.25, aes( colour=as.factor(FDI_count_bin)),shape=19) +
+  scale_color_manual(values=c("#ED5151","#149ECE")) +
   scale_y_continuous(labels = ~ paste0(.x, "°"))+
-  labs(x= "BEC Subzone", y="MCMT", shape = "FDI Occurrence", 
+  labs(x= "BEC Subzone", y="MCMT", 
        colour = "FDI Occurrence", title = "BEC Subzone vs MCMT") +
-  theme_classic()
+  theme_classic() +
+  theme(axis.text = element_text(size = 14), 
+    axis.title = element_text(size = 16),
+    title = element_text(size=16),
+    legend.text = element_text(size=16))
 
 ggplot(bin_dis_GIS1, aes(x=as.factor(PLI_count_bin), y=PLI_percent)) +
          geom_boxplot(outlier.color=NA)+
