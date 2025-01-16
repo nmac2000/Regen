@@ -4,7 +4,7 @@ ggplot(bin_dis_GIS_bec, aes(x=Longitude, y=Latitude)) +
   geom_point(aes(shape = as.factor(outlier), colour = BEC_Subzone), size = 3) +
   theme_classic()
 
-table(bin_dis_GIS1$BEC_Subzone, bin_dis_GIS1$BEC_Zone)
+table(bin_dis_GIS1$BEC_Subzone, bin_dis_GIS1$PLI.f)
 
 filter(bin_dis_GIS1, years_since >= 10) %>% 
   filter(FDI_count_bin > 0) %>% 
@@ -16,9 +16,13 @@ filter(bin_dis_GIS1, years_since >= 10) %>%
   summarize(n = n())
 
 
-ggplot(bin_dis_GIS_bec,aes(x=PARENT_SOILS, y=MCMT)) +
+ggplot(bin_dis_GIS_bec,aes(x=BEC_Subzone, y=MCMT)) +
   geom_boxplot(outlier.color=NA)+
-  geom_jitter(width =.25, aes(shape=as.factor(PLI_count_bin), colour=as.factor(PLI_count_bin))) +
+  geom_jitter(width =.25, aes(shape=as.factor(FDI_count_bin), colour=as.factor(FDI_count_bin)), size=2.2) +
+  scale_color_manual(values=c("#999999", "#E69F00")) +
+  scale_y_continuous(labels = ~ paste0(.x, "°"))+
+  labs(x= "BEC Subzone", y="MCMT", shape = "FDI Occurrence", 
+       colour = "FDI Occurrence", title = "BEC Subzone vs MCMT") +
   theme_classic()
 
 ggplot(bin_dis_GIS1, aes(x=as.factor(PLI_count_bin), y=PLI_percent)) +
@@ -30,4 +34,8 @@ bin_dis_GIS_bec <- bin_dis_GIS1 %>%
   mutate(outlier = ifelse(BEC_Zone == "IDF" & MCMT <= -7, 1, 0)) %>% 
   mutate(outlier = ifelse(BEC_Zone == "SBPS" & MCMT >= -7, 2, outlier))
 
-write.csv(bin_dis_GIS_bec, "C:/Users/nmac2000/Documents/regen project/for_arc.csv")
+ggpredict(FDI.8, c("MCMT")) %>% 
+  plot()
+
+ggpredict(FDI.8, c( "BEC_Subzone")) %>% 
+  plot()

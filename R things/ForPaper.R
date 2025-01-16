@@ -54,15 +54,15 @@ predict_response(structure.FDI.3j, c("Distance")) %>%
   theme_classic()
 
 
-structure: 
-  species % (FDI and PLI)
-plot(predict_response(structure.PLI.5a, "PLI_percent"))
+#structure: 
+#  species % (FDI and PLI)
+predict_response(structure.PLI.5a, "PLI_percent")
 predict_response(structure.FDI.3j, c("FDI_percent"))
-  distance (FDI)
+#  distance (FDI)
 predict_response(structure.FDI.3j, c("Distance"))
   
-site:
-  BEC subzone (FDI and PLI)
+#site:
+#  BEC subzone (FDI and PLI)
 predict_response(site.PLI.2j, "BEC_Subzone")
 predict_response(site.FDI.3k, "BEC_Subzone")  
 

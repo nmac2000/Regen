@@ -5,7 +5,7 @@
 hanceville <- bin_dis_GIS1 %>% 
   filter(FIRE_NUMBER_1 == "C50647") 
 
-table(hanceville$COFRAG_1, hanceville$BEC_Subzone)
+table(hanceville$PARENT_SOILS, hanceville$BEC_Subzone)
 
 
 Hanceville.null <- glm(PLI.f ~ 1 ,
@@ -105,7 +105,7 @@ Hanceville.1b <- glm(PLI.f ~ years_since + BEC_Subzone + Elevation,
 summary(Hanceville.1b)
 lrtest(Hanceville.1b, Hanceville.1a)
 
-Hanceville.1c <- glm(PLI.f ~ years_since + BEC_Subzone + SOILNAME_1,
+Hanceville.1c <- glm(PLI.f ~ years_since + BEC_Subzone + PARENT_SOILS,
                      family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.1c)
 lrtest(Hanceville.1c, Hanceville.1a)
@@ -125,7 +125,7 @@ Hanceville.1f <- glm(PLI.f ~ years_since + BEC_Subzone +  Slope,
 summary(Hanceville.1f)
 lrtest(Hanceville.1e, Hanceville.1f)
 
-Hanceville.1g <- glm(PLI.f ~ years_since + BEC_Subzone + TEXTURE_1 + Slope + PARENT_SOILS,
+Hanceville.1g <- glm(PLI.f ~ years_since + BEC_Subzone + Slope + PARENT_SOILS,
                      family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.1g)
 lrtest(Hanceville.1g, Hanceville.1e)
@@ -242,5 +242,5 @@ summary(Hanceville.F.p)
 lrtest(Hanceville.F.p, Hanceville.F.null)
 
 ggplot(hanceville, aes(x=Latitude, y=Longitude)) +
-  geom_point(aes(colour = BEC_Subzone, shape = TEXTURE_1, size = as.factor(FDI.f))) +
+  geom_point(aes(colour = BEC_Subzone, shape = TEXTURE_1, size = as.factor(PLI.f))) +
   theme_classic()
