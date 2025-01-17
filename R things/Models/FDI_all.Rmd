@@ -76,7 +76,7 @@ FDI.4 <- glm(FDI.f ~ years_since + FDI_percent + MCMT,
 summary(FDI.4)
 lrtest(FDI.4, FDI.3)
 
-FDI.5 <- glm(FDI.f ~ years_since + FDI_percent + MCMT + PARENT_SOILS,
+FDI.5 <- glm(FDI.f ~ years_since + FDI_percent + MCMT + Distance,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(FDI.5)
 lrtest(FDI.4, FDI.5)
@@ -91,6 +91,10 @@ FDI.7 <- glm(FDI.f ~ years_since + FDI_percent + MCMT + PARENT_SOILS + Distance 
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(FDI.7)
 lrtest(FDI.6, FDI.7)
+
+FDI.8 <- glm(FDI.f ~ years_since + FDI_percent + MCMT + PARENT_SOILS + Distance + BEC_Subzone+ 
+               years_since*MCMT,
+    family=binomial(link = "logit"), data=bin_dis_GIS1)
 ```
 
 

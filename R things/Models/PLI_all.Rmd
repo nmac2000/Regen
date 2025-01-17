@@ -92,12 +92,12 @@ PLI.4 <- glm(PLI.f ~ years_since + PLI_percent + NFFD_sp,
 summary(PLI.4)
 lrtest(PLI.4, PLI.3)
 
-PLI.5 <- glm(PLI.f ~ years_since + PLI_percent + BEC_Subzone+ PARENT_SOILS ,
+PLI.5 <- glm(PLI.f ~ years_since + PLI_percent + BARC.x ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(PLI.5)
 lrtest(PLI.2, PLI.5)
 
-PLI.6 <- glm(PLI.f ~ years_since + PLI_percent + BEC_Subzone + PARENT_SOILS + BARC.x ,
+PLI.6 <- glm(PLI.f ~ years_since + PLI_percent + BEC_Subzone + BARC.x ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(PLI.6)
 lrtest(PLI.6, PLI.5)

@@ -24,6 +24,7 @@ library(ggeffects)
 
 
 
+<<<<<<< HEAD
 
 #structure: 
 #  species % (FDI and PLI)
@@ -46,6 +47,19 @@ predict_response(site.PLI.2i, "BEC_Subzone") %>%
   plot()
 predict_response(site.FDI.3k, "BEC_Subzone") %>% 
   plot()
+=======
+#structure: 
+#  species % (FDI and PLI)
+predict_response(structure.PLI.5a, "PLI_percent")
+predict_response(structure.FDI.3j, c("FDI_percent"))
+#  distance (FDI)
+predict_response(structure.FDI.3j, c("Distance"))
+  
+#site:
+#  BEC subzone (FDI and PLI)
+predict_response(site.PLI.2j, "BEC_Subzone")
+predict_response(site.FDI.3k, "BEC_Subzone")  
+>>>>>>> e720a7c5c7b1b7cfdeb53d1512c475d990d2d9a8
 
 #FDI
 ggpredict(FDI.7, c("MCMT")) %>% 
