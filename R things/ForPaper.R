@@ -125,3 +125,34 @@ PLI_percent <- ggpredict(PLI.6, "PLI_percent") %>%
   theme_classic()
 
 grid.arrange(PLI_percent, PLI_BEC, PLI_BARC)
+
+#maybe more results?
+
+ggpredict(structure.PLI.5a, "BARC.x") %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_point() +
+  geom_linerange(aes(ymin=conf.low, ymax = conf.high)) +
+  coord_cartesian(ylim = c(0, 1)) +
+  scale_x_discrete(labels=c("Unburned", "Low", "Medium", "High")) +
+  labs(x = "Fire Severity", y = "Predicted Probability") +
+  theme_classic()
+
+ggpredict(structure.FDI.3j, "BARC.x") %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_point() +
+  geom_linerange(aes(ymin=conf.low, ymax = conf.high)) +
+  coord_cartesian(ylim = c(0, 1)) +
+  scale_x_discrete(labels=c("Unburned", "Low", "Medium", "High")) +
+  labs(x = "Fire Severity", y = "Predicted Probability") +
+  theme_classic()
+
+ggplot(bin_dis_GIS1, aes(x=as.factor(FIRE_NUMBER_1),y=FDI_percent)) +
+  geom_boxplot(outlier.color=NA)+
+  geom_jitter(width =.25, aes( colour=as.factor(FDI_count_bin), shape = as.factor(BARC.x))) +
+  scale_color_manual(values=c("#ED5151","#149ECE")) +
+#  scale_shape_manual(values=c(21,24,22,4)) +
+  scale_y_continuous(labels = ~ paste0(.x, "%"))+
+  labs(x= "Fire Severity", y="FDI Percent", 
+       colour = "FDI Occurrence") +
+  theme_classic() 
+
