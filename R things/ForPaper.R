@@ -21,11 +21,6 @@ bin_dis_GIS1 %>%
 library(ggeffects)
 
 
-
-
-
-<<<<<<< HEAD
-
 #structure: 
 #  species % (FDI and PLI)
 
@@ -47,10 +42,11 @@ predict_response(site.PLI.2i, "BEC_Subzone") %>%
   plot()
 predict_response(site.FDI.3k, "BEC_Subzone") %>% 
   plot()
-=======
+
 #structure: 
 #  species % (FDI and PLI)
-predict_response(structure.PLI.5a, "PLI_percent")
+ggpredict(structure.PLI.5a, "PLI_percent") %>% 
+  plot()
 predict_response(structure.FDI.3j, c("FDI_percent"))
 #  distance (FDI)
 predict_response(structure.FDI.3j, c("Distance"))
@@ -59,33 +55,73 @@ predict_response(structure.FDI.3j, c("Distance"))
 #  BEC subzone (FDI and PLI)
 predict_response(site.PLI.2j, "BEC_Subzone")
 predict_response(site.FDI.3k, "BEC_Subzone")  
->>>>>>> e720a7c5c7b1b7cfdeb53d1512c475d990d2d9a8
+
 
 #FDI
-ggpredict(FDI.7, c("MCMT")) %>% 
-  plot()
+FDI_MCMT <- ggpredict(FDI.7, c("MCMT")) %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_smooth(se=F) +
+  geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  scale_x_continuous(labels = ~ paste0(.x, "°"))+
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(title = "Predicted Probability of FDI Occurrence",
+       x = "MCMT", y = "Predicted Probability") +
+  theme_classic()
 
-ggpredict(FDI.7, c("years_since")) %>% 
-  plot()
 
-ggpredict(FDI.7, c("FDI_percent")) %>% 
-  plot()
+FDI_percent <- ggpredict(FDI.7, c("FDI_percent")) %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_smooth(se=F) +
+  geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  scale_x_continuous(labels = ~ paste0(.x, "%"))+
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(x = "Pre-fire Douglas-fir Overstory Cover", y = "") +
+  theme_classic()
 
-ggpredict(FDI.7, c("Distance")) %>% 
-  plot()
+FDI_distance <- ggpredict(FDI.7, c("Distance")) %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_smooth(se=F) +
+  geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(x = "Distance to Live Tree (m)", y = "") +
+  theme_classic()
 
-ggpredict(FDI.7, c("PARENT_SOILS")) %>% 
-  plot()
+FDI_soil <- ggpredict(FDI.7, c("PARENT_SOILS")) %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_point() +
+  geom_linerange(aes(ymin=conf.low, ymax = conf.high)) +
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(x = "Parent Soil", y = "Predicted Probability") +
+  theme_classic()
+
+grid.arrange(FDI_MCMT, FDI_percent, FDI_soil, FDI_distance)
 
 #PLI
-ggpredict(PLI.6, "years_since") %>% 
-  plot()
+PLI_BARC <- ggpredict(PLI.6, "BARC.x") %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_point() +
+  geom_linerange(aes(ymin=conf.low, ymax = conf.high)) +
+  coord_cartesian(ylim = c(0, 1)) +
+  scale_x_discrete(labels=c("Unburned", "Low", "Medium", "High")) +
+  labs(x = "Fire Severity", y = "Predicted Probability") +
+  theme_classic()
 
-ggpredict(PLI.6, "BARC.x") %>% 
-  plot()
+PLI_BEC <- ggpredict(PLI.6, "BEC_Subzone") %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_point() +
+  geom_linerange(aes(ymin=conf.low, ymax = conf.high)) +
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(x = "BEC Subzone", y="Predicted Probability") +
+  theme_classic()
 
-ggpredict(PLI.6, "BEC_Subzone") %>% 
-  plot()
+PLI_percent <- ggpredict(PLI.6, "PLI_percent") %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_smooth(se=F) +
+  geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  scale_x_continuous(labels = ~ paste0(.x, "%"))+
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(title = "Predicted Probability of PLI Occurrence",
+       x = "Pre-fire Lodgepole Pine Overstory Cover", y = "Predicted Probability") +
+  theme_classic()
 
-ggpredict(PLI.6, "PLI_percent") %>% 
-  plot()
+grid.arrange(PLI_percent, PLI_BEC, PLI_BARC)

@@ -1,0 +1,67 @@
+
+```{r}
+library(tidyverse)
+library(DBI) # to work with .db files (input and output format for FVS)
+rm(list=ls(all=TRUE)) # clear environment 
+```
+
+```{r}
+source("fvs_fnx.R")
+source("csv_fnx.R")
+```
+
+```{r}
+tree <- read_csv(here::here("output_data/fvs_trees.csv"),
+                 col_types = cols(Stand_ID = col_character(), #fire number maybe
+                                  StandPlot_ID = col_character(), #fire number + plot
+                                  Plot_ID = col_double(), #plot id
+                                  Tree_ID = col_double(), #quadrant and number
+                                  Tree_Count = col_double(),
+                                  History = col_double(), #tree history (why it died?)
+                                  Species = col_character(), #species
+                                  DBH = col_double(), #DBH
+                                  Ht = col_double(), #height
+                                  CrRatio = col_double(), #ratio of live crown length to total height, which was not measured
+                                  TopoCode = col_double())) #96=broken/missing top
+
+plot <- read_csv(here::here("output_data/fvs_plot.csv"),
+                 col_types = cols(Stand_ID = col_character(), #fire number
+                                  Plot_ID = col_double(), #fire number + plot number
+                                  StandPlot_ID = col_character(), #plot id
+                                  Variant = col_character(), #i think BC
+                                  Inv_Year = col_integer(),
+                                  Ecoregion = col_character(), #IDF and SBPS
+                                  Aspect = col_double(),
+                                  Slope = col_double(), 
+                                  Elevation = col_double(), 
+                                  Basal_Area_Factor = col_double(), 
+                                  Inv_Plot_Size = col_double(), 
+                                  Brk_DBH = col_character(), 
+                                  Num_Plots = col_integer()))
+
+other_input <- read_csv(here::here("output_data/fvs_extra.csv"),
+                        col_types = cols(StandPlot_ID = col_character(),
+                                         FM1 = col_character(),
+                                         FM2 = col_character(),
+                                         temp = col_double(),
+                                         wind = col_double()))
+```
+
+```{r}
+wd_path <- "C:/Users/kearu/OneDrive - The University Of British Columbia/Desktop/msc_code_repos_post/msc_fvs_outside_git"
+fvs_db_files <- runFVS(tree, plot, other_input, wd_path)
+fvs_db_files
+```
+
+```{r}
+createCSV(fvs_db_files, wd_path)
+```
+
+Not necessary to run, but can use to explore FVS db file outputs 
+```{r}
+#run_db <- dbConnect(RSQLite::SQLite(), "C:/Users/kearu/OneDrive - The University Of British Columbia/Desktop/msc_code_repos_post/msc_fvs_outside_git/pre_hpcf_TU3_7-output.db")
+#dbListTables(run_db)
+#dbReadTable(run_db, "FVS_BurnReport_Metric")
+
+#dbDisconnect(run_db)
+```

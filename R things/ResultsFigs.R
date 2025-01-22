@@ -6,17 +6,8 @@ ggplot(bin_dis_GIS_bec, aes(x=Longitude, y=Latitude)) +
 
 table(bin_dis_GIS1$BEC_Subzone, bin_dis_GIS1$PLI.f)
 
-filter(bin_dis_GIS1, years_since >= 10) %>% 
-  filter(FDI_count_bin > 0) %>% 
-  group_by(SampleSite_ID) %>% 
-  mutate(PLI_tall = PLI_x30_bin + PLI_x130_bin) %>% 
-  mutate(FDI_tall = FDI_x30_bin + FDI_x130_bin) %>%
-  ungroup() %>% 
-  group_by(FDI_tall) %>% 
-  summarize(n = n())
 
-
-ggplot(bin_dis_GIS_bec,aes(x=BEC_Subzone, y=MCMT)) +
+ggplot(bin_dis_GIS1,aes(x=BEC_Subzone, y=MCMT)) +
   geom_boxplot(outlier.color=NA)+
   geom_jitter(width =.25, aes( colour=as.factor(FDI_count_bin)),shape=19) +
   scale_color_manual(values=c("#ED5151","#149ECE")) +
@@ -29,17 +20,29 @@ ggplot(bin_dis_GIS_bec,aes(x=BEC_Subzone, y=MCMT)) +
     title = element_text(size=16),
     legend.text = element_text(size=16))
 
-ggplot(bin_dis_GIS1, aes(x=as.factor(PLI_count_bin), y=PLI_percent)) +
-         geom_boxplot(outlier.color=NA)+
-         geom_jitter(width =.25) +
-         theme_classic() 
+bin_dis_GIS1 %>% 
+  mutate(FDI = ifelse(FDI_count>6,1,0)) %>% 
+ggplot(aes(x=yhat.FDI, y=FDI_count)) +
+  geom_point(aes(color=FDI))+
+#  ylim(0,1500) +
+#  xlim(.5,1) +
+  theme_classic() 
 
-bin_dis_GIS_bec <- bin_dis_GIS1 %>% 
-  mutate(outlier = ifelse(BEC_Zone == "IDF" & MCMT <= -7, 1, 0)) %>% 
-  mutate(outlier = ifelse(BEC_Zone == "SBPS" & MCMT >= -7, 2, outlier))
 
-ggpredict(FDI.8, c("MCMT")) %>% 
-  plot()
 
-ggpredict(FDI.8, c( "BEC_Subzone")) %>% 
-  plot()
+bin_dis_GIS1 %>% 
+  mutate(FDI = ifelse(FDI_count>6,1,0)) %>%
+  filter(yhat.FDI>.5) %>% 
+  group_by(FDI) %>% 
+  summarize(count=n())
+  
+
+ggplot(bin_dis_GIS1, aes(x=yhat.PLI, y=yhat.FDI)) +
+  geom_point(aes(color=as.factor(FDI.f))) +
+  theme_minimal()
+
+ggplot(bin_dis_GIS1, aes(x=yhat.PLI, y=yhat.FDI)) +
+  geom_point(aes(color=as.factor(PLI.f))) +
+  theme_minimal()
+
+
