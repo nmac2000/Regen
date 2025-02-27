@@ -9,18 +9,32 @@ bin_dis_GIS1 %>%
 
 
 bin_dis_GIS1 %>% 
-  group_by(BEC_Zone, PLI_count_bin) %>% 
-  filter(PLI_percent > 0) %>% 
+  group_by(BEC_Subzone, PLI_count_bin) %>% 
+#  filter(PLI_percent > 0) %>% 
   summarize(n = n())
 
 bin_dis_GIS1 %>% 
-  filter(PLI_count >0) %>% 
-  group_by() %>% 
-  summarize(mean = median(PLI_tph))
+  group_by(BEC_Subzone) %>% 
+  summarize(mean = mean(FDI_tph))
+
+bin_dis_GIS1 %>% 
+  filter(total_count==0) %>% 
+  select(SampleSite_ID)
+
+overstory %>% 
+  filter(Card %in% c(369,425,758,766,1109,1362,1479,1816,1835,2113,2158,2210)) %>%  
+  print(n=25)
+
+site %>% 
+  filter(Card %in% c(369,425,758,766,1109,1362,1479,1816,1835,2113,2158,2210)) 
+
+#2113, 1109, 1479, 1816, 2158, 2210, 758, 1362, 369, 425, 1835, 766
+
 
 library(ggeffects)
 library(tidyverse)
 library(gridExtra)
+library(cowplot)
 
 #structure: 
 #  species % (FDI and PLI)
@@ -150,6 +164,73 @@ grid.arrange(PLI_percent, PLI_BEC, PLI_BARC)
 
 plot_grid(FDI_distance, FDI_percent, PLI_percent, labels=c("A", "B", "C"), ncol = 2, nrow = 2)
 plot_grid(FDI_BEC, FDI_soil, PLI_BEC,PLI_slope, labels=c("A", "B", "C", "D"), ncol = 2, nrow = 2)
+
+# Climate
+# FDI
+predict_response(climate.FDI.2f, "MCMT")
+predict_response(climate.FDI.2f, "PAS")  
+predict_response(climate.FDI.2f, "CMI_sm") 
+
+str(bin_dis_GIS1$PAS)
+
+bin_dis_GIS1 %>% 
+  filter(FDI_count_bin > 0) %>%
+  summarize(
+    rangePAS = list(range(PAS)),
+    rangeMCMT = list(range(MCMT)),
+    rangeCMI = list(range(CMI_sm))
+  )
+
+FDI_MCMT <- ggpredict(climate.FDI.2f, c("MCMT")) %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_smooth(se=F) +
+  geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  scale_x_continuous(labels = ~ paste0(.x, "°"))+
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(title = "FDI",x = "Mean Coldest Month Temp", y = "") +
+  theme_classic()
+
+FDI_PAS <- ggpredict(climate.FDI.2f, c("PAS")) %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_smooth(se=F) +
+  geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(title = "FDI",x = "Precipitation as Snow", y = "Predicted Probability of FDI Occurrence") +
+  theme_classic()
+
+FDI_CMI <- ggpredict(climate.FDI.2f, c("CMI_sm")) %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_smooth(se=F, method="loess") +
+  geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(title = "FDI",x = "Summer Climate Moisture Index", y = "") +
+  theme_classic()
+
+# PLI
+predict_response(climate.PLI.2d, "NFFD_sp")
+predict_response(climate.PLI.2d, "cool.wet.anomalies.MCMT")  
+ 
+
+PLI_MCMT <- ggpredict(climate.PLI.2d, c("cool.wet.anomalies.MCMT [all]")) %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_smooth(se=F) +
+  geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(title = "PLI",x = "Number of Anomalous Years", y = "Predicted Probability of PLI Occurrence") +
+  theme_classic()
+
+PLI_NFFD <- ggpredict(climate.PLI.2d, c("NFFD_sp [all]")) %>% 
+  ggplot(mapping = aes (x=x, y=predicted)) +
+  geom_smooth(se=F) +
+  geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(title = "PLI",x = "# of Frost Free Days (March-May", y = "") +
+  theme_classic()
+
+plot_grid(FDI_MCMT,  PLI_NFFD, FDI_CMI, PLI_MCMT, FDI_PAS, labels=c("A", "B", "C", "D", "E"), ncol = 2, nrow = 3)
+plot_grid(PLI_MCMT, PLI_NFFD, labels=c("A", "B", "C", "D"), ncol = 2, nrow = 1)
+
+
 
 #maybe more results?
 
