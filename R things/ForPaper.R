@@ -45,6 +45,12 @@ ggpredict(structure.PLI.5a, terms = c("PLI_percent", "BARC.x")) %>%
 ggpredict(structure.FDI.3j, terms = c("FDI_percent", "BARC.x")) %>% 
   plot()
 
+bin_dis_GIS1 %>% 
+  filter(PLI_count_bin > 0) %>%
+  summarize(
+    rangeDistance = list(range(Distance)),
+    rangeFDI = list(range(PLI_percent)),
+  )
 
 
 #distance (FDI)
@@ -102,7 +108,7 @@ FDI_distance <- ggpredict(FDI.7, c("Distance")) %>%
   labs(title = "FDI",x = "Distance to Live Tree (m)", y = "Predicted Probability of FDI Occurrence") +
   theme_classic()
 
-FDI_soil <- ggpredict(FDI.7, c("PARENT_SOILS")) %>% 
+FDI_soil <- ggpredict(site.FDI.3k, c("PARENT_SOILS")) %>% 
   ggplot(mapping = aes (x=x, y=predicted)) +
   geom_linerange(aes(ymin=conf.low, ymax = conf.high), color="grey", size=1) +
   geom_point(color="blue") +
@@ -185,6 +191,7 @@ FDI_MCMT <- ggpredict(climate.FDI.2f, c("MCMT")) %>%
   ggplot(mapping = aes (x=x, y=predicted)) +
   geom_smooth(se=F) +
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  geom_vline(xintercept = c(-5.9, -8.6), color = "red", linetype = "dashed") +
   scale_x_continuous(labels = ~ paste0(.x, "°"))+
   coord_cartesian(ylim = c(0, 1)) +
   labs(title = "FDI",x = "Mean Coldest Month Temp", y = "") +
@@ -194,6 +201,7 @@ FDI_PAS <- ggpredict(climate.FDI.2f, c("PAS")) %>%
   ggplot(mapping = aes (x=x, y=predicted)) +
   geom_smooth(se=F) +
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  geom_vline(xintercept = c(75, 169), color = "red", linetype = "dashed") +
   coord_cartesian(ylim = c(0, 1)) +
   labs(title = "FDI",x = "Precipitation as Snow", y = "Predicted Probability of FDI Occurrence") +
   theme_classic()
@@ -202,6 +210,7 @@ FDI_CMI <- ggpredict(climate.FDI.2f, c("CMI_sm")) %>%
   ggplot(mapping = aes (x=x, y=predicted)) +
   geom_smooth(se=F, method="loess") +
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  geom_vline(xintercept = c(-32.18, -17.72), color = "red", linetype = "dashed") +
   coord_cartesian(ylim = c(0, 1)) +
   labs(title = "FDI",x = "Summer Climate Moisture Index", y = "") +
   theme_classic()
@@ -209,12 +218,20 @@ FDI_CMI <- ggpredict(climate.FDI.2f, c("CMI_sm")) %>%
 # PLI
 predict_response(climate.PLI.2d, "NFFD_sp")
 predict_response(climate.PLI.2d, "cool.wet.anomalies.MCMT")  
+
+bin_dis_GIS1 %>% 
+  filter(PLI_count_bin > 0) %>%
+  summarize(
+    rangeNFFD = list(range(NFFD_sp)),
+    rangeMCMT = list(range(cool.wet.anomalies.MCMT))
+  )
  
 
 PLI_MCMT <- ggpredict(climate.PLI.2d, c("cool.wet.anomalies.MCMT [all]")) %>% 
   ggplot(mapping = aes (x=x, y=predicted)) +
   geom_smooth(se=F) +
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  geom_vline(xintercept = c(0, 2), color = "red", linetype = "dashed") +
   coord_cartesian(ylim = c(0, 1)) +
   labs(title = "PLI",x = "Number of Anomalous Years", y = "Predicted Probability of PLI Occurrence") +
   theme_classic()
@@ -223,8 +240,9 @@ PLI_NFFD <- ggpredict(climate.PLI.2d, c("NFFD_sp [all]")) %>%
   ggplot(mapping = aes (x=x, y=predicted)) +
   geom_smooth(se=F) +
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
+  geom_vline(xintercept = c(11, 30), color = "red", linetype = "dashed") +
   coord_cartesian(ylim = c(0, 1)) +
-  labs(title = "PLI",x = "# of Frost Free Days (March-May", y = "") +
+  labs(title = "PLI",x = "# of Frost Free Days (March-May)", y = "") +
   theme_classic()
 
 plot_grid(FDI_MCMT,  PLI_NFFD, FDI_CMI, PLI_MCMT, FDI_PAS, labels=c("A", "B", "C", "D", "E"), ncol = 2, nrow = 3)
