@@ -4,21 +4,27 @@ ggplot(bin_dis_GIS_bec, aes(x=Longitude, y=Latitude)) +
   geom_point(aes(shape = as.factor(outlier), colour = BEC_Subzone), size = 3) +
   theme_classic()
 
-table(bin_dis_GIS1$BEC_Subzone, bin_dis_GIS1$PLI.f)
+table(bin_dis_GIS1$BEC_Subzone, bin_dis_GIS1$BEC_Zone)
 
-
+tiff("C:/Users/nmac2000/OneDrive - UBC/Figures/BECandMCMT.tif",width = 3.543, height = 2.1, units = "in", res = 300)
 ggplot(bin_dis_GIS1,aes(x=BEC_Subzone, y=MCMT)) +
-  geom_boxplot(outlier.color=NA)+
-  geom_jitter(width =.25, aes( colour=as.factor(FDI_count_bin)),shape=19) +
-  scale_color_manual(values=c("#ED5151","#149ECE")) +
+  geom_boxplot(outlier.color=NA, linewidth = .25)+
+  geom_point(aes(colour = as.factor(FDI_count_bin)), 
+             position = position_jitter(width = .35), alpha = .5, 
+             size = 1.15, shape = 19)  +
+  scale_color_manual(values=c("#BD9457","#41A83E")) +
   scale_y_continuous(labels = ~ paste0(.x, "°"))+
   labs(x= "BEC Subzone", y="MCMT", 
        colour = "FDI Occurrence", title = "BEC Subzone vs MCMT") +
   theme_classic() +
-  theme(axis.text = element_text(size = 14), 
-    axis.title = element_text(size = 16),
-    title = element_text(size=16),
-    legend.text = element_text(size=16))
+  theme(axis.text = element_text(size = 7), 
+    axis.title = element_text(size = 7),
+    title = element_text(size=7),
+    legend.text = element_text(size=7),
+    legend.box.background = element_rect(),
+    legend.box.margin = margin(.5,.5,.5,.5)
+)
+dev.off()
 
 bin_dis_GIS1 %>% 
   mutate(FDI = ifelse(FDI_count>6,1,0)) %>% 
@@ -28,7 +34,9 @@ ggplot(aes(x=yhat.FDI, y=FDI_count)) +
 #  xlim(.5,1) +
   theme_classic() 
 
-
+bin_dis_GIS1 %>% 
+  group_by(PARENT_SOILS) %>% 
+  summarize(count = n())
 
 bin_dis_GIS1 %>% 
   mutate(FDI = ifelse(FDI_count>6,1,0)) %>%

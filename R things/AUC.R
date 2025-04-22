@@ -40,7 +40,9 @@ bin_dis_GIS1$yhat.PLI <- fitted(PLI.6)
 bin_dis_GIS1$yhat.FDI <- fitted(FDI.6)
 
 pROC::auc(bin_dis_GIS1$PLI.f, bin_dis_GIS1$yhat.PLI)
+plot(pROC::roc(bin_dis_GIS1$PLI.f,bin_dis_GIS1$yhat.PLI),auc.polygon=T)
 pROC::auc(bin_dis_GIS1$FDI.f, bin_dis_GIS1$yhat.FDI)
+plot(pROC::roc(bin_dis_GIS1$FDI.f,bin_dis_GIS1$yhat.FDI),auc.polygon=T)
 
 #Hanceville
 hanceville$yhat.PLI <- fitted(Hanceville.1e)
