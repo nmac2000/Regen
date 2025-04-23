@@ -88,11 +88,6 @@ regen_combo_STM <- regen_STM_sp %>%
   ungroup()
 
 
-regen_STM_sp_NR <- regen_STM_sp %>% 
-  group_by(SampleSite_ID) %>% 
-  mutate(has_nr = any(Species == "NR"), num_rows = n()) %>% 
-  filter(num_rows == 1 | !(has_nr & Species == "NR")) %>% 
-  select(-has_nr, -num_rows)
 
 ## now add percentages and such
 regen_percents$Species <- ""
@@ -100,7 +95,9 @@ regen_percents$Species <- ifelse(regen_percents$PLI_percent > 0, paste(regen_per
 regen_percents$Species <- ifelse(regen_percents$FDI_percent > 0, paste(regen_percents$Species, "FDI"),regen_percents$Species)
 regen_percents$Species <- ifelse(regen_percents$SX_percent > 0, paste(regen_percents$Species, "SX"),regen_percents$Species)
 regen_percents$Species <- ifelse(regen_percents$AT_percent > 0, paste(regen_percents$Species, "AT"),regen_percents$Species)
-
+regen_percents$Species <- ifelse(regen_percents$SpeciesAll == "NR", "NR",regen_percents$Species)
+regen_percents$LeadingSpecies <- ifelse(regen_percents$SpeciesAll == "NR", "NR",regen_percents$LeadingSpecies)
+regen_percents$Dominant <- ifelse(regen_percents$SpeciesAll == "NR", "NR",regen_percents$Dominant)
 
 regen_percents <- regen_combo_STM %>% 
   mutate(PLI_percent = round(100*PLI_count/total_count)) %>% 
@@ -111,11 +108,11 @@ regen_percents <- regen_combo_STM %>%
 
 regen_percents <- regen_percents %>% 
   mutate(Dominant = case_when(
-    PLI_percent >= 75 ~ "PLI",
-    FDI_percent >= 75 ~ "FDI",
-    SX_percent >= 75 ~ "SX",
-    AT_percent >=75~ "AT",
-    PLI_percent < 75 & FDI_percent < 75 & AT_percent < 75 & SX_percent < 75 ~ "Mix"
+    PLI_percent >= 80 ~ "PLI",
+    FDI_percent >= 80 ~ "FDI",
+    SX_percent >= 80 ~ "SX",
+    AT_percent >=80~ "AT",
+    PLI_percent < 80 & FDI_percent < 80 & AT_percent < 80 & SX_percent < 80 ~ "Mix"
   ))
 
 regen_percents <- regen_percents %>%
@@ -157,3 +154,8 @@ regen_percents$SampleSite_ID <- as.character(regen_percents$SampleSite_ID)
 
 regen_percents <- regen_percents_unfiltered %>% 
   filter(SampleSite_ID %in% VRI_all$SampleSite_ID) 
+
+regen_percents$PLI_percent <- ifelse(is.na(regen_percents$PLI_percent), 0, regen_percents$PLI_percent)
+regen_percents$FDI_percent <- ifelse(is.na(regen_percents$FDI_percent), 0, regen_percents$FDI_percent)
+regen_percents$SX_percent <- ifelse(is.na(regen_percents$SX_percent), 0, regen_percents$SX_percent)
+regen_percents$AT_percent <- ifelse(is.na(regen_percents$AT_percent), 0, regen_percents$AT_percent)
