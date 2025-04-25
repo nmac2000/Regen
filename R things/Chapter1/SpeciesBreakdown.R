@@ -1,3 +1,6 @@
+library(Gmisc)
+library(tidyverse)
+
 # Looking at percentages and what not
 
 PLI_VRI <- VRI_all %>% 
@@ -156,21 +159,45 @@ STM <- STM %>%
     Dominant_pre == "Mix" ~ "Mix",
   ))
 
+
+
+library(miscTools)
+
 succession <- table(STM$Dominant_pre, STM$Dominant)
-new_row <- matrix(0, nrow = 1, ncol = ncol(succession))
-colnames(new_row) <- colnames(succession)
-rownames(new_row) <- "NR"
-insert_position <- 4
-succession <- rbind(
-  succession[1:(insert_position - 1), , drop = FALSE],
-  new_row,
-  succession[insert_position:nrow(succession), , drop = FALSE]
-)
+mat <- matrix(succession, nrow = nrow(succession), ncol = ncol(succession),
+              dimnames = dimnames(succession))
 
+succession <- insertRow(m=mat, r=4, v=0, rName="NR")
 
-transitionPlot(succession,type_of_arrow = "gradient",
+transitionPlot(succession,type_of_arrow = "simple",
                fill_start_box =c("darkgoldenrod1","yellowgreen","lightblue",
                                  "darkgreen", "darkslategray4", "lightgoldenrod"),
-              new_page = T )
+               arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
+                             "darkgreen", "darkslategray4", "lightgoldenrod"),
+               min_lwd =unit(0, "mm"),
+               max_lwd =unit(6, "mm"),
+              new_page = T ,
+              tot_spacing = .05,
+              overlap_add_width = 1)
 
+# mixed stand transitions
 
+STM_MIX <- STM %>% 
+  filter(Dominant_pre == "Mix")
+
+mix <- table(STM_MIX$LeadingSpecies_pre, STM_MIX$LeadingSpecies)
+mat <- matrix(mix, nrow = nrow(mix), ncol = ncol(mix),
+              dimnames = dimnames(mix))
+
+mix <- insertRow(m=mat, r=3, v=0, rName="NR")
+
+transitionPlot(mix,type_of_arrow = "simple",
+               fill_start_box =c("darkgoldenrod1","yellowgreen","lightblue",
+                                 "darkgreen", "darkslategray4"),
+               arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
+                             "darkgreen", "darkslategray4"),
+               min_lwd =unit(0, "mm"),
+               max_lwd =unit(6, "mm"),
+               new_page = T ,
+               tot_spacing = .05,
+               overlap_add_width = 1)

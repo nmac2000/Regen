@@ -54,3 +54,11 @@ ggplot(bin_dis_GIS1, aes(x=yhat.PLI, y=yhat.FDI)) +
   theme_minimal()
 
 
+############## fire severity weird things
+
+bin_dis_GIS1 %>% 
+  group_by(BARC.x) %>% 
+  filter(FDI_count_bin > 0) %>% 
+  summarise(mean = mean(FDI_count))
+
+table(bin_dis_GIS1$BURN_SEVERITY_RATING_1, bin_dis_GIS1$FDI.f)
