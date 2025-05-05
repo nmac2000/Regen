@@ -87,6 +87,8 @@ Hanceville.o <- glm(PLI.f ~ DRAIN_1,
 summary(Hanceville.o)
 lrtest(Hanceville.o, Hanceville.null)
 
+hanceville$COFRAG_1 <- ifelse(is.na(hanceville$COFRAG_1), 0, hanceville$COFRAG_1)
+
 Hanceville.p <- glm(PLI.f ~ COFRAG_1,
                     family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.p)
@@ -95,60 +97,71 @@ lrtest(Hanceville.p, Hanceville.null)
 ####
 
 
-Hanceville.1a <- glm(PLI.f ~ years_since + BEC_Subzone,
+Hanceville.1a <- glm(PLI.f ~ BEC_Subzone,
                     family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.1a)
 lrtest(Hanceville.1a, Hanceville.a)
 
-Hanceville.1b <- glm(PLI.f ~ years_since + BEC_Subzone + Elevation, 
+Hanceville.1b <- glm(PLI.f ~ BEC_Subzone + Elevation, 
                      family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.1b)
 lrtest(Hanceville.1b, Hanceville.1a)
 
-Hanceville.1c <- glm(PLI.f ~ years_since + BEC_Subzone + PARENT_SOILS,
+Hanceville.1c <- glm(PLI.f ~ BEC_Subzone + PARENT_SOILS,
                      family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.1c)
 lrtest(Hanceville.1c, Hanceville.1a)
 
-Hanceville.1d <- glm(PLI.f ~ years_since + BEC_Subzone + TEXTURE_1,
+Hanceville.1d <- glm(PLI.f ~ BEC_Subzone + TEXTURE_1,
                      family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.1d)
 lrtest(Hanceville.1d, Hanceville.1a)
 
-Hanceville.1e <- glm(PLI.f ~ years_since + BEC_Subzone + TEXTURE_1 + Slope,
+Hanceville.1e <- glm(PLI.f ~ BEC_Subzone + TEXTURE_1 + Slope,
                      family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.1e)
 lrtest(Hanceville.1e, Hanceville.1d)
 
-Hanceville.1f <- glm(PLI.f ~ years_since + BEC_Subzone +  Slope,
+Hanceville.1f <- glm(PLI.f ~ BEC_Subzone +  Slope,
                      family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.1f)
 lrtest(Hanceville.1e, Hanceville.1f)
 
-Hanceville.1g <- glm(PLI.f ~ years_since + BEC_Subzone + Slope + PARENT_SOILS,
+Hanceville.1g <- glm(PLI.f ~ BEC_Subzone + Slope + PARENT_SOILS,
                      family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.1g)
 lrtest(Hanceville.1g, Hanceville.1e)
 
-Hanceville.1h <- glm(PLI.f ~ years_since + BEC_Subzone + TEXTURE_1 + Slope + I(Slope*sin(Aspect*(pi/180))) + I(Slope*cos(Aspect*(pi/180)))  ,
+Hanceville.1h <- glm(PLI.f ~ BEC_Subzone + TEXTURE_1 + Slope + I(Slope*sin(Aspect*(pi/180))) + I(Slope*cos(Aspect*(pi/180)))  ,
                      family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.1h)
 lrtest(Hanceville.1h, Hanceville.1e)
 
-Hanceville.1i <- glm(PLI.f ~ years_since + BEC_Subzone + TEXTURE_1 + Slope + Solar_Radiation,
+Hanceville.1i <- glm(PLI.f ~ BEC_Subzone + TEXTURE_1 + Slope + Solar_Radiation,
                      family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.1i)
 lrtest(Hanceville.1i, Hanceville.1e)
 
-Hanceville.1j <- glm(PLI.f ~ years_since + BEC_Subzone + TEXTURE_1 + Slope + Elevation,
+Hanceville.1j <- glm(PLI.f ~ BEC_Subzone + TEXTURE_1 + Slope + Elevation,
                      family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.1j)
 lrtest(Hanceville.1j, Hanceville.1e)
 
-Hanceville.1k <- glm(PLI.f ~ years_since + BEC_Subzone + TEXTURE_1 + Slope + DRAIN_1,
+Hanceville.1k <- glm(PLI.f ~ BEC_Subzone + TEXTURE_1 + Slope + DRAIN_1,
                      family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.1k)
 lrtest(Hanceville.1k, Hanceville.1e)
+
+hanceville.full <- glm(PLI.f ~ BEC_Subzone  + Slope ,
+                   family=binomial(link = "logit"), data=hanceville)
+summary(hanceville.full)
+lrtest(hanceville.full, Hanceville.1e)
+
+hanceville$yhat.PLI.full <- fitted(hanceville.full)
+pROC::auc(hanceville$PLI.f, hanceville$yhat.PLI.full)
+
+hanceville$yhat.PLI.1e <- fitted(Hanceville.1e)
+pROC::auc(hanceville$PLI.f, hanceville$yhat.PLI.1e)
 
 
 ggplot(hanceville, aes(x=Latitude, y=Longitude)) +

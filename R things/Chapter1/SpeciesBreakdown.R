@@ -4,28 +4,28 @@ library(tidyverse)
 # Looking at percentages and what not
 
 PLI_VRI <- VRI_all %>% 
-  filter(LeadingSpecies == "PLI")
+  filter(LeadingSpecies_pre == "PLI")
 
 FDI_VRI <- VRI_all %>% 
-  filter(LeadingSpecies == "FDI")
+  filter(LeadingSpecies_pre == "FDI")
 
 SX_VRI <- VRI_all %>% 
-  filter(LeadingSpecies == "SX")
+  filter(LeadingSpecies_pre == "SX")
 
 AT_VRI <- VRI_all %>% 
-  filter(LeadingSpecies == "AT")
+  filter(LeadingSpecies_pre == "AT")
 
 MIX_VRI <- VRI_all %>% 
-  filter(Dominant == "Mix")
+  filter(Dominant_pre == "Mix")
 
 MIX_regen <- regen_percents %>% 
   filter(Dominant == "Mix")
 
-ggplot(MIX_VRI, aes(x=LeadingSpecies,y = LeadingPercent)) +
+ggplot(MIX_VRI, aes(x=LeadingSpecies_pre,y = LeadingPercent_pre)) +
   geom_count()
 
 
-table(MIX_regen$LeadingSpecies, MIX_regen$Leading)
+
 
 
 MIX_VRI %>% 

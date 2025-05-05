@@ -213,5 +213,7 @@ VRI_all_unfiltered <- VRI_all %>%
 VRI_all <- VRI_all_unfiltered %>% 
   filter(SampleSite_ID %in% regen_percents$SampleSite_ID) 
 
-VRI_all <- VRI_all %>% 
-  rename(Species_pre = Species)
+write.csv(STM, "C:/Users/nmac2000/Desktop/Chapter2/data/STM.csv")
+
+STM %>% 
+  filter(is.)

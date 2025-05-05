@@ -3,7 +3,7 @@
 library(tidyverse)
 regen_STM_read <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/AllPlotsRegen.csv")
 
-names(regen_STM)
+
 
 regen_STM <- regen_STM_read %>% 
   rename(SampleSite_ID = Plot.ID,
@@ -90,21 +90,19 @@ regen_combo_STM <- regen_STM_sp %>%
 
 
 ## now add percentages and such
-regen_percents$Species <- ""
-regen_percents$Species <- ifelse(regen_percents$PLI_percent > 0, paste(regen_percents$Species, "PLI"),regen_percents$Species)
-regen_percents$Species <- ifelse(regen_percents$FDI_percent > 0, paste(regen_percents$Species, "FDI"),regen_percents$Species)
-regen_percents$Species <- ifelse(regen_percents$SX_percent > 0, paste(regen_percents$Species, "SX"),regen_percents$Species)
-regen_percents$Species <- ifelse(regen_percents$AT_percent > 0, paste(regen_percents$Species, "AT"),regen_percents$Species)
-regen_percents$Species <- ifelse(regen_percents$SpeciesAll == "NR", "NR",regen_percents$Species)
-regen_percents$LeadingSpecies <- ifelse(regen_percents$SpeciesAll == "NR", "NR",regen_percents$LeadingSpecies)
-regen_percents$Dominant <- ifelse(regen_percents$SpeciesAll == "NR", "NR",regen_percents$Dominant)
-
 regen_percents <- regen_combo_STM %>% 
   mutate(PLI_percent = round(100*PLI_count/total_count)) %>% 
   mutate(FDI_percent = round(100*FDI_count/total_count)) %>% 
   mutate(SX_percent = round(100*SX_count/total_count)) %>% 
   mutate(AT_percent = round(100*AT_count/total_count)) %>% 
   select(SampleSite_ID, SpeciesAll, PLI_percent:AT_percent)
+
+regen_percents$Species <- ""
+regen_percents$Species <- ifelse(regen_percents$PLI_percent > 0, paste(regen_percents$Species, "PLI"),regen_percents$Species)
+regen_percents$Species <- ifelse(regen_percents$FDI_percent > 0, paste(regen_percents$Species, "FDI"),regen_percents$Species)
+regen_percents$Species <- ifelse(regen_percents$SX_percent > 0, paste(regen_percents$Species, "SX"),regen_percents$Species)
+regen_percents$Species <- ifelse(regen_percents$AT_percent > 0, paste(regen_percents$Species, "AT"),regen_percents$Species)
+regen_percents$Species <- ifelse(regen_percents$SpeciesAll == "NR", "NR",regen_percents$Species)
 
 regen_percents <- regen_percents %>% 
   mutate(Dominant = case_when(
@@ -122,6 +120,9 @@ regen_percents <- regen_percents %>%
     AT_percent >= PLI_percent & AT_percent >= FDI_percent & AT_percent >= SX_percent ~ "AT",
     SX_percent >= PLI_percent & SX_percent >= FDI_percent & SX_percent >= AT_percent ~ "SX"
   ))
+
+regen_percents$LeadingSpecies <- ifelse(regen_percents$SpeciesAll == "NR", "NR",regen_percents$LeadingSpecies)
+regen_percents$Dominant <- ifelse(regen_percents$SpeciesAll == "NR", "NR",regen_percents$Dominant)
 
 regen_percents <- regen_percents %>%
   mutate(LeadingPercent = pmax(PLI_percent, FDI_percent, AT_percent, SX_percent, na.rm = TRUE))
