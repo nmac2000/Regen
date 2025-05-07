@@ -62,3 +62,14 @@ bin_dis_GIS1 %>%
   summarise(mean = mean(FDI_count))
 
 table(bin_dis_GIS1$BURN_SEVERITY_RATING_1, bin_dis_GIS1$FDI.f)
+
+
+#### humboldt presentation
+
+ggplot(bin_dis_GIS1, aes(y = Distance, x= FDI_count)) +
+  geom_line(aes(colour = as.factor(FDI_count_bin))) 
+  
+ggplot(bin_dis_GIS1, aes(x=PLI_percent, y=FDI_percent)) +
+  geom_point(aes(color=FDI.f))
+
+
