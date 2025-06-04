@@ -215,5 +215,3 @@ VRI_all <- VRI_all_unfiltered %>%
 
 write.csv(STM, "C:/Users/nmac2000/Desktop/Chapter2/data/STM.csv")
 
-STM %>% 
-  filter(is.)

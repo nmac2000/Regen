@@ -476,3 +476,18 @@ ggplot(bin_dis_GIS1, aes(x=as.factor(FIRE_NUMBER_1),y=FDI_percent)) +
        colour = "FDI Occurrence") +
   theme_classic() 
 
+
+
+library(corrplot)
+
+St <- bin_dis_GIS1 %>% 
+  select(Distance, PATCH_SIZE_1,  DISTANCE_TO_PERIMETER, FDI_percent, PLI_percent)
+Si <- bin_dis_GIS1 %>% 
+  select(Aspect, Elevation, Slope, Solar_Radiation, TWI)
+Cl <- bin_dis_GIS1 %>% 
+  select(MWMT, MCMT, Tmax_sm, MAP, PAS, PPT_sm, NFFD_sp, AHM, SHM, CMI_sm)
+
+M <- cor(St)
+M <- cor(Si)
+M <- cor(Cl)
+corrplot(M, method = 'number')
