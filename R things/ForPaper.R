@@ -58,6 +58,7 @@ site %>%
 library(ggeffects)
 library(tidyverse)
 library(gridExtra)
+library(cowplot)
 
 #structure: 
 #  species % (FDI and PLI)
@@ -104,11 +105,11 @@ PLI_percent <- ggpredict(structure.PLI.5a, "PLI_percent") %>%
   scale_x_continuous(labels = ~ paste0(.x, "%"))+
   coord_cartesian(ylim = c(0, 1)) +
   labs(title = "Lodgepole pine",
-       x = "Pre-fire Lodgepole Pine Basal Area Composition", y ="Predicted Probability") +
+       x = "Pre-fire Lodgepole Pine", y ="") +
   theme_classic() +
-  theme(axis.text = element_text(size=18),
-        axis.title = element_text(size=18),
-        title = element_text(size=18))#,
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=16),
+        title = element_text(size=16))#,
 #legend.text = element_text(size=12),
 #       legend.box.background = element_rect(),
 #      legend.box.margin = margin(.5,.5,.5,.5),
@@ -120,14 +121,14 @@ FDI_percent <- ggpredict(structure.FDI.3j, c("FDI_percent")) %>%
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high, , fill = "95% CI"), alpha=.5) +
   scale_x_continuous(labels = ~ paste0(.x, "%"))+
   coord_cartesian(ylim = c(0, 1)) +
-  labs(title = "Douglas-fir",x = "Pre-fire Douglas-fir Basal Area Composition", y = "Predicted Probability") +
+  labs(title = "Douglas-fir",x = "Pre-fire Douglas-fir", y = "Predicted Probability") +
   scale_color_manual(name = "Legend", values = "blue", labels = "Model Prediction") + # Line color
   scale_fill_manual(name = "Legend", values = "darkgrey", labels = "95% Confidence Interval") + # Ribbon color
   theme_classic() +
   theme(legend.position="none") +
-  theme(axis.text = element_text(size=18),
-        axis.title = element_text(size=18),
-        title = element_text(size=18))#,
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=16),
+        title = element_text(size=16))#,
 #legend.text = element_text(size=12),
 #       legend.box.background = element_rect(),
 #      legend.box.margin = margin(.5,.5,.5,.5),
@@ -139,18 +140,38 @@ FDI_distance <-
   geom_smooth(aes(color = "Model Fit"), se = FALSE) +
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high, , fill = "95% CI"), alpha=.5) +
   coord_cartesian(ylim = c(0, 1)) +
-  labs(title = "Douglas-fir",x = "Distance to Live Tree (m)", y = "Predicted Probability") +
+  labs(title = "Douglas-fir",x = "Distance to Live Tree (m)", y = "") +
   scale_color_manual(name = "", values = "blue") + #, labels = "Model Prediction") + 
   scale_fill_manual(name = "", values = "darkgrey") + #, labels = "95% Confidence Interval") + 
   theme_classic()  +
-  theme(axis.text = element_text(size=18),
-                    axis.title = element_text(size=18),
-                    title = element_text(size=18))#,
+  theme(legend.position="none") +
+  theme(axis.text = element_text(size=12),
+                    axis.title = element_text(size=16),
+                    title = element_text(size=16))#,
     #legend.text = element_text(size=12),
      #       legend.box.background = element_rect(),
       #      legend.box.margin = margin(.5,.5,.5,.5),
       #                                 legend.position="right")
 
+
+
+
+
+legend <- get_legend(FDI_distance + theme(legend.box.margin = margin(5, 5, 5, 5),
+                                          legend.box.background = element_rect(color = "black", linewidth = 0.5)))
+
+FDI_distance <- FDI_distance + theme(legend.position = "none")
+
+tiff("C:/Users/nmac2000/OneDrive - UBC/Figures/structure.tif",width = 90,height = 250, units = "mm", res = 1063)
+plot_grid(
+  PLI_percent, FDI_percent, 
+  FDI_distance,
+  labels = c("A", "B", "C"),
+#  label_x = -.1,
+  ncol = 1, nrow = 3,
+  rel_widths = c(1, 1, 0.5) # Legend takes less space
+)
+dev.off()
 
 bin_dis_GIS1 %>% 
   filter(is.na(BARC.x)) %>% 
@@ -165,7 +186,7 @@ FDI_BARC <- ggpredict(structure.FDI.3j, c("BARC.x")) %>%
   coord_cartesian(ylim = c(0, 1)) +
   labs(x = "Fire Severity", y = "Predicted Probability", title = "Douglas-fir") +
   theme_classic() +
-  theme(axis.text = element_text(size=18),
+  theme(axis.text = element_text(size=16),
         axis.title = element_text(size=18),
         title = element_text(size=18))
 
@@ -180,28 +201,10 @@ PLI_BARC <- ggpredict(structure.PLI.5a, c("BARC.x"))  %>%
   coord_cartesian(ylim = c(0, 1)) +
   labs(x = "Fire Severity", y = "Predicted Probability", title = "Lodgepole Pine") +
   theme_classic() +
-  theme(axis.text = element_text(size=18),
+  theme(axis.text = element_text(size=16),
         axis.title = element_text(size=18),
         title = element_text(size=18))
 
-
-legend <- get_legend(FDI_distance + theme(legend.box.margin = margin(5, 5, 5, 5),
-                                          legend.box.background = element_rect(color = "black", linewidth = 0.5)))
-
-FDI_distance <- FDI_distance + theme(legend.position = "none")
-
-tiff("C:/Users/nmac2000/OneDrive - UBC/Figures/structure.tif",width = 7.48, height = 5, units = "in", res = 2244)
-plot_grid(
-  PLI_percent, FDI_percent, 
-  FDI_distance, legend,
-  labels = c("A", "B", "C", ""),
-  ncol = 2, nrow = 2,
-  rel_widths = c(1, 1, 0.5) # Legend takes less space
-)
-dev.off()
-
-
-  
 #site:
 ###########
 #  BEC subzone (FDI and PLI)
@@ -211,17 +214,6 @@ predict_response(site.FDI.3k, "PARENT_SOILS")
 predict_response(site.PLI.2j, "Slope") 
   plot()
 
-#FDI
-FDI_MCMT <- ggpredict(FDI.7, c("MCMT")) %>% 
-  ggplot(mapping = aes (x=x, y=predicted)) +
-  geom_smooth(se=F) +
-  geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
-  scale_x_continuous(labels = ~ paste0(.x, "°"))+
-  coord_cartesian(ylim = c(0, 1)) +
-  labs(title = "Predicted Probability",
-       x = "MCMT", y = "Predicted Probability") +
-  theme_classic()
-
 
 ###########
 
@@ -230,27 +222,29 @@ FDI_soil <- ggpredict(site.FDI.3k, c("PARENT_SOILS")) %>%
   geom_linerange(aes(ymin=conf.low, ymax = conf.high), color="grey", size=4) +
   geom_point(color="blue", size = 4) +
   coord_cartesian(ylim = c(0, 1)) +
-  labs(x = "Parent Soil", y = "Predicted Probability", title = "Douglas-fir") +
-#  scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
+  labs(x = "Parent Soil", y = "", title = "Douglas-fir") +
+#  scale_x_discrete(guide = guide_axis(angle = 355)) +
   theme_classic() +
-  theme(axis.text = element_text(size=18),
-        axis.title = element_text(size=18),
-        title = element_text(size=18))#,
+  theme(axis.text.x = element_text(angle = 30, hjust = 1),
+        axis.text = element_text(size=12),
+        axis.title = element_text(size=16),
+        title = element_text(size=16))#,
 #legend.text = element_text(size=12),
 #       legend.box.background = element_rect(),
 #      legend.box.margin = margin(.5,.5,.5,.5),
 #                                 legend.position="right")
 
 FDI_BEC <- ggpredict(site.FDI.3k, c("BEC_Subzone")) %>% 
-  ggplot(mapping = aes (x=x, y=predicted)) +
-  geom_linerange(aes(ymin=conf.low, ymax = conf.high), color="grey", size=4) +
-  geom_point(color="blue", size=4) +
+  ggplot(mapping = aes (x=x, y=predicted, na.rm=T)) +
+  geom_linerange(aes(ymin=conf.low, ymax = conf.high), color="grey", size=4, na.rm=T) +
+  geom_point(color="blue", size=4, na.rm=T) +
   coord_cartesian(ylim = c(0, 1)) +
   labs(x = "BEC Subzone", y = "Predicted Probability", title = "Douglas-fir") +
   theme_classic() +
-  theme(axis.text = element_text(size=18),
-        axis.title = element_text(size=18),
-        title = element_text(size=18))#,
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.text = element_text(size=12),
+        axis.title = element_text(size=16),
+        title = element_text(size=16))#,
 #legend.text = element_text(size=12),
 #       legend.box.background = element_rect(),
 #      legend.box.margin = margin(.5,.5,.5,.5),
@@ -259,15 +253,7 @@ FDI_BEC <- ggpredict(site.FDI.3k, c("BEC_Subzone")) %>%
 #grid.arrange(FDI_MCMT, FDI_percent, FDI_soil, FDI_distance)
 
 #PLI
-PLI_BARC <- ggpredict(structure.PLI.5a, "BARC.x") %>% 
-  ggplot(mapping = aes(x=x, y=predicted)) +
-#  geom_smooth(se=F) +
-  geom_point() +
-  geom_linerange(aes(ymin=conf.low, ymax = conf.high)) +
-  coord_cartesian(ylim = c(0, 1)) +
-  scale_x_discrete(labels=c("Unburned", "Low", "Medium", "High")) +
-  labs(x = "Fire Severity", y = "Predicted Probability") +
-  theme_classic()
+
 
 PLI_BEC <- ggpredict(site.PLI.2j, "BEC_Subzone") %>% 
   ggplot(mapping = aes (x=x, y=predicted)) +
@@ -276,9 +262,10 @@ PLI_BEC <- ggpredict(site.PLI.2j, "BEC_Subzone") %>%
   coord_cartesian(ylim = c(0, 1)) +
   labs(title = "Lodgepole pine", x = "BEC Subzone", y="Predicted Probability") +
   theme_classic() +
-  theme(axis.text = element_text(size=18),
-        axis.title = element_text(size=18),
-        title = element_text(size=18))#,
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.text = element_text(size=12),
+        axis.title = element_text(size=16),
+        title = element_text(size=16))#,
 #legend.text = element_text(size=12),
 #       legend.box.background = element_rect(),
 #      legend.box.margin = margin(.5,.5,.5,.5),
@@ -290,14 +277,14 @@ PLI_slope <- ggpredict(site.PLI.2j, "Slope") %>%
   ggplot(mapping = aes (x=x, y=predicted)) +
   geom_smooth(se=F) +
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
-  scale_x_continuous(labels = ~ paste0(.x, "%"))+
+#  scale_x_continuous(labels = ~ paste0(.x, "%"))+
   coord_cartesian(ylim = c(0, 1)) +
   labs(title = "Lodgepole pine",
-       x = "Slope", y = "Predicted Probability") +
+       x = "Slope angle (%)", y = "") +
   theme_classic() +
-  theme(axis.text = element_text(size=18),
-        axis.title = element_text(size=18),
-        title = element_text(size=18))#,
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=16),
+        title = element_text(size=16))#,
 #legend.text = element_text(size=12),
 #       legend.box.background = element_rect(),
 #      legend.box.margin = margin(.5,.5,.5,.5),
@@ -305,41 +292,23 @@ PLI_slope <- ggpredict(site.PLI.2j, "Slope") %>%
 
 #grid.arrange(PLI_percent, PLI_BEC, PLI_BARC)
 
-tiff("C:/Users/nmac2000/OneDrive - UBC/Figures/site1.tif",width = 7.48, height = 5, units = "in", res = 2244)
+tiff("C:/Users/nmac2000/OneDrive - UBC/Figures/site1.tif",width = 190, height = 200, units = "mm", res = 2244)
 
-plot_grid(PLI_BEC,PLI_slope, FDI_BEC,  labels = c("A", "B", "C"),
-          ncol = 3, nrow = 2,         # Three columns, two rows
+plot_grid(PLI_BEC, PLI_slope,FDI_BEC, FDI_soil,  labels = c("A", "B", "C", "D"),
+          ncol = 2, nrow = 2,         # Three columns, two rows
           rel_widths = c(1, 1, 1),  # Make the legend smaller in width
           rel_heights = c(1),      # Equal heights for rows
           align = "hv",               # Align horizontally and vertically
           axis = "tblr" )
 dev.off()
 
-tiff("C:/Users/nmac2000/OneDrive - UBC/Figures/site2.tif",width = 7.48, height = 2.5, units = "in", res = 2244)
 
-plot_grid( FDI_soil, legend,  labels = c( "D", ""),
-          ncol = 2, nrow = 1,
-          rel_widths = c(.7,1),# Equal heights for rows
-          align = "hv",               # Align horizontally and vertically
-          axis = "tblr" )
-dev.off()
 
 
 # Climate
-# FDI
-predict_response(climate.FDI.2f, "MCMT")
-predict_response(climate.FDI.2f, "PAS")  
-predict_response(climate.FDI.2f, "CMI_sm") 
 
-str(bin_dis_GIS1$PAS)
 
-bin_dis_GIS1 %>% 
-#  filter(FDI_count_bin > 0) %>%
-  summarize(
-    rangePAS = list(range(PAS)),
-    rangeMCMT = list(range(MCMT)),
-    rangeCMI = list(range(CMI_sm))
-  )
+#FDI
 
 
 FDI_MCMT <- ggpredict(climate.FDI.2f, c("MCMT")) %>% 
@@ -351,9 +320,9 @@ FDI_MCMT <- ggpredict(climate.FDI.2f, c("MCMT")) %>%
   coord_cartesian(ylim = c(0, 1)) +
   labs(title = "Douglas-fir",x = "Mean Coldest Month Temp", y = "Predicted Probability") +
   theme_classic() +
-  theme(axis.text = element_text(size=18),
-        axis.title = element_text(size=18),
-        title = element_text(size=18))#,
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=16),
+        title = element_text(size=16))#,
 #legend.text = element_text(size=12),
 #       legend.box.background = element_rect(),
 #      legend.box.margin = margin(.5,.5,.5,.5),
@@ -365,11 +334,11 @@ FDI_PAS <- ggpredict(climate.FDI.2f, c("PAS")) %>%
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
   geom_vline(xintercept = c(75, 169), color = "red", linetype = "dashed") +
   coord_cartesian(ylim = c(0, 1)) +
-  labs(title = "Douglas-fir",x = "Precipitation as Snow", y = "Predicted Probability") +
+  labs(title = "Douglas-fir",x = "Precipitation as Snow", y = "") +
   theme_classic() +
-  theme(axis.text = element_text(size=18),
-        axis.title = element_text(size=18),
-        title = element_text(size=18))#,
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=16),
+        title = element_text(size=16))#,
 #legend.text = element_text(size=12),
 #       legend.box.background = element_rect(),
 #      legend.box.margin = margin(.5,.5,.5,.5),
@@ -381,27 +350,18 @@ FDI_CMI <- ggpredict(climate.FDI.2f, c("CMI_sm")) %>%
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
   geom_vline(xintercept = c(-32.18, -17.72), color = "red", linetype = "dashed") +
   coord_cartesian(ylim = c(0, 1)) +
-  labs(title = "Douglas-fir",x = "Summer Climate Moisture Index",y = "Predicted Probability") +
+  labs(title = "Douglas-fir",x = "Summer CMI",y = "") +
   theme_classic() +
-  theme(axis.text = element_text(size=18),
-        axis.title = element_text(size=18),
-        title = element_text(size=18))#,
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=16),
+        title = element_text(size=16))#,
 #legend.text = element_text(size=12),
 #       legend.box.background = element_rect(),
 #      legend.box.margin = margin(.5,.5,.5,.5),
 #                                 legend.position="right")
 
 # PLI
-predict_response(climate.PLI.2d, "NFFD_sp")
-predict_response(climate.PLI.2d, "cool.wet.anomalies.MCMT")  
 
-bin_dis_GIS1 %>% 
-  filter(PLI_count_bin > 0) %>%
-  summarize(
-    rangeNFFD = list(range(NFFD_sp)),
-    rangeMCMT = list(range(cool.wet.anomalies.MCMT))
-  )
- 
 
 PLI_MCMT <- ggpredict(climate.PLI.2d, c("cool.wet.anomalies.MCMT [all]")) %>% 
   ggplot(mapping = aes (x=x, y=predicted)) +
@@ -409,12 +369,12 @@ PLI_MCMT <- ggpredict(climate.PLI.2d, c("cool.wet.anomalies.MCMT [all]")) %>%
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
   geom_vline(xintercept = c(0, 2), color = "red", linetype = "dashed") +
   coord_cartesian(ylim = c(0, 1)) +
-  labs(title = "Lodgepole pine", subtitle = "Mean Coldest Month Temperature",
-       x = "Number of Anomalous Years",y = "Predicted Probability") +
+  labs(title = "Lodgepole pine",
+       x = "MCMT Anomalies",y = "") +
   theme_classic() +
-  theme(axis.text = element_text(size=18),
-        axis.title = element_text(size=18),
-        title = element_text(size=18))#,
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=16),
+        title = element_text(size=16))#,
 #legend.text = element_text(size=12),
 #       legend.box.background = element_rect(),
 #      legend.box.margin = margin(.5,.5,.5,.5),
@@ -426,21 +386,20 @@ PLI_NFFD <- ggpredict(climate.PLI.2d, c("NFFD_sp [all]")) %>%
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
   geom_vline(xintercept = c(11, 30), color = "red", linetype = "dashed") +
   coord_cartesian(ylim = c(0, 1)) +
-  labs(title = "Lodgepole pine",x = "# of Frost Free Days (March-May)", y = "Predicted Probability") +
+  labs(title = "Lodgepole pine",x = "# of Frost Free Days", y = "") +
   theme_classic() +
-  theme(axis.text = element_text(size=18),
-        axis.title = element_text(size=18),
-        title = element_text(size=18))#,
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=16),
+        title = element_text(size=16))#,
 #legend.text = element_text(size=12),
 #       legend.box.background = element_rect(),
 #      legend.box.margin = margin(.5,.5,.5,.5),
 #                                 legend.position="right")
 
 tiff("C:/Users/nmac2000/OneDrive - UBC/Figures/climate.tif",
-     width = 7.48, height = 5, units = "in", res = 2244)
-plot_grid(PLI_NFFD, PLI_MCMT, FDI_MCMT, FDI_CMI, FDI_PAS, legend,
-          labels=c("A", "B", "C", "D", "E", ""), ncol = 2, nrow = 3, 
-          hjust = -2.5)
+     width = 90, height =500, units = "mm", res = 2244)
+plot_grid(PLI_NFFD, PLI_MCMT, FDI_MCMT, FDI_CMI, FDI_PAS,
+          labels=c("A", "B", "C", "D", "E"), ncol = 1, nrow = 5)
 dev.off()
 
 

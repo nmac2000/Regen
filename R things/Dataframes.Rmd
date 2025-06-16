@@ -445,6 +445,11 @@ bin_dis_GIS1 <- bin_dis_GIS1 %>%
   filter(!SampleSite_ID %in% c(456, 496, 1108, 1422, 1514, 1643, 1511)) %>% 
   filter(!is.na(UNIQUE_ID))
 
+bin_dis_GIS <- bin_dis_GIS1 %>% 
+    distinct(SampleSite_ID, .keep_all = T) %>% 
+  filter(!SampleSite_ID %in% not_measured$SampleSite_ID) %>% 
+  filter(!SampleSite_ID %in% c(456, 496, 1108, 1422, 1514, 1643, 1511)) %>% 
+  filter(!is.na(UNIQUE_ID))
 
 
 #write.csv(bin_dis_GIS1, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/bin_dis_GIS3.csv")
@@ -454,6 +459,13 @@ bin_dis_GIS1 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/
 ```{r}
 bin_dis_GIS1 <- bin_dis_GIS1 %>% 
   select(-X, -X.1, -X.2)
+bin_dis_GIS1$BEC_Subzone <- sub("dk", "IDFdk",bin_dis_GIS1$BEC_Subzone)
+bin_dis_GIS1$BEC_Subzone <- sub("xm", "IDFxm",bin_dis_GIS1$BEC_Subzone)
+bin_dis_GIS1$BEC_Subzone <- sub("dc", "SBPSdc",bin_dis_GIS1$BEC_Subzone)
+bin_dis_GIS1$BEC_Subzone <- sub("mk", "SBPSmk",bin_dis_GIS1$BEC_Subzone)
+bin_dis_GIS1$BEC_Subzone <- sub("xc", "SBPSxc",bin_dis_GIS1$BEC_Subzone)
+
+VRI_2024$SPECIES_CD_3_1 <- sub("\\bSX\\b", "SX", VRI_2024$SPECIES_CD_3_1)
 ```
 
 

@@ -57,19 +57,12 @@ ggplot(bin_dis_GIS1, aes(x=yhat.PLI, y=yhat.FDI)) +
 ############## fire severity weird things
 
 bin_dis_GIS1 %>% 
-  group_by(FDI_count_bin) %>% 
-  summarise(count = n())
+  group_by(BARC.x) %>% 
+  summarise(SE = sd(PLI_count)/sqrt(length(PLI_count)))
 
 table(bin_dis_GIS1$BURN_SEVERITY_RATING_1, bin_dis_GIS1$FDI.f)
 table(bin_dis_GIS1$BARC.x, bin_dis_GIS1$BEC_Zone)
 
+######
 
-#### humboldt presentation
-
-ggplot(bin_dis_GIS1, aes(y = Distance, x= FDI_count)) +
-  geom_line(aes(colour = as.factor(FDI_count_bin))) 
-  
-ggplot(bin_dis_GIS1, aes(x=PLI_percent, y=FDI_percent)) +
-  geom_point(aes(color=FDI.f))
-
-
+table(bin_dis_GIS1$BEC_Subzone, bin_dis_GIS1$FDI.f)
