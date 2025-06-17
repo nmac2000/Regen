@@ -22,3 +22,13 @@ table(STM_PLI$PLI_post)
 table(STM_PLI$PLI_pre,STM_PLI$PLI_post)
 
 table(bin_dis_GIS1$FIRE_NUMBER_1, bin_dis_GIS1$FIRE_YEAR_1)
+
+table(STM$Dominant)
+
+table(STM_AT$Dominant_pre, STM_AT$LeadingSpecies_pre)
+
+STM_SX %>% 
+  filter(SX_pre != "NoSX" & SX_post == "NoSX") %>% 
+  pull(LeadingSpecies) %>% 
+  table()
+

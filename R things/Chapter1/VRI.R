@@ -214,4 +214,5 @@ VRI_all <- VRI_all_unfiltered %>%
   filter(SampleSite_ID %in% regen_percents$SampleSite_ID) 
 
 write.csv(STM, "C:/Users/nmac2000/Desktop/Chapter2/data/STM.csv")
+VRI_all <- read.csv("C:/Users/nmac2000/Desktop/Chapter2/data/STM.csv")
 
