@@ -83,6 +83,13 @@ STM_FDI %>%
   group_by(trans_FDI, FDI_pre) %>% 
   summarize(count = n())
 
+STM_FDI %>% 
+  filter(trans_FDI == "shift") %>% 
+#  ggplot(aes(x=FDI_pre, y=FDI_post)) +
+#  geom_count()
+  select(FDI_pre, FDI_post) %>% 
+  table()
+
 FDI_succession <- table(STM_FDI$FDI_pre, STM_FDI$FDI_post)
 transitionPlot(FDI_succession,type_of_arrow = "simple",
                fill_start_box =c("darkgoldenrod1","yellowgreen","lightblue",
@@ -117,10 +124,23 @@ STM_PLI <- STM %>%
     Dominant == "PLI" ~ "Dominant",
     PLI_percent < 80 & PLI_percent >= 30 ~ "MixHighPLI",
     PLI_percent < 30 & PLI_percent > 0 ~ "MixLowPLI",
-    PLI_percent == 0 ~ "NoPLI"))
+    PLI_percent == 0 ~ "NoPLI")) %>% 
+  mutate(trans_PLI = case_when(
+    PLI_pre != PLI_post ~ "shift", 
+    PLI_pre == PLI_post ~ "static"
+  ))
+
 
 ggplot(STM_PLI, aes(x=PLI_pre, y=PLI_post)) +
   geom_count()
+
+ggplot(STM_PLI, aes(x=trans_PLI)) +
+  geom_bar(aes(color=PLI_pre, fill = PLI_pre))
+
+STM_PLI %>% 
+  filter(trans_PLI == "shift") %>% 
+  select(PLI_pre, PLI_post) %>% 
+  table()
 
 PLI_succession <- table(STM_PLI$PLI_pre, STM_PLI$PLI_post)
 transitionPlot(PLI_succession,type_of_arrow = "simple",
@@ -149,10 +169,30 @@ STM_SX <- STM %>%
     Dominant == "SX" ~ "Dominant",
     SX_percent < 80 & SX_percent >= 30 ~ "MixHighSX",
     SX_percent < 30 & SX_percent > 0 ~ "MixLowSX",
-    SX_percent == 0 ~ "NoSX"))
+    SX_percent == 0 ~ "NoSX")) %>% 
+  mutate(trans_SX = case_when(
+      SX_pre != SX_post ~ "shift", 
+      SX_pre == SX_post ~ "static"
+    ))
+
+ggplot(STM_SX, aes(x=trans_SX)) +
+  geom_bar(aes(color=SX_pre, fill = SX_pre))
+
+STM_SX %>% 
+  filter(trans_SX == "shift") %>% 
+  select(SX_pre, SX_post) %>% 
+  table()
 
 ggplot(STM_SX, aes(x=SX_pre, y=SX_post)) +
   geom_count()
+
+STM_SX %>% 
+  filter(trans_SX == "shift") %>% 
+  filter(SX_post == "NoSX") %>% 
+  select(Dominant, SX_pre) %>% 
+  table()
+
+
 
 SX_succession <- table(STM_SX$SX_pre, STM_SX$SX_post)
 transitionPlot(SX_succession,type_of_arrow = "simple",
@@ -198,6 +238,10 @@ STM_AT %>%
   filter(trans_AT == "shift") %>% 
   select(AT_pre,AT_post) %>% 
   table()
+
+STM_AT %>% 
+  group_by(trans_AT, AT_pre) %>% 
+  summarize(count = n())
 
 AT_succession <- table(STM_AT$AT_pre, STM_AT$AT_post)
 transitionPlot(AT_succession,type_of_arrow = "simple",
@@ -333,3 +377,48 @@ STM_trans %>%
   ungroup() %>% 
   select(Dominant_pre, Dominant) %>% 
   table()
+
+library(cowplot)
+#tiff("C:/Users/nmac2000/OneDrive - UBC/Figures/climate.tif",
+#     width = 90, height =500, units = "mm", res = 2244)
+#plot_grid(PLI_NFFD, PLI_MCMT, FDI_MCMT, FDI_CMI, FDI_PAS,
+#          labels=c("A", "B", "C", "D", "E"), ncol = 1, nrow = 5)
+#dev.off()
+
+
+library(grid)
+par_org <- par(ask = TRUE)
+grid.newpage()
+transitionPlot(PLI_succession,type_of_arrow = "simple",
+               fill_start_box =c("darkgoldenrod1","yellowgreen","lightblue",
+                                 "darkgreen"),
+               arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
+                             "darkgreen"),
+               box_label = c("Pre-fire","Post-fire"),
+               box_txt = c("PLI dominant", "Mixed: High PLI", "Mixed: Low PLI", 
+                           "No PLI"),
+               #main = "Aspen", 
+               min_lwd =unit(0, "mm"),
+               max_lwd =unit(6, "mm"),
+               new_page = T ,
+               tot_spacing = .05,
+               overlap_add_width = 1)
+
+
+transitionPlot(FDI_succession,type_of_arrow = "simple",
+               fill_start_box =c("darkgoldenrod1","yellowgreen","lightblue",
+                                 "darkgreen"),
+               arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
+                             "darkgreen"),
+               box_label = c("Pre-fire","Post-fire"),
+               box_txt = c("FDI dominant", "Mixed: High FDI", "Mixed: Low FDI", 
+                           "No FDI"),
+               #main = "Aspen", 
+               min_lwd =unit(0, "mm"),
+               max_lwd =unit(6, "mm"),
+               new_page = T ,
+               tot_spacing = .05,
+               overlap_add_width = 1)
+
+
+par(par_org)
