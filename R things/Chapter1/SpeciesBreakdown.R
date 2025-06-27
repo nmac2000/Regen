@@ -422,3 +422,30 @@ transitionPlot(FDI_succession,type_of_arrow = "simple",
 
 
 par(par_org)
+
+
+trans <- STM
+trans$AT <- STM_AT$trans_AT
+trans$FDI <- STM_FDI$trans_FDI
+trans$PLI <- STM_PLI$trans_PLI
+trans$SX <- STM_SX$trans_SX
+
+trans %>% 
+  filter(Trans == "static") %>% 
+  filter(AT == "static") %>% 
+  filter(FDI == "static") %>% 
+  filter(PLI == "static") %>% 
+  filter(SX == "static") %>% 
+  summarize(count = n())
+
+STM %>% 
+  filter(str_detect(Species_pre, "AT")) %>% 
+  filter(!str_detect(Species, "AT")) %>% 
+  select(Dominant_pre, Dominant) %>% 
+  table()
+
+STM %>% 
+  filter(str_detect(Species_pre, "PLI")) %>% 
+  filter(!str_detect(Species, "PLI")) %>% 
+  select(Dominant_pre, Dominant) %>%
+  table()
