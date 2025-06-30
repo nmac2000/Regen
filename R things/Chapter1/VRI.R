@@ -213,6 +213,25 @@ VRI_all_unfiltered <- VRI_all %>%
 VRI_all <- VRI_all_unfiltered %>% 
   filter(SampleSite_ID %in% regen_percents$SampleSite_ID) 
 
+VRI2023_fires <- VRI_read_2023 %>% 
+  select(Card.x, FIRE_NUMBER_1) %>% 
+  mutate(SampleSite_ID = as.character(Card.x)) %>% 
+  select(-Card.x) %>% 
+  filter(SampleSite_ID %in% STM$SampleSite_ID) 
+
+VRI2024_fires <- VRI_read_2024 %>% 
+  select(Plot_ID, FIRE_NUMBER_1) %>% 
+  mutate(SampleSite_ID = as.character(Plot_ID)) %>% 
+  select(-Plot_ID) %>% 
+  filter(SampleSite_ID %in% STM$SampleSite_ID) 
+
+VRI_fires <- rbind(VRI2024_fires, VRI2023_fires) 
+
+VRI2023_fires %>% 
+  group_by(FIRE_NUMBER_1) %>% 
+  summarize(count = n())
+
+names(VRI_read_2023)
 write.csv(STM, "C:/Users/nmac2000/Desktop/Chapter2/data/STM.csv")
 VRI_all <- read.csv("C:/Users/nmac2000/Desktop/Chapter2/data/STM.csv")
 

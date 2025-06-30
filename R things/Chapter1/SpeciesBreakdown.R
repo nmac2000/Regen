@@ -97,8 +97,8 @@ transitionPlot(FDI_succession,type_of_arrow = "simple",
                arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
                              "darkgreen"),
                box_label = c("Pre-fire","Post-fire"),
-               box_txt = c("FDI dominant", "Mixed: High FDI", "Mixed: Low FDI", 
-                           "No FDI"),
+               box_txt = c("Dominant", "Moderate", "Sparse", 
+                           "Absent"),
                #main = "Aspen", 
                min_lwd =unit(0, "mm"),
                max_lwd =unit(6, "mm"),
@@ -149,8 +149,8 @@ transitionPlot(PLI_succession,type_of_arrow = "simple",
                arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
                              "darkgreen"),
                box_label = c("Pre-fire","Post-fire"),
-               box_txt = c("PLI dominant", "Mixed: High PLI", "Mixed: Low PLI", 
-                           "No PLI"),
+               box_txt = c("Dominant", "Moderate", "Sparse", 
+                            "Absent"),
                #main = "Aspen", 
                min_lwd =unit(0, "mm"),
                max_lwd =unit(6, "mm"),
@@ -201,8 +201,8 @@ transitionPlot(SX_succession,type_of_arrow = "simple",
                arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
                              "darkgreen"),
                box_label = c("Pre-fire","Post-fire"),
-               box_txt = c("SX dominant", "Mixed: High SX", "Mixed: Low SX", 
-                           "No SX"),
+               box_txt = c("Dominant", "Moderate", "Sparse", 
+                           "Absent"),
                #main = "Aspen", 
                min_lwd =unit(0, "mm"),
                max_lwd =unit(6, "mm"),
@@ -250,8 +250,8 @@ transitionPlot(AT_succession,type_of_arrow = "simple",
                arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
                              "darkgreen"),
                box_label = c("Pre-fire","Post-fire"),
-               box_txt = c("AT dominant", "Mixed: High AT", "Mixed: Low AT", 
-                           "No AT"),
+               box_txt = c("Dominant", "Moderate", "Sparse", 
+                           "Absent"),
                #main = "Aspen", 
                min_lwd =unit(0, "mm"),
                max_lwd =unit(6, "mm"),
@@ -432,20 +432,20 @@ trans$SX <- STM_SX$trans_SX
 
 trans %>% 
   filter(Trans == "static") %>% 
-  filter(AT == "static") %>% 
-  filter(FDI == "static") %>% 
-  filter(PLI == "static") %>% 
-  filter(SX == "static") %>% 
+#  filter(AT == "static") %>% 
+#  filter(FDI == "static") %>% 
+#  filter(PLI == "static") %>% 
+#  filter(SX == "static") %>% 
   summarize(count = n())
 
 STM %>% 
   filter(str_detect(Species_pre, "AT")) %>% 
   filter(!str_detect(Species, "AT")) %>% 
-  select(Dominant_pre, Dominant) %>% 
+  select(Dominant) %>% 
   table()
 
 STM %>% 
   filter(str_detect(Species_pre, "PLI")) %>% 
   filter(!str_detect(Species, "PLI")) %>% 
-  select(Dominant_pre, Dominant) %>%
+  select(Species) %>% 
   table()
