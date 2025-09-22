@@ -302,9 +302,9 @@ mat <- matrix(succession, nrow = nrow(succession), ncol = ncol(succession),
 succession <- insertRow(m=mat, r=4, v=0, rName="NR")
 
 transitionPlot(succession,type_of_arrow = "simple",
-               fill_start_box =c("#84a98c","#386641","cyan4","lightblue",
+               fill_start_box =c("#84a98c","#7c6a0a","cyan4","lightblue",
                                  "darkolivegreen", "#2f3e46"),
-               arrow_clr =c("#84a98c","#386641","cyan4","lightblue",
+               arrow_clr =c("#84a98c","#7c6a0a","cyan4","lightblue",
                             "darkolivegreen", "#2f3e46"),
                box_label = c("Pre-fire","Post-fire"),
                box_txt = c("Aspen", "Douglas-fir", "Mixed Stands", 

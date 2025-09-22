@@ -2,6 +2,8 @@
 # October 18
 # Nat MacMillan
 
+library(tidyverse)
+
 bin_dis_GIS1 %>% 
   filter(BARC.x == 4) %>%
   filter(PLI_percent > 0) %>% 
@@ -454,3 +456,9 @@ library(tidyverse)
 
 regen_combo_STM %>% 
   summarize(sum(SX_count))
+
+ggplot(filter(bin_dis_GIS1, FDI_count > 0), aes(x=FDI_count)) +
+  geom_histogram(bins = 10)
+
+
+
