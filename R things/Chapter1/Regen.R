@@ -15,6 +15,9 @@ regen_STM <- regen_STM_read %>%
          BEC_Zone = BEC_Zone_fromMeta,
          BEC_Subzone = BEC_Subzone_fromMeta) %>% 
   select(SampleSite_ID, Species, x0:total, BEC_Zone:BEC_Subzone)
+table(regen_STM$Species)
+
+
 
 regen_STM$Species <- sub("^$", "NR", regen_STM$Species)
 regen_STM$Species <- sub("JR", "NR", regen_STM$Species)

@@ -15,7 +15,9 @@ STM_PLI %>%
   select(BEC_Zone, BEC_Subzone) %>% 
   table()
 
-
+regen_combo_STM %>% 
+  filter(PLI_count > 0 | SX_count > 0 | FDI_count > 0) %>% 
+  select( PLI_count, SX_count, FDI_count)
 
 table(STM_PLI$PLI_pre)
 table(STM_PLI$PLI_post)

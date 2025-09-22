@@ -225,7 +225,7 @@ site.FDI.3j <- glm(FDI.f ~ years_since + BEC_Subzone + PARENT_SOILS  ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.FDI.3j)
 
-site.FDI.3k <- glm(FDI.f ~ years_since + BEC_Subzone + PARENT_SOILS  + BEC_Subzone*years_since ,
+site.FDI.3k <- glm(FDI.f ~ years_since + BEC_Subzone + PARENT_SOILS  + PARENT_SOILS*years_since ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.FDI.3k)
 lrtest(site.FDI.3j, site.FDI.3k)

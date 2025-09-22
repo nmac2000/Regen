@@ -163,13 +163,78 @@ pROC::auc(hanceville$PLI.f, hanceville$yhat.PLI.full)
 hanceville$yhat.PLI.1e <- fitted(Hanceville.1e)
 pROC::auc(hanceville$PLI.f, hanceville$yhat.PLI.1e)
 
+Hanceville.1e <- glm(PLI.f ~ BEC_Subzone + DRAIN_1 + Slope,
+                     family=binomial(link = "logit"), data=hanceville)
+summary(Hanceville.1e)
+lrtest(Hanceville.1e, Hanceville.1d)
+
+Hanceville.full <- glm(PLI.f ~ BEC_Subzone + PARENT_SOILS + Slope,
+                     family=binomial(link = "logit"), data=hanceville)
+summary(Hanceville.full)
+lrtest(Hanceville.1e, Hanceville.1d)
 
 ggplot(hanceville, aes(x=Latitude, y=Longitude)) +
   geom_point(aes(colour = BEC_Subzone, shape = PARENT_SOILS, size = as.factor(PLI.f))) +
   theme_classic()
 
 ###
+PLI_base <- glm(PLI.f ~ BEC_Subzone +  Slope,
+                family=binomial(link = "logit"), data=hanceville)
+summary(PLI_base)
 
+PLI_parent <- glm(PLI.f ~ BEC_Subzone + PARENT_SOILS + Slope,
+                       family=binomial(link = "logit"), data=hanceville)
+summary(PLI_parent)
+lrtest(PLI_parent, PLI_base)
+
+PLI_texture <- glm(PLI.f ~ BEC_Subzone + TEXTURE_1 + Slope,
+                  family=binomial(link = "logit"), data=hanceville)
+summary(PLI_texture)
+lrtest(PLI_texture, PLI_base)
+
+PLI_drain <- glm(PLI.f ~ BEC_Subzone + DRAIN_1 + Slope,
+                   family=binomial(link = "logit"), data=hanceville)
+summary(PLI_drain)
+lrtest(PLI_drain, PLI_base)
+
+PLI_cofrag <- glm(PLI.f ~ BEC_Subzone + COFRAG_1 + Slope,
+                   family=binomial(link = "logit"), data=hanceville)
+summary(PLI_cofrag)
+lrtest(PLI_cofrag, PLI_base)
+
+hanceville %>% 
+  filter(!is.na(COFRAG_1)) %>% 
+  summarise(avg = mean(COFRAG_1))
+
+hanceville$COFRAG_1 <- ifelse(hanceville$SOILNAME_1 == "TYEE", 20, hanceville$COFRAG_1)
+hanceville$COFRAG_1 <- ifelse(hanceville$SOILNAME_1 == "CHASM", 23, hanceville$COFRAG_1)
+
+###
+FDI_base <- glm(FDI.f ~ BEC_Subzone ,
+                family=binomial(link = "logit"), data=hanceville)
+summary(FDI_base)
+
+FDI_parent <- glm(FDI.f ~ BEC_Subzone + PARENT_SOILS,
+                  family=binomial(link = "logit"), data=hanceville)
+summary(FDI_parent)
+lrtest(FDI_base, FDI_parent)
+
+FDI_texture <- glm(FDI.f ~ BEC_Subzone + TEXTURE_1,
+                  family=binomial(link = "logit"), data=hanceville)
+summary(FDI_texture)
+lrtest(FDI_base, FDI_texture)
+
+FDI_drain <- glm(FDI.f ~ BEC_Subzone + DRAIN_1,
+                   family=binomial(link = "logit"), data=hanceville)
+summary(FDI_drain)
+lrtest(FDI_base, FDI_drain)
+
+FDI_cofrag <- glm(FDI.f ~ BEC_Subzone + COFRAG_1,
+                   family=binomial(link = "logit"), data=hanceville)
+summary(FDI_cofrag)
+lrtest(FDI_base, FDI_cofrag)
+
+###
 Hanceville.F.null <- glm(FDI.f ~ 1 ,
                        family=binomial(link = "logit"), data=hanceville)
 summary(Hanceville.F.null)

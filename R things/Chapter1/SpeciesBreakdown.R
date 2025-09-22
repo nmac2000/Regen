@@ -1,6 +1,18 @@
 library(Gmisc)
 library(tidyverse)
 
+fire_severity_all <- read.csv("C:\\Users\\nmac2000\\Documents\\regen project\\Data\\fire_severity_all.csv")
+
+ggplot(bin_dis_GIS1, aes(x=Slope)) +
+  geom_histogram()
+
+bin_dis_GIS1 %>% 
+  filter(BARC.x != 4) %>% 
+  filter(FDI_count_bin == 0) %>% 
+  select(FDI_count_bin, Distance) %>% 
+  plot()
+
+
 # Looking at percentages and what not
 regen_percents
 
@@ -84,18 +96,22 @@ STM_FDI %>%
   summarize(count = n())
 
 STM_FDI %>% 
-  filter(trans_FDI == "shift") %>% 
+  filter(FDI_pre == "NoFDI") %>% 
 #  ggplot(aes(x=FDI_pre, y=FDI_post)) +
 #  geom_count()
   select(FDI_pre, FDI_post) %>% 
   table()
 
-FDI_succession <- table(STM_FDI$FDI_pre, STM_FDI$FDI_post)
+test <- left_join(STM_SX, fire_severity_all, by = "SampleSite_ID")
+
+table(test$trans_SX, test$BARC)
+
+FDI_successTransFDI_succession <- table(STM_FDI$FDI_pre, STM_FDI$FDI_post)
 transitionPlot(FDI_succession,type_of_arrow = "simple",
-               fill_start_box =c("darkgoldenrod1","yellowgreen","lightblue",
-                                 "darkgreen"),
-               arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
-                             "darkgreen"),
+               fill_start_box =c("#373d20","#717744","#3e5c76",
+                                 "#a3b9e0"),
+               arrow_clr =c("#373d20","#717744","#3e5c76",
+                            "#a3b9e0"),
                box_label = c("Pre-fire","Post-fire"),
                box_txt = c("Dominant", "Moderate", "Sparse", 
                            "Absent"),
@@ -142,12 +158,16 @@ STM_PLI %>%
   select(PLI_pre, PLI_post) %>% 
   table()
 
+test <- left_join(STM_PLI, fire_severity_all, by = "SampleSite_ID")
+
+table(test$PLI_post, test$BARC)
+
 PLI_succession <- table(STM_PLI$PLI_pre, STM_PLI$PLI_post)
 transitionPlot(PLI_succession,type_of_arrow = "simple",
-               fill_start_box =c("darkgoldenrod1","yellowgreen","lightblue",
-                                 "darkgreen"),
-               arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
-                             "darkgreen"),
+               fill_start_box =c("#373d20","#717744","#3e5c76",
+                                 "#a3b9e0"),
+               arrow_clr =c("#373d20","#717744","#3e5c76",
+                            "#a3b9e0"),
                box_label = c("Pre-fire","Post-fire"),
                box_txt = c("Dominant", "Moderate", "Sparse", 
                             "Absent"),
@@ -196,10 +216,10 @@ STM_SX %>%
 
 SX_succession <- table(STM_SX$SX_pre, STM_SX$SX_post)
 transitionPlot(SX_succession,type_of_arrow = "simple",
-               fill_start_box =c("darkgoldenrod1","yellowgreen","lightblue",
-                                 "darkgreen"),
-               arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
-                             "darkgreen"),
+               fill_start_box =c("#373d20","#717744","#3e5c76",
+                                 "#a3b9e0"),
+               arrow_clr =c("#373d20","#717744","#3e5c76",
+                            "#a3b9e0"),
                box_label = c("Pre-fire","Post-fire"),
                box_txt = c("Dominant", "Moderate", "Sparse", 
                            "Absent"),
@@ -235,7 +255,7 @@ ggplot(STM_AT, aes(x=trans_AT)) +
   geom_bar(aes(color=AT_pre, fill = AT_pre))
 
 STM_AT %>% 
-  filter(trans_AT == "shift") %>% 
+  filter(AT_pre == "NoAT") %>% 
   select(AT_pre,AT_post) %>% 
   table()
 
@@ -245,10 +265,10 @@ STM_AT %>%
 
 AT_succession <- table(STM_AT$AT_pre, STM_AT$AT_post)
 transitionPlot(AT_succession,type_of_arrow = "simple",
-               fill_start_box =c("darkgoldenrod1","yellowgreen","lightblue",
-                                 "darkgreen"),
-               arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
-                             "darkgreen"),
+               fill_start_box =c("#373d20","#717744","#3e5c76",
+                                 "#a3b9e0"),
+               arrow_clr =c("#373d20","#717744","#3e5c76",
+                            "#a3b9e0"),
                box_label = c("Pre-fire","Post-fire"),
                box_txt = c("Dominant", "Moderate", "Sparse", 
                            "Absent"),
@@ -274,6 +294,7 @@ STM <- STM %>%
 
 library(miscTools)
 
+
 succession <- table(STM$Dominant_pre, STM$Dominant)
 mat <- matrix(succession, nrow = nrow(succession), ncol = ncol(succession),
               dimnames = dimnames(succession))
@@ -281,10 +302,10 @@ mat <- matrix(succession, nrow = nrow(succession), ncol = ncol(succession),
 succession <- insertRow(m=mat, r=4, v=0, rName="NR")
 
 transitionPlot(succession,type_of_arrow = "simple",
-               fill_start_box =c("darkgoldenrod1","yellowgreen","lightblue",
-                                 "darkgreen", "darkslategray4", "lightgoldenrod"),
-               arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
-                             "darkgreen", "darkslategray4", "lightgoldenrod"),
+               fill_start_box =c("#84a98c","#386641","cyan4","lightblue",
+                                 "darkolivegreen", "#2f3e46"),
+               arrow_clr =c("#84a98c","#386641","cyan4","lightblue",
+                            "darkolivegreen", "#2f3e46"),
                box_label = c("Pre-fire","Post-fire"),
                box_txt = c("Aspen", "Douglas-fir", "Mixed Stands", 
                            "", "Lodgepole Pine", "Spruce"),
@@ -308,10 +329,10 @@ mix <- table(STM_MIX$LeadingSpecies_pre, STM_MIX$LeadingSpecies)
 #mix <- insertRow(m=mat, r=3, v=0, rName="NR")
 
 transitionPlot(mix,type_of_arrow = "simple",
-               fill_start_box =c("darkgoldenrod1","yellowgreen","lightblue",
-                                 "darkgreen"),
-               arrow_clr = c("darkgoldenrod1","yellowgreen","lightblue",
-                             "darkgreen"),
+               fill_start_box =c("olivedrab3","springgreen4","cyan4","lightblue",
+                                 "darkolivegreen", "green4"),
+               arrow_clr =c("olivedrab3","springgreen4","cyan4","lightblue",
+                            "darkolivegreen", "green4"),
                min_lwd =unit(0, "mm"),
                max_lwd =unit(6, "mm"),
                new_page = T ,
@@ -429,10 +450,13 @@ trans$AT <- STM_AT$trans_AT
 trans$FDI <- STM_FDI$trans_FDI
 trans$PLI <- STM_PLI$trans_PLI
 trans$SX <- STM_SX$trans_SX
+trans <- left_join(trans, fire_severity_all, by="SampleSite_ID")
+
+
 
 trans %>% 
-  filter(Trans == "static") %>% 
-#  filter(AT == "static") %>% 
+#  filter(Trans == "static") %>% 
+  filter(AT == "static") %>% 
 #  filter(FDI == "static") %>% 
 #  filter(PLI == "static") %>% 
 #  filter(SX == "static") %>% 

@@ -105,7 +105,7 @@ PLI_percent <- ggpredict(structure.PLI.5a, "PLI_percent") %>%
   scale_x_continuous(labels = ~ paste0(.x, "%"))+
   coord_cartesian(ylim = c(0, 1)) +
   labs(title = "Lodgepole pine",
-       x = "Pre-fire Lodgepole Pine", y ="") +
+       x = "Pre-fire Lodgepole Pine", y ="Predicted Probability") +
   theme_classic() +
   theme(axis.text = element_text(size=12),
         axis.title = element_text(size=16),
@@ -121,7 +121,7 @@ FDI_percent <- ggpredict(structure.FDI.3j, c("FDI_percent")) %>%
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high, , fill = "95% CI"), alpha=.5) +
   scale_x_continuous(labels = ~ paste0(.x, "%"))+
   coord_cartesian(ylim = c(0, 1)) +
-  labs(title = "Douglas-fir",x = "Pre-fire Douglas-fir", y = "Predicted Probability") +
+  labs(title = "Douglas-fir",x = "Pre-fire Douglas-fir", y = "") +
   scale_color_manual(name = "Legend", values = "blue", labels = "Model Prediction") + # Line color
   scale_fill_manual(name = "Legend", values = "darkgrey", labels = "95% Confidence Interval") + # Ribbon color
   theme_classic() +
@@ -162,14 +162,13 @@ legend <- get_legend(FDI_distance + theme(legend.box.margin = margin(5, 5, 5, 5)
 
 FDI_distance <- FDI_distance + theme(legend.position = "none")
 
-tiff("C:/Users/nmac2000/OneDrive - UBC/Figures/structure.tif",width = 90,height = 250, units = "mm", res = 1063)
+tiff("C:/Users/nmac2000/OneDrive - UBC/Figures/structure1.tif",width = 2500,height = 800, units = "px", res = 200)
 plot_grid(
-  PLI_percent, FDI_percent, 
-  FDI_distance,
+  PLI_percent, FDI_percent, FDI_distance,
   labels = c("A", "B", "C"),
 #  label_x = -.1,
-  ncol = 1, nrow = 3,
-  rel_widths = c(1, 1, 0.5) # Legend takes less space
+  ncol = 3, nrow = 1,
+  rel_widths = c(1, 1, 1) # Legend takes less space
 )
 dev.off()
 
@@ -235,7 +234,7 @@ FDI_soil <- ggpredict(site.FDI.3k, c("PARENT_SOILS")) %>%
 #                                 legend.position="right")
 
 FDI_BEC <- ggpredict(site.FDI.3k, c("BEC_Subzone")) %>% 
-  ggplot(mapping = aes (x=x, y=predicted, na.rm=T)) +
+  ggplot(mapping = aes (x= fct_relevel(x, "IDFdk", "IDFxm", "SBPSdc", "SBPSmk", "SBPSxc") , y=predicted, na.rm=T)) +
   geom_linerange(aes(ymin=conf.low, ymax = conf.high), color="grey", size=4, na.rm=T) +
   geom_point(color="blue", size=4, na.rm=T) +
   coord_cartesian(ylim = c(0, 1)) +
@@ -256,7 +255,7 @@ FDI_BEC <- ggpredict(site.FDI.3k, c("BEC_Subzone")) %>%
 
 
 PLI_BEC <- ggpredict(site.PLI.2j, "BEC_Subzone") %>% 
-  ggplot(mapping = aes (x=x, y=predicted)) +
+  ggplot(mapping = aes (fct_relevel(x, "IDFdk", "IDFxm", "SBPSdc", "SBPSmk", "SBPSxc") , y=predicted)) +
   geom_linerange(aes(ymin=conf.low, ymax = conf.high), color="grey", size=4) +
   geom_point(colour="blue", size = 4) +
   coord_cartesian(ylim = c(0, 1)) +
@@ -292,7 +291,7 @@ PLI_slope <- ggpredict(site.PLI.2j, "Slope") %>%
 
 #grid.arrange(PLI_percent, PLI_BEC, PLI_BARC)
 
-tiff("C:/Users/nmac2000/OneDrive - UBC/Figures/site1.tif",width = 190, height = 200, units = "mm", res = 2244)
+tiff("C:/Users/nmac2000/OneDrive - UBC/Figures/site1.tif",width = 2500, height =2000, units = "px", res = 200)
 
 plot_grid(PLI_BEC, PLI_slope,FDI_BEC, FDI_soil,  labels = c("A", "B", "C", "D"),
           ncol = 2, nrow = 2,         # Three columns, two rows
@@ -386,7 +385,7 @@ PLI_NFFD <- ggpredict(climate.PLI.2d, c("NFFD_sp [all]")) %>%
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +
   geom_vline(xintercept = c(11, 30), color = "red", linetype = "dashed") +
   coord_cartesian(ylim = c(0, 1)) +
-  labs(title = "Lodgepole pine",x = "# of Frost Free Days", y = "") +
+  labs(title = "Lodgepole pine",x = "# of Frost Free Days", y = "Predicted Probability") +
   theme_classic() +
   theme(axis.text = element_text(size=12),
         axis.title = element_text(size=16),
@@ -397,9 +396,9 @@ PLI_NFFD <- ggpredict(climate.PLI.2d, c("NFFD_sp [all]")) %>%
 #                                 legend.position="right")
 
 tiff("C:/Users/nmac2000/OneDrive - UBC/Figures/climate.tif",
-     width = 90, height =500, units = "mm", res = 2244)
-plot_grid(PLI_NFFD, PLI_MCMT, FDI_MCMT, FDI_CMI, FDI_PAS,
-          labels=c("A", "B", "C", "D", "E"), ncol = 1, nrow = 5)
+     width = 2500, height =2000, units = "px", res = 200)
+plot_grid(PLI_NFFD, PLI_MCMT, NA ,FDI_MCMT, FDI_CMI, FDI_PAS,
+          labels=c("A", "B",NA, "C", "D", "E"), ncol = 3, nrow = 2)
 dev.off()
 
 
@@ -450,3 +449,8 @@ M <- cor(St)
 M <- cor(Si)
 M <- cor(Cl)
 corrplot(M, method = 'number')
+
+library(tidyverse)
+
+regen_combo_STM %>% 
+  summarize(sum(SX_count))
