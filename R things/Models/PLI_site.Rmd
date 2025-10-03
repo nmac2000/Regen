@@ -108,12 +108,10 @@ site.PLI.2c <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS,
 summary(site.PLI.2c)
 lrtest(site.PLI.2c, site.PLI.2a)
 
-site.PLI.2d <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Slope + Slope*sin(Aspect*(pi/180)) + Slope*cos(Aspect*(pi/180)) ,
+site.PLI.2d <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Slope + I(Slope*sin(Aspect*(pi/180))) + I(Slope*cos(Aspect*(pi/180))) ,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2d)
 lrtest(site.PLI.2d, site.PLI.2c)
-lrtest(site.PLI.2d, glm(PLI.f ~ years_since + BEC_Subzone,
-    family=binomial(link = "logit"), data=bin_dis_GIS1))
 
 site.PLI.2e <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Slope + I(Slope*sin(Aspect*(pi/180))) + I(Slope*cos(Aspect*(pi/180))) + Elevation,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
@@ -130,7 +128,7 @@ site.PLI.2g <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS + Elevation+ So
 summary(site.PLI.2g)
 lrtest(site.PLI.2g, site.PLI.2f)
 
-site.PLI.2h <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS  + TWI +Elevation,
+site.PLI.2h <- glm(PLI.f ~ years_since + BEC_Zone + PARENT_SOILS  + Slope +Elevation,
     family=binomial(link = "logit"), data=bin_dis_GIS1)
 summary(site.PLI.2h)
 lrtest(site.PLI.2h, site.PLI.2i)

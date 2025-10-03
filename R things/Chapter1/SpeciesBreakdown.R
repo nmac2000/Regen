@@ -3,6 +3,8 @@ library(tidyverse)
 
 fire_severity_all <- read.csv("C:\\Users\\nmac2000\\Documents\\regen project\\Data\\fire_severity_all.csv")
 
+max(bin_dis_GIS1$total_count)
+
 ggplot(bin_dis_GIS1, aes(x=Slope)) +
   geom_histogram()
 

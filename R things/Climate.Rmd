@@ -31,7 +31,7 @@ actual_coords <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Plo
 actual_coords <- read.csv(actual_coords)
 
 ```
-#Get coords for actual plots
+#(DOnt) IGNORE#Get coords for actual plots
 ```{r}
 #need to convert utm to lat/long
 
