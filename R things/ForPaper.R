@@ -209,10 +209,10 @@ PLI_BARC <- ggpredict(structure.PLI.5a, c("BARC.x"))  %>%
 #site:
 ###########
 #  BEC subzone (FDI and PLI)
-predict_response(site.PLI.2j, "BEC_Subzone")
+predict_response(site.PLI.2c, "BEC_Subzone")
 predict_response(site.FDI.3k, "BEC_Subzone")  
 predict_response(site.FDI.3k, "PARENT_SOILS") 
-predict_response(site.PLI.2j, "Slope") 
+predict_response(site.PLI.2c, "Slope") 
   plot()
 
 
@@ -256,8 +256,8 @@ FDI_BEC <- ggpredict(site.FDI.3k, c("BEC_Subzone")) %>%
 #PLI
 
 
-PLI_BEC <- ggpredict(site.PLI.2j, "BEC_Subzone") %>% 
-  ggplot(mapping = aes (fct_relevel(x, "IDFdk", "IDFxm", "SBPSdc", "SBPSmk", "SBPSxc") , y=predicted)) +
+PLI_BEC <- ggpredict(site.PLI.2c, "BEC_Subzone") %>% 
+  ggplot(mapping = aes (x= fct_relevel(x, "IDFdk", "IDFxm", "SBPSdc", "SBPSmk", "SBPSxc") , y=predicted)) +
   geom_linerange(aes(ymin=conf.low, ymax = conf.high), color="grey", size=4) +
   geom_point(colour="blue", size = 4) +
   coord_cartesian(ylim = c(0, 1)) +
@@ -274,7 +274,7 @@ PLI_BEC <- ggpredict(site.PLI.2j, "BEC_Subzone") %>%
 
 
 
-PLI_slope <- ggpredict(site.PLI.2j, "Slope") %>% 
+PLI_slope <- ggpredict(site.PLI.2c, "Slope") %>% 
   ggplot(mapping = aes (x=x, y=predicted)) +
   geom_smooth(se=F) +
   geom_ribbon(aes(ymin=conf.low, ymax = conf.high), alpha=.2) +

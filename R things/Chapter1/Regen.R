@@ -13,8 +13,9 @@ regen_STM <- regen_STM_read %>%
          x130 = X.1.3m..4cm.adj,
          total = total.seedlings,
          BEC_Zone = BEC_Zone_fromMeta,
-         BEC_Subzone = BEC_Subzone_fromMeta) %>% 
-  select(SampleSite_ID, Species, x0:total, BEC_Zone:BEC_Subzone)
+         BEC_Subzone = BEC_Subzone_fromMeta,
+         FIRE_YEAR_1 = FIRE_YEAR_1_fromMeta) %>% 
+  select(SampleSite_ID, Species, x0:total, BEC_Zone:BEC_Subzone, FIRE_YEAR_1)
 table(regen_STM$Species)
 
 

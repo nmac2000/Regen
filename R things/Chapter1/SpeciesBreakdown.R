@@ -89,7 +89,8 @@ STM_FDI <- STM %>%
   mutate(trans_FDI = case_when(
     FDI_pre != FDI_post ~ "shift", 
     FDI_pre == FDI_post ~ "static"
-  ))
+  )) %>% 
+  filter(FIRE_YEAR_1 == "2017")
 
 STM_FDI %>% 
 #  filter(trans_FDI == "shift") %>% 
@@ -108,7 +109,8 @@ test <- left_join(STM_SX, fire_severity_all, by = "SampleSite_ID")
 
 table(test$trans_SX, test$BARC)
 
-FDI_successTransFDI_succession <- table(STM_FDI$FDI_pre, STM_FDI$FDI_post)
+FDI_successTrans
+FDI_succession <- table(STM_FDI$FDI_pre, STM_FDI$FDI_post)
 transitionPlot(FDI_succession,type_of_arrow = "simple",
                fill_start_box =c("#373d20","#717744","#3e5c76",
                                  "#a3b9e0"),
@@ -146,7 +148,8 @@ STM_PLI <- STM %>%
   mutate(trans_PLI = case_when(
     PLI_pre != PLI_post ~ "shift", 
     PLI_pre == PLI_post ~ "static"
-  ))
+  )) %>% 
+    filter(FIRE_YEAR_1 == "2017")
 
 
 ggplot(STM_PLI, aes(x=PLI_pre, y=PLI_post)) +
@@ -195,7 +198,8 @@ STM_SX <- STM %>%
   mutate(trans_SX = case_when(
       SX_pre != SX_post ~ "shift", 
       SX_pre == SX_post ~ "static"
-    ))
+    )) %>% 
+  filter(FIRE_YEAR_1 == "2017")
 
 ggplot(STM_SX, aes(x=trans_SX)) +
   geom_bar(aes(color=SX_pre, fill = SX_pre))
@@ -248,7 +252,8 @@ STM_AT <- STM %>%
   mutate(trans_AT = case_when(
     AT_pre != AT_post ~ "shift", 
     AT_pre == AT_post ~ "static"
-  ))
+  )) %>% 
+  filter(FIRE_YEAR_1 == "2017")
 
 ggplot(STM_AT, aes(x=AT_pre, y=AT_post, fill = AT_percent)) +
   geom_tile()
@@ -284,6 +289,7 @@ transitionPlot(AT_succession,type_of_arrow = "simple",
 # Overall Transitions
 
 STM <- STM %>% 
+  filter(FIRE_YEAR_1 == "2017") %>% 
   mutate(State_pre = case_when(
     Dominant_pre == "AT" ~ "AT Dominant",
     Dominant_pre == "FDI" ~ "FDI Dominant",

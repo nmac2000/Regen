@@ -3,7 +3,7 @@
 ## 2023 data
 VRI_read_2023 <- read.csv("C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_binary.csv")
 VRI_2023 <- VRI_read_2023 %>% 
-  select(SampleSite_ID, BEC_Zone, BEC_Subzone, BEC_Variant, CROWN_CLOSURE_1:SPECIES_PCT_4_1) %>% 
+  select(SampleSite_ID, BEC_Zone, BEC_Subzone, BEC_Variant, CROWN_CLOSURE_1:SPECIES_PCT_4_1, FIRE_YEAR_1) %>% 
   filter(SPECIES_CD_1_1 != "") %>% 
   distinct(SampleSite_ID, .keep_all = T) %>% 
   filter(!SampleSite_ID %in% not_measured$SampleSite_ID) %>% 
@@ -68,7 +68,7 @@ VRI_2023$Year <- 2023
 VRI_read_2024 <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/VRI.csv")
 
 VRI_2024 <- VRI_read_2024 %>% 
-  select(Plot_ID, BEC_Zone, BEC_Subzone, BEC_Variant, CROWN_CLOSURE_1:SPECIES_PCT_4_1) %>% 
+  select(Plot_ID, BEC_Zone, BEC_Subzone, BEC_Variant, CROWN_CLOSURE_1:SPECIES_PCT_4_1, FIRE_YEAR_1) %>% 
   rename(SampleSite_ID = Plot_ID)%>% 
   filter(SPECIES_CD_1_1 != "") %>% 
   distinct(SampleSite_ID, .keep_all = T) %>% 

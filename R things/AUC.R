@@ -17,7 +17,7 @@ pROC::auc(bin_dis_GIS1$FDI.f, bin_dis_GIS1$yhat.FDI.structure)
 
 #Site
 
-bin_dis_GIS1$yhat.PLI.site <- fitted(site.PLI.2j)
+bin_dis_GIS1$yhat.PLI.site <- fitted(site.PLI.2c)
 bin_dis_GIS1$yhat.FDI.site <- fitted(site.FDI.3k)
 
 
