@@ -57,8 +57,8 @@ STM <- STM %>%
   group_by(SampleSite_ID) %>% 
   mutate(Trans = ifelse(Dominant_pre == Dominant, "static", "shift"))
 
-write.csv(STM, "C:/Users/nmac2000/Desktop/Chapter2/data/STM.csv")
-STM <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Data/Chapter1/STM.csv")
+write.csv(STM, "C:/Users/ EDIT THIS /STM.csv")
+STM <- read.csv("C:/Users/ EDIT THIS /STM.csv")
 STM <- STM %>% 
   select(-X.1, -X)
 ggplot(STM, aes(x=FDI_percent_pre, y=FDI_percent)) +

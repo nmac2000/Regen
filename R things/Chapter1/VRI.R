@@ -1,7 +1,7 @@
 # Format VRI data
 
 ## 2023 data
-VRI_read_2023 <- read.csv("C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_binary.csv")
+VRI_read_2023 <- read.csv("C:/Users/ EDIT THIS/regen_binary.csv")
 VRI_2023 <- VRI_read_2023 %>% 
   select(SampleSite_ID, BEC_Zone, BEC_Subzone, BEC_Variant, CROWN_CLOSURE_1:SPECIES_PCT_4_1, FIRE_YEAR_1) %>% 
   filter(SPECIES_CD_1_1 != "") %>% 
@@ -65,7 +65,7 @@ VRI_2023$Species_pre <- ifelse(VRI_2023$AT_percent_pre > 0, paste(VRI_2023$Speci
 VRI_2023$Year <- 2023
 
 ## 2024 data
-VRI_read_2024 <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/VRI.csv")
+VRI_read_2024 <- read.csv("C:/Users/ EDIT THIS /VRI.csv")
 
 VRI_2024 <- VRI_read_2024 %>% 
   select(Plot_ID, BEC_Zone, BEC_Subzone, BEC_Variant, CROWN_CLOSURE_1:SPECIES_PCT_4_1, FIRE_YEAR_1) %>% 
@@ -232,6 +232,6 @@ VRI2023_fires %>%
   summarize(count = n())
 
 names(VRI_read_2023)
-write.csv(STM, "C:/Users/nmac2000/Desktop/Chapter2/data/STM.csv")
-VRI_all <- read.csv("C:/Users/nmac2000/Desktop/Chapter2/data/STM.csv")
+write.csv(STM, "C:/Users/ EDIT THIS /STM.csv")
+VRI_all <- read.csv("C:/Users/ EDIT THIS /STM.csv")
 

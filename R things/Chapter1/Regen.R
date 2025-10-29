@@ -1,7 +1,7 @@
 # Format regeneration data
 
 library(tidyverse)
-regen_STM_read <- read.csv("C:/Users/nmac2000/Documents/regen project/Data/AllPlotsRegen.csv")
+regen_STM_read <- read.csv("C:/Users/ EDIT THIS /AllPlotsRegen.csv")
 
 
 
