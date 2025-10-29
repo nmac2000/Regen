@@ -11,17 +11,22 @@ Load packages and data
 library(tidyverse)
 library(lmtest)
 
-regen <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_2023_ALL.csv"
+## Download files from "Files Needed" folder in 
+## Forest Biometrics - Eskelson lab/Documents/General/Chilcotin Plateau/R files/Nat/Regeneration Drivers/Files Needed
+## Keep file name the same, but edit this R file so the file pathway reflects your own interface
+## These files should exist in some capacity in Forest Biometrics - Eskelson lab/Documents/General/Chilcotin Plateau/Data, but this follows my existing naming convention
+
+regen <- "C:/Users/ EDIT THIS /Regen_2023_ALL.csv"
 regen <- read.csv(regen)
-GIS_i <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/Regen_Points_May2.csv"
+GIS_i <- "C:/Users/ EDIT THIS /Regen_Points_May2.csv"
 GIS_i <- read.csv(GIS_i)
-clipGis <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/PossiblePlot.csv"
+clipGis <- "C:/Users/ EDIT THIS /PossiblePlot.csv"
 clipGis <- read.csv(clipGis)
-distance <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Data/distance.csv"
+distance <- "C:/Users/ EDIT THIS /distance.csv"
 distance <- read.csv(distance)
-fire_severity <- "https://raw.githubusercontent.com/nmac2000/Regen/main/Dataframes/FireSeverity.csv"
+fire_severity <- "C:/Users/ EDIT THIS /FireSeverity.csv"
 fire_severity <- read.csv(fire_severity)
-patchsize <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Data/PatchSize.csv")
+patchsize <- read.csv("C:/Users/ EDIT THIS /PatchSize.csv")
 ```
 
 # Format plot data
@@ -152,7 +157,7 @@ regen_combo <- regen_all %>%
   ungroup()
 
 # export dataframe
-write.csv(regen_combo, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/MeasuredPlots.csv")
+write.csv(regen_combo, "C:/Users/ EDIT THIS /MeasuredPlots.csv")
 ```
 
 # Add GIS Data
@@ -247,7 +252,7 @@ assign_direction <- function(angle) {
 # Apply the function to the data column
 GIS_i$Azimuth <- sapply(GIS_i$Aspect, assign_direction)
 
-write.csv(GIS_i, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/GIS_fixed.csv")
+write.csv(GIS_i, "C:/Users/ EDIT THIS /GIS_fixed.csv")
 
 
 ```
@@ -328,8 +333,8 @@ regen_GIS <- regen_GIS %>%
 
 regen_GIS %>% 
   filter(is.na(Distance))
-write.csv(regen_GIS,  "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_GIS.csv")
-regen_GIS <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/regen_GIS.csv")
+write.csv(regen_GIS,  "C:/Users/ EDIT THIS /regen_GIS.csv")
+regen_GIS <- read.csv("C:/Users/ EDIT THIS /regen_GIS.csv")
 ```
 
 
@@ -364,15 +369,15 @@ regen_binary <- regen_GIS %>%
          SX_x130_bin = ifelse(SX_x130>0,1,0))
 
 
-write.csv(regen_binary, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_binary.csv")
-# ? not what why this is: write.csv(bin_GIS, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/binary_GIS.csv")
+write.csv(regen_binary, "C:/Users/ EDIT THIS /regen_GIS.csv/regen_binary.csv")
+
 
 
 ```
 
 # For Analysis
 ```{r}
-bin_dis_GIS1 <- read.csv("C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/regen_binary.csv")
+bin_dis_GIS1 <- read.csv("C:/Users/ EDIT THIS /regen_binary.csv")
 
 # ensure y variable is a factor for seedling presence vs absence
 bin_dis_GIS1$PLI.f <- as.factor(bin_dis_GIS1$PLI_count_bin)
@@ -450,8 +455,8 @@ bin_dis_GIS <- bin_dis_GIS1 %>%
   filter(!is.na(UNIQUE_ID))
 
 
-#write.csv(bin_dis_GIS1, "C:/Users/nmac2000/Documents/regen project/Regen/Dataframes/bin_dis_GIS3.csv")
-bin_dis_GIS1 <- read.csv("https://raw.githubusercontent.com/nmac2000/Regen/refs/heads/main/Dataframes/bin_dis_GIS3.csv")
+#write.csv(bin_dis_GIS1, "C:/Users/ EDIT THIS /bin_dis_GIS3.csv")
+bin_dis_GIS1 <- read.csv("C:/Users/ EDIT THIS /bin_dis_GIS3.csv")
 
 ```
 ```{r}
